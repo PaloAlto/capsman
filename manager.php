@@ -133,8 +133,8 @@ class cmanCapsManager extends cmanPlugin
 		}
 
 		$this->generateNames();
-		if ( ! in_array($this->current, $this->roles) ) {
-			$roles = array_keys($this->roles);
+		$roles = array_keys($this->roles);
+		if ( ! in_array($this->current, $roles) ) {
 			$this->current = array_shift($roles);
 		}
 		
@@ -358,8 +358,6 @@ class cmanCapsManager extends cmanPlugin
 		$new_caps = ( is_array($caps) ) ? array_map('intval', $caps) : array();
 		$new_caps = array_merge($new_caps, akv_level2caps($level));
 
-		echo '<pre>'; print_r($new_caps); echo '</pre>'; 
-		
 		// Find caps to add and remove
 		$add_caps = array_diff_key($new_caps, $old_caps);
 		$del_caps = array_diff_key($old_caps, $new_caps);
