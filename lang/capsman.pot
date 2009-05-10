@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Capability Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-09 12:02+0100\n"
+"POT-Creation-Date: 2009-05-10 23:40+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jordi Canals <jcanals@alkivia.com>\n"
 "Language-Team: Alkivia | http://alkivia.org <gpl@alkivia.com>\n"
@@ -15,69 +15,73 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../admin-general.php:44
+#: ../admin-general.php:39
 msgid "Roles and Capabilities"
 msgstr ""
 
-#: ../admin-general.php:53
+#: ../admin-general.php:48
 #, php-format
 msgid "Capabilities for %s"
 msgstr ""
 
-#: ../admin-general.php:81
-#: ../manager.php:144
+#: ../admin-general.php:95
+msgid "Level:"
+msgstr ""
+
+#: ../admin-general.php:118
+#: ../manager.php:185
 msgid "Save Changes"
 msgstr ""
 
-#: ../admin-general.php:92
+#: ../admin-general.php:129
 msgid "Plugin Homepage"
 msgstr ""
 
-#: ../admin-general.php:93
+#: ../admin-general.php:130
 msgid "Support Forum"
 msgstr ""
 
-#: ../admin-general.php:94
+#: ../admin-general.php:131
 msgid "Author Homepage"
 msgstr ""
 
-#: ../admin-general.php:95
+#: ../admin-general.php:132
 msgid "Help donating"
 msgstr ""
 
-#: ../admin-general.php:101
+#: ../admin-general.php:138
 msgid "Select New Role"
 msgstr ""
 
-#: ../admin-general.php:109
-#: ../manager.php:121
+#: ../admin-general.php:146
+#: ../manager.php:162
 msgid "Change"
 msgstr ""
 
-#: ../admin-general.php:114
+#: ../admin-general.php:151
 msgid "Create New Role"
 msgstr ""
 
-#: ../admin-general.php:117
-#: ../manager.php:125
+#: ../admin-general.php:154
+#: ../manager.php:166
 msgid "Create"
 msgstr ""
 
-#: ../admin-general.php:122
+#: ../admin-general.php:159
 msgid "Copy this role to"
 msgstr ""
 
-#: ../admin-general.php:125
-#: ../manager.php:134
+#: ../admin-general.php:162
+#: ../manager.php:175
 msgid "Copy"
 msgstr ""
 
-#: ../admin-general.php:130
+#: ../admin-general.php:167
 msgid "Add Capability"
 msgstr ""
 
-#: ../admin-general.php:133
-#: ../manager.php:148
+#: ../admin-general.php:170
+#: ../manager.php:189
 msgid "Add to role"
 msgstr ""
 
@@ -97,42 +101,50 @@ msgstr ""
 msgid "%s is required for this plugin."
 msgstr ""
 
-#: ../manager.php:81
+#: ../manager.php:99
 msgid "Capability Manager"
 msgstr ""
 
-#: ../manager.php:81
+#: ../manager.php:99
 msgid "Capabilities"
 msgstr ""
 
-#: ../manager.php:112
-msgid "Bad form Received"
-msgstr ""
-
-#: ../manager.php:127
-#: ../manager.php:137
-msgid "New role created."
-msgstr ""
-
-#: ../manager.php:130
-#: ../manager.php:140
-msgid "Error: Failed creating the new role."
-msgstr ""
-
-#: ../manager.php:145
-msgid "New capabilities saved."
+#: ../manager.php:124
+msgid "What do you think you're doing?!?"
 msgstr ""
 
 #: ../manager.php:153
+msgid "Bad form Received"
+msgstr ""
+
+#: ../manager.php:168
+#: ../manager.php:178
+msgid "New role created."
+msgstr ""
+
+#: ../manager.php:171
+#: ../manager.php:181
+msgid "Error: Failed creating the new role."
+msgstr ""
+
+#: ../manager.php:186
+msgid "New capabilities saved."
+msgstr ""
+
+#: ../manager.php:194
 msgid "New capability added to role."
 msgstr ""
 
-#: ../manager.php:155
+#: ../manager.php:196
 msgid "Incorrect capability name."
 msgstr ""
 
-#: ../manager.php:158
+#: ../manager.php:199
 msgid "Bad form received."
+msgstr ""
+
+#: ../manager.php:372
+msgid "You cannot remove Manage Capabilities from Administrators"
 msgstr ""
 
 #: ../framework/formating.php:38
