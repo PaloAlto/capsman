@@ -1,0 +1,162 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Capability Manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-09 12:02+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jordi Canals <jcanals@alkivia.com>\n"
+"Language-Team: Alkivia | http://alkivia.org <gpl@alkivia.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../admin-general.php:44
+msgid "Roles and Capabilities"
+msgstr "Roles y Permisos"
+
+#: ../admin-general.php:53
+#, php-format
+msgid "Capabilities for %s"
+msgstr "Permisos para %s"
+
+#: ../admin-general.php:81
+#: ../manager.php:144
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: ../admin-general.php:92
+msgid "Plugin Homepage"
+msgstr "Página del plugin"
+
+#: ../admin-general.php:93
+msgid "Support Forum"
+msgstr "Foro de soporte"
+
+#: ../admin-general.php:94
+msgid "Author Homepage"
+msgstr "Página del autor"
+
+#: ../admin-general.php:95
+msgid "Help donating"
+msgstr "Ayuda donando"
+
+#: ../admin-general.php:101
+msgid "Select New Role"
+msgstr "Seleccionar nuevo Rol"
+
+#: ../admin-general.php:109
+#: ../manager.php:121
+msgid "Change"
+msgstr "Cambiar"
+
+#: ../admin-general.php:114
+msgid "Create New Role"
+msgstr "Crear nuevo Rol"
+
+#: ../admin-general.php:117
+#: ../manager.php:125
+msgid "Create"
+msgstr "Crear"
+
+#: ../admin-general.php:122
+msgid "Copy this role to"
+msgstr "Copiar este rol a"
+
+#: ../admin-general.php:125
+#: ../manager.php:134
+msgid "Copy"
+msgstr "Copiar"
+
+#: ../admin-general.php:130
+msgid "Add Capability"
+msgstr "Añadir Permiso"
+
+#: ../admin-general.php:133
+#: ../manager.php:148
+msgid "Add to role"
+msgstr "Añadir al rol"
+
+#: ../capsman.php:50
+#: ../framework/plugins.php:467
+#: ../framework/plugins.php:509
+msgid "Warning:"
+msgstr "Atención:"
+
+#: ../capsman.php:51
+#, php-format
+msgid "The active plugin %s is not compatible with your PHP version."
+msgstr "La extensión activa %s no es compatible con tu versión de PHP."
+
+#: ../capsman.php:53
+#, php-format
+msgid "%s is required for this plugin."
+msgstr "Se require %s para utilizar esta extensión."
+
+#: ../manager.php:81
+msgid "Capability Manager"
+msgstr "Administrador de Permisos"
+
+#: ../manager.php:81
+msgid "Capabilities"
+msgstr "Permisos"
+
+#: ../manager.php:112
+msgid "Bad form Received"
+msgstr "Se ha recibido un formulario incorrecto."
+
+#: ../manager.php:127
+#: ../manager.php:137
+msgid "New role created."
+msgstr "Se ha creado el nuevo rol."
+
+#: ../manager.php:130
+#: ../manager.php:140
+msgid "Error: Failed creating the new role."
+msgstr "Error: No se ha podido crear el nuevo rol."
+
+#: ../manager.php:145
+msgid "New capabilities saved."
+msgstr "Se han actualizado los nuevos permisos."
+
+#: ../manager.php:153
+msgid "New capability added to role."
+msgstr "Nuevos permiso añadido al rol."
+
+#: ../manager.php:155
+msgid "Incorrect capability name."
+msgstr "Nombre incorrecto de permiso ."
+
+#: ../manager.php:158
+msgid "Bad form received."
+msgstr "Se ha recibido un formulario incorrecto."
+
+#: ../framework/formating.php:38
+msgid "Settings saved."
+msgstr "Opciones guardadas."
+
+#: ../framework/plugins.php:468
+#, php-format
+msgid "The active plugin %s is not compatible with your WordPress version."
+msgstr "La extensión activa %s no es compatible con tu versión de WordPress."
+
+#: ../framework/plugins.php:470
+#, php-format
+msgid "WordPress %s is required to run this plugin."
+msgstr "Se require WordPress %s para ejecutar esta extensión."
+
+#: ../framework/plugins.php:510
+msgid "Standard sidebar functions are not present."
+msgstr "No se han encontrado algunas funciones de la barra lateral estándar."
+
+#: ../framework/plugins.php:511
+#, php-format
+msgid "It is required to use the standard sidebar to run %s"
+msgstr "Es preciso utilizar la barra lateral estándar para ejectutar %s"
+
+#~ msgid "Managing %s"
+#~ msgstr "Administrando %s"
+
