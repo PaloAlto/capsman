@@ -1,16 +1,17 @@
 === Capability Manager ===
 Contributors: txanny
 Donate link: http://alkivia.org/donate
-Tags: roles, capabilities, manager
+Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.7
 Tested up to: 2.8
-Stable tag: 1.0-beta
+Stable tag: 1.0
 
 A simple way to manage WordPress roles and capabilities.
 
 == Description ==
 
 The Capability Manager plugin provides a simple way to manage role capabilities. Using it, you will be able to change the capabilities of any role, add new roles, copy existing roles into new ones, and add new capabilities to existing roles.
+You can also delegate capabilities management to other users. In this case, some restrictions apply to this users, as them can only set/unset the capabilities they have. 
 At the current version, you cannot manage capabilities at user level (only can be managed for roles) and cannont delete existing roles. This will be included in next versions.
 
 **Features:**
@@ -23,6 +24,30 @@ At the current version, you cannot manage capabilities at user level (only can b
 
 * Delete existing roles.
 * Manage capabilities at user level.
+
+**Who can manage?**
+
+* Only users with 'manage_capabilities' can manage them. This capability is created at install time and assigned to administrators.
+
+*Administrators*
+
+* Only administrators can grant or remove 'manage_capabilities' to other users. Cannot be removed from administrators.
+* Can grant or remove any capability, included the ones them not have.
+* Only administrators can manage the 'administrator' role.
+
+*Other users granted to manage capabilities*
+
+* Cannot grant or remove 'manage_capabilities'.
+* Cannot manage 'administrator' role.
+* Can only manage roles that have the same or lower level than the user.
+* Can only grant or remove capabilities they have.
+* Cannot manage roles they have. (This is to prevent granting/removing his own capabilities).
+
+**Rules to create new capabilities or roles**
+
+* Can be maximum 40 characters lenght.
+* Have to start with a letter.
+* Can contain only letters, digits, spaces and underscores.
 
 == Installation ==
 
@@ -69,4 +94,4 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
-* **1.0-beta** - First public version.
+* **1.0** - First public version.
