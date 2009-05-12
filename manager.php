@@ -5,7 +5,7 @@
  * 
  * @version		$Rev$
  * @author		Jordi Canals
- * @package		Community
+ * @package		CapsMan
  * @link		http://alkivia.org/plugins/community
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
@@ -29,10 +29,12 @@ include_once ( dirname(__FILE__) . '/framework/plugins.php');
 include_once ( CMAN_PATH . '/framework/roles.php' );
 
 /**
- * Class ucomCommunity.
+ * Class cmanCapsManager.
  * Sets the main environment for all Community components.
  * 
- * @author Jordi Canals
+ * @author		Jordi Canals
+ * @package		CapsMan
+ * @link		http://alkivia.org
  */
 class cmanCapsManager extends cmanPlugin
 {
