@@ -2,7 +2,7 @@
 /**
  * Plugins related functions and classes.
  * 
- * @version		$Rev$
+ * @version		$Rev: 145 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework

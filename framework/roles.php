@@ -2,7 +2,7 @@
 /**
  * Roles and Capabilities related functions.
  * 
- * @version		$Rev$
+ * @version		$Rev: 166 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
@@ -59,17 +59,19 @@ if ( ! function_exists('akv_get_user_role') ) :
 	/**
 	 * Return the user role. Taken from WordPress roles and Capabilities.
 	 * 
-	 * @param int $user_ID	User ID to find the role.	
+	 * @param int|object $user_ID	User ID or the user object to find the role.	
 	 * @return string		User role in this blog (key, not translated).
 	 */
-	function akv_get_user_role( $user_ID ) {
+	function akv_get_user_role( $user ) {
 		global $wpdb, $wp_roles;
 		if ( ! isset( $wp_roles ) ) {
 			$wp_roles = new WP_Roles();
 		}
 		$caps_name = $wpdb->prefix . 'capabilities';
 	
-		$user = get_userdata($user_ID);
+		if ( ! is_object($user) ) {
+			$user = get_userdata($user);
+		}
 		$roles = array_filter( array_keys( (array) $user->$caps_name ), array( &$wp_roles, 'is_role' ) );
 
 		return array_pop($roles);

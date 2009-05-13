@@ -3,7 +3,7 @@
  * General formating functions.
  * Used to format output data and send messages to user.
  * 
- * @version		$Rev$
+ * @version		$Rev: 148 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
