@@ -4,7 +4,7 @@ Donate link: http://alkivia.org/donate
 Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.7
 Tested up to: 2.8
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 A simple way to manage WordPress roles and capabilities.
 
@@ -94,4 +94,5 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
+* **1.0.1** - Some code improvements. Updated Alkivia Framework.
 * **1.0** - First public version.
