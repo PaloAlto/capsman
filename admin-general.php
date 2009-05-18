@@ -115,7 +115,10 @@ $default = $this->current;
 		<p class="submit">
 			<input type="hidden" name="action" value="update" />
 			<input type="hidden" name="current" value="<?php echo $default; ?>" />
-			<input type="submit" name="Save" value="<?php _e('Save Changes', $this->ID) ?>" class="button-primary" />
+			<input type="submit" name="Save" value="<?php _e('Save Changes', $this->ID) ?>" class="button-primary" /> &nbsp;
+			<?php if ( current_user_can('administrator') && 'administrator' != $default ) : ?>
+					<a class="ak-delete" title="<?php echo attribute_escape(__('Delete this role', $this->ID)) ?>" href="<?php echo wp_nonce_url("admin.php?page={$this->p_dirs['subdir']}&amp;action=delete&amp;role={$default}", 'delete-role_' . $default); ?>" onclick="if ( confirm('<?php echo js_escape(sprintf(__("You are about to delete the %s role.\n 'Cancel' to stop, 'OK' to delete.", $this->ID), $roles[$default])); ?>') ) { return true;}return false;"><?php _e('Delete Role', $this->ID)?></a>
+			<?php endif; ?>
 		</p>
 
 		<p class="footer"><a href="<?php echo $this->p_data['PluginURI']; ?>"><?php echo $this->p_data['Name'] . ' ' . $this->p_data['Version']?></a> &nbsp;

@@ -17,28 +17,31 @@ At the current version, you cannot manage capabilities at user level (only can b
 **Features:**
 
 * Manage role capabilities.
-* Add new roles.
+* Add new roles or delete existing roles.
 * Add new capabilities to any existing role.
 
 **Future Planned Features**
 
-* Delete existing roles.
 * Manage capabilities at user level.
 
 **Who can manage?**
 
+* Capability manager only supports one role per user.
 * Only users with 'manage_capabilities' can manage them. This capability is created at install time and assigned to administrators.
+* Administrator role cannot be deleted.
 
 *Administrators*
 
 * Only administrators can grant or remove 'manage_capabilities' to other users. Cannot be removed from administrators.
 * Can grant or remove any capability, included the ones them not have.
 * Only administrators can manage the 'administrator' role.
+* Oly administrators can delete roles.
 
 *Other users granted to manage capabilities*
 
 * Cannot grant or remove 'manage_capabilities'.
 * Cannot manage 'administrator' role.
+* Cannot delete roles.
 * Can only manage roles that have the same or lower level than the user.
 * Can only grant or remove capabilities they have.
 * Cannot manage roles they have. (This is to prevent granting/removing his own capabilities).
@@ -94,5 +97,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
+* **1.1** - Role deletion added.
 * **1.0.1** - Some code improvements. Updated Alkivia Framework.
 * **1.0** - First public version.

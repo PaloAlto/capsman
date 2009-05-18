@@ -133,9 +133,15 @@ class cmanCapsManager extends cmanPlugin
 			check_admin_referer('capsman-general-manager');
 			$this->processAdminGeneral();
 		}
-
+		
 		$this->generateNames();
 		$roles = array_keys($this->roles);
+		
+		if ( isset($_GET['action']) && 'delete' == $_GET['action']) {
+			check_admin_referer('delete-role_' . $_GET['role']);
+			$this->adminDeleteRole();
+		}
+
 		if ( ! in_array($this->current, $roles) ) {
 			$this->current = array_shift($roles);
 		}
@@ -200,6 +206,46 @@ class cmanCapsManager extends cmanPlugin
 		} else {
 			akv_admin_error(__('Bad form received.', $this->ID));
 		}
+	}
+	
+	/**
+	 * Deletes a role.
+	 * The role comes from the $_GET['role'] var and the nonce has already been chacked.
+	 * Default WordPress role cannor be deleted and if trying ro do it, throws an error.
+	 * Users with the deleted role, are moved to the WordPress default role.
+	 *  
+	 * @return void
+	 */
+	private function adminDeleteRole() {
+		global $wpdb;
+		
+		$this->current = $_GET['role'];
+		$default = get_option('default_role'); 
+		if (  $default == $this->current ) {
+			akv_admin_error(sprintf(__('Cannot delete default role. You <a href="%s">have to change it first</a>.', $this->ID), 'options-general.php'));
+			return;
+		}
+
+		$query = "SELECT ID FROM {$wpdb->usermeta} INNER JOIN {$wpdb->users} "
+			. "ON {$wpdb->usermeta}.user_id = {$wpdb->users}.ID "
+			. "WHERE meta_key='{$wpdb->prefix}capabilities' AND meta_value LIKE '%{$this->current}%';"; 
+
+		$users = $wpdb->get_results($query);
+		$count = count($users);
+		
+		foreach ( $users as $u ) {
+			$user = new WP_User($u->ID);
+			if ( $user->has_cap($this->current) ) {		// Check again the user has the deleting role
+				$user->set_role($default);
+			}
+		}
+		
+		$roles = new WP_Roles();
+		$roles->remove_role($this->current);
+		unset($this->roles[$this->current]);
+		
+		akv_admin_notify(sprintf(__('Role %1$s has been deleted. %2$d users moved to default role %3$s.', $this->ID), $this->roles[$this->current], $count, $this->roles[$default]));
+		$this->current = $default;
 	}
 	
 	/**

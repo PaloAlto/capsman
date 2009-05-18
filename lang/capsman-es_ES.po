@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Capability Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-10 23:40+0100\n"
+"POT-Creation-Date: 2009-05-18 02:06+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jordi Canals <jcanals@alkivia.com>\n"
 "Language-Team: Alkivia | http://alkivia.org <gpl@alkivia.org>\n"
@@ -28,59 +28,76 @@ msgid "Level:"
 msgstr "Nivel:"
 
 #: ../admin-general.php:118
-#: ../manager.php:185
+#: ../manager.php:193
 msgid "Save Changes"
 msgstr "Guardar cambios"
 
-#: ../admin-general.php:129
+#: ../admin-general.php:120
+msgid "Delete this role"
+msgstr "Eliminar este rol"
+
+#: ../admin-general.php:120
+#, php-format
+msgid ""
+"You are about to delete the %s role.\n"
+" 'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"Estás a intentando eliminar el rol %s.\n"
+"  'Aceptar' para borrar, 'Cancelar' para salir."
+
+#: ../admin-general.php:120
+msgid "Delete Role"
+msgstr "Eliminar Rol"
+
+#: ../admin-general.php:132
 msgid "Plugin Homepage"
 msgstr "Página del plugin"
 
-#: ../admin-general.php:130
+#: ../admin-general.php:133
 msgid "Support Forum"
 msgstr "Foro de soporte"
 
-#: ../admin-general.php:131
+#: ../admin-general.php:134
 msgid "Author Homepage"
 msgstr "Página del autor"
 
-#: ../admin-general.php:132
+#: ../admin-general.php:135
 msgid "Help donating"
 msgstr "Ayuda donando"
 
-#: ../admin-general.php:138
+#: ../admin-general.php:141
 msgid "Select New Role"
 msgstr "Seleccionar nuevo Rol"
 
-#: ../admin-general.php:146
-#: ../manager.php:162
+#: ../admin-general.php:149
+#: ../manager.php:170
 msgid "Change"
 msgstr "Cambiar"
 
-#: ../admin-general.php:151
+#: ../admin-general.php:154
 msgid "Create New Role"
 msgstr "Crear nuevo Rol"
 
-#: ../admin-general.php:154
-#: ../manager.php:166
+#: ../admin-general.php:157
+#: ../manager.php:174
 msgid "Create"
 msgstr "Crear"
 
-#: ../admin-general.php:159
+#: ../admin-general.php:162
 msgid "Copy this role to"
 msgstr "Copiar este rol a"
 
-#: ../admin-general.php:162
-#: ../manager.php:175
+#: ../admin-general.php:165
+#: ../manager.php:183
 msgid "Copy"
 msgstr "Copiar"
 
-#: ../admin-general.php:167
+#: ../admin-general.php:170
 msgid "Add Capability"
 msgstr "Añadir Permiso"
 
-#: ../admin-general.php:170
-#: ../manager.php:189
+#: ../admin-general.php:173
+#: ../manager.php:197
 msgid "Add to role"
 msgstr "Añadir al rol"
 
@@ -100,49 +117,59 @@ msgstr "La extensión activa %s no es compatible con tu versión de PHP."
 msgid "%s is required for this plugin."
 msgstr "Se require %s para utilizar esta extensión."
 
-#: ../manager.php:99
+#: ../manager.php:101
 msgid "Capability Manager"
 msgstr "Administrador de Permisos"
 
-#: ../manager.php:99
+#: ../manager.php:101
 msgid "Capabilities"
 msgstr "Permisos"
 
-#: ../manager.php:124
+#: ../manager.php:126
 msgid "What do you think you're doing?!?"
 msgstr "¿Que piensas que estás haciendo?"
 
-#: ../manager.php:153
+#: ../manager.php:161
 msgid "Bad form Received"
 msgstr "Se ha recibido un formulario incorrecto."
 
-#: ../manager.php:168
-#: ../manager.php:178
+#: ../manager.php:176
+#: ../manager.php:186
 msgid "New role created."
 msgstr "Se ha creado el nuevo rol."
 
-#: ../manager.php:171
-#: ../manager.php:181
+#: ../manager.php:179
+#: ../manager.php:189
 msgid "Error: Failed creating the new role."
 msgstr "Error: No se ha podido crear el nuevo rol."
 
-#: ../manager.php:186
+#: ../manager.php:194
 msgid "New capabilities saved."
 msgstr "Se han actualizado los nuevos permisos."
 
-#: ../manager.php:194
+#: ../manager.php:202
 msgid "New capability added to role."
 msgstr "Nuevos permiso añadido al rol."
 
-#: ../manager.php:196
+#: ../manager.php:204
 msgid "Incorrect capability name."
 msgstr "Nombre incorrecto de permiso ."
 
-#: ../manager.php:199
+#: ../manager.php:207
 msgid "Bad form received."
 msgstr "Se ha recibido un formulario incorrecto."
 
-#: ../manager.php:372
+#: ../manager.php:225
+#, php-format
+msgid "Cannot delete default role. You <a href=\"%s\">have to change it first</a>."
+msgstr "No se puede eliminar el rol predeterminado. <a href=\"%s\">Debes cambiarlo antes</a>."
+
+#: ../manager.php:247
+#, php-format
+msgid "Role %1$s has been deleted. %2$d users moved to default role %3$s."
+msgstr "El Rol %1$s ha sido eliminado. Se ha asignado el rol predeterminado %3$s a %2$d usuarios."
+
+#: ../manager.php:420
 msgid "You cannot remove Manage Capabilities from Administrators"
 msgstr "No se puede eliminar 'Manage Capabilities' de los administradores."
 
