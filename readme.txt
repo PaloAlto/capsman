@@ -4,7 +4,7 @@ Donate link: http://alkivia.org/donate
 Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.7
 Tested up to: 2.8
-Stable tag: 1.0.1
+Stable tag: 1.1
 
 A simple way to manage WordPress roles and capabilities.
 
@@ -35,7 +35,7 @@ At the current version, you cannot manage capabilities at user level (only can b
 * Only administrators can grant or remove 'manage_capabilities' to other users. Cannot be removed from administrators.
 * Can grant or remove any capability, included the ones them not have.
 * Only administrators can manage the 'administrator' role.
-* Oly administrators can delete roles.
+* Only administrators can delete roles.
 
 *Other users granted to manage capabilities*
 
