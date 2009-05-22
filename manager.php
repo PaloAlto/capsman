@@ -210,8 +210,8 @@ class cmanCapsManager extends cmanPlugin
 	
 	/**
 	 * Deletes a role.
-	 * The role comes from the $_GET['role'] var and the nonce has already been chacked.
-	 * Default WordPress role cannor be deleted and if trying ro do it, throws an error.
+	 * The role comes from the $_GET['role'] var and the nonce has already been checked.
+	 * Default WordPress role cannot be deleted and if trying to do it, throws an error.
 	 * Users with the deleted role, are moved to the WordPress default role.
 	 *  
 	 * @return void
