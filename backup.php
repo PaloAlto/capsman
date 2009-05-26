@@ -65,7 +65,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && 'backup.php' == basename($_SERVER['SCR
 				<p style="text-align:center;"><strong><span style="color:red;"><?php _e('WARNING:', $this->ID); ?></span> <?php _e('Reseting default Roles and Capabilities will set them to the WordPress install defaults.', $this->ID); ?></strong><br />
 					<?php _e('If you have installed any plugin that adds new roles or capabilities, these will be lost.', $this->ID)?><br />
 					<strong><?php _e('It is recommended to use this only as a last resource!')?></strong></p>
-				<p style="text-align:center;"><a class="ak-delete" title="<?php echo attribute_escape(__('Reset Roles and Capabilities to WordPress defaults', $this->ID)) ?>" href="<?php echo wp_nonce_url("tools.php?page={$this->p_dirs['subdir']}-tool&amp;action=reset-defaults", 'capsman-reset-defaults'); ?>" onclick="if ( confirm('<?php echo js_escape(sprintf(__("You are about to reset Roles and Capabilities to WordPress defaults.\n 'Cancel' to stop, 'OK' to delete.", $this->ID), $roles[$default])); ?>') ) { return true;}return false;"><?php _e('Reset to WordPress defaults', $this->ID)?></a>
+				<p style="text-align:center;"><a class="ak-delete" title="<?php echo attribute_escape(__('Reset Roles and Capabilities to WordPress defaults', $this->ID)) ?>" href="<?php echo wp_nonce_url("tools.php?page={$this->p_dirs['subdir']}-tool&amp;action=reset-defaults", 'capsman-reset-defaults'); ?>" onclick="if ( confirm('<?php echo js_escape(sprintf(__("You are about to reset Roles and Capabilities to WordPress defaults.\n 'Cancel' to stop, 'OK' to reset.", $this->ID), $roles[$default])); ?>') ) { return true;}return false;"><?php _e('Reset to WordPress defaults', $this->ID)?></a>
 				
 			</dd>
 		</dl>
