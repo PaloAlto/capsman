@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Capability Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-18 02:06+0100\n"
+"POT-Creation-Date: 2009-05-27 01:01+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jordi Canals <jcanals@alkivia.com>\n"
 "Language-Team: Alkivia | http://alkivia.org <gpl@alkivia.org>\n"
@@ -27,7 +27,7 @@ msgid "Level:"
 msgstr "Nivell:"
 
 #: ../admin-general.php:118
-#: ../manager.php:193
+#: ../manager.php:231
 msgid "Save Changes"
 msgstr "Desa els canvis"
 
@@ -49,18 +49,22 @@ msgid "Delete Role"
 msgstr "Eliminar Rol"
 
 #: ../admin-general.php:132
+#: ../backup.php:81
 msgid "Plugin Homepage"
 msgstr "Pàgina web de l'extensió"
 
 #: ../admin-general.php:133
+#: ../backup.php:82
 msgid "Support Forum"
 msgstr "Forum d'Ajuda"
 
 #: ../admin-general.php:134
+#: ../backup.php:83
 msgid "Author Homepage"
 msgstr "Lloc web de l'autor"
 
 #: ../admin-general.php:135
+#: ../backup.php:84
 msgid "Help donating"
 msgstr "Ajuda donant"
 
@@ -69,7 +73,7 @@ msgid "Select New Role"
 msgstr "Selecciona un nou Rol"
 
 #: ../admin-general.php:149
-#: ../manager.php:170
+#: ../manager.php:208
 msgid "Change"
 msgstr "Canvia"
 
@@ -78,7 +82,7 @@ msgid "Create New Role"
 msgstr "Crear rol nou"
 
 #: ../admin-general.php:157
-#: ../manager.php:174
+#: ../manager.php:212
 msgid "Create"
 msgstr "Crear"
 
@@ -87,7 +91,7 @@ msgid "Copy this role to"
 msgstr "Copia aquest rol a"
 
 #: ../admin-general.php:165
-#: ../manager.php:183
+#: ../manager.php:221
 msgid "Copy"
 msgstr "Copiar"
 
@@ -96,9 +100,69 @@ msgid "Add Capability"
 msgstr "Afegeix Competència"
 
 #: ../admin-general.php:173
-#: ../manager.php:197
+#: ../manager.php:235
 msgid "Add to role"
 msgstr "Afegir al rol"
+
+#: ../backup.php:36
+msgid "Backup Tool for Capability Manager"
+msgstr "Eina de Copies de Seguretat per a Capability Manager"
+
+#: ../backup.php:45
+msgid "Backup and Restore"
+msgstr "Copia i Restaura"
+
+#: ../backup.php:49
+msgid "Select action:"
+msgstr "Selecciona una acció:"
+
+#: ../backup.php:52
+msgid "Backup roles and capabilities"
+msgstr "Desa una copia de rols i competències"
+
+#: ../backup.php:53
+msgid "Restore last saved backup"
+msgstr "Recupera la darrera còpia de seguretat"
+
+#: ../backup.php:55
+msgid "Do Action"
+msgstr "Executa l'Acció"
+
+#: ../backup.php:63
+msgid "Reset WordPress Defaults"
+msgstr "Restaura valors predeterminats de WordPress"
+
+#: ../backup.php:65
+msgid "WARNING:"
+msgstr "ATENCIÓ:"
+
+#: ../backup.php:65
+msgid "Reseting default Roles and Capabilities will set them to the WordPress install defaults."
+msgstr "Restaurant els valors predeterminats per a Rols i Competències, els configurarà als valors predeterminats de la instal·lació de WordPress."
+
+#: ../backup.php:66
+msgid "If you have installed any plugin that adds new roles or capabilities, these will be lost."
+msgstr "Si has instal·lat alguna extensió que afegeix nous rols o competències, aquests es perdran."
+
+#: ../backup.php:67
+msgid "It is recommended to use this only as a last resource!"
+msgstr "Es recomana utilitzar aquesta opció només com a últim recurs!"
+
+#: ../backup.php:68
+msgid "Reset Roles and Capabilities to WordPress defaults"
+msgstr "Restaura Rols i Competències als valors predeterminats de WordPress"
+
+#: ../backup.php:68
+msgid ""
+"You are about to reset Roles and Capabilities to WordPress defaults.\n"
+" 'Cancel' to stop, 'OK' to reset."
+msgstr ""
+"Estàs apunt de restaurar els valors predeterminats de WordPress per a Rols i Competències.\n"
+"  'Cancel·la' per abandonarr, 'D'acord' per restaurar."
+
+#: ../backup.php:68
+msgid "Reset to WordPress defaults"
+msgstr "Restaura els valors predeterminats de WordPress"
 
 #: ../capsman.php:50
 #: ../framework/plugins.php:467
@@ -116,59 +180,81 @@ msgstr "L'extensió activa %s no és compatible amb la teva versió de PHP."
 msgid "%s is required for this plugin."
 msgstr "Es requereix %s per aquesta extensió."
 
-#: ../manager.php:101
+#: ../manager.php:117
+#: ../manager.php:118
 msgid "Capability Manager"
 msgstr "Administrador de Compoetències"
 
-#: ../manager.php:101
+#: ../manager.php:117
 msgid "Capabilities"
 msgstr "Competències"
 
-#: ../manager.php:126
+#: ../manager.php:140
+#: ../manager.php:174
 msgid "What do you think you're doing?!?"
 msgstr "Que et penses que fas?"
 
-#: ../manager.php:161
+#: ../manager.php:199
 msgid "Bad form Received"
 msgstr "S'ha rebut un formulari incorrecte."
 
-#: ../manager.php:176
-#: ../manager.php:186
+#: ../manager.php:214
+#: ../manager.php:224
 msgid "New role created."
 msgstr "S'ha creat el nou rol."
 
-#: ../manager.php:179
-#: ../manager.php:189
+#: ../manager.php:217
+#: ../manager.php:227
 msgid "Error: Failed creating the new role."
 msgstr "Error: No s'ha pogut crear el nou rol."
 
-#: ../manager.php:194
+#: ../manager.php:232
 msgid "New capabilities saved."
 msgstr "S'han desat les noves competències."
 
-#: ../manager.php:202
+#: ../manager.php:240
 msgid "New capability added to role."
 msgstr "Nova competència afegida al rol."
 
-#: ../manager.php:204
+#: ../manager.php:242
 msgid "Incorrect capability name."
 msgstr "Nom incorrecte de competència."
 
-#: ../manager.php:207
+#: ../manager.php:245
 msgid "Bad form received."
 msgstr "S'ha rebut un formulari incorrecte."
 
-#: ../manager.php:225
+#: ../manager.php:264
+msgid "New backup saved."
+msgstr "S'ha creat la copia de seguretat."
+
+#: ../manager.php:270
+msgid "Roles and Capabilities restored from last backup."
+msgstr "S'han recuperat els Rols i Competències des de la copia de seguretat."
+
+#: ../manager.php:272
+msgid "Restore failed. No backup found."
+msgstr "Ha fallat la recuperació. No s'ha trobat cap copia de seguretat."
+
+#: ../manager.php:293
 #, php-format
 msgid "Cannot delete default role. You <a href=\"%s\">have to change it first</a>."
 msgstr "No es pot eliminar el rol predeterminat. <a href=\"%s\" Abans has de canviar-lo</a>."
 
-#: ../manager.php:247
+#: ../manager.php:314
 #, php-format
 msgid "Role %1$s has been deleted. %2$d users moved to default role %3$s."
 msgstr "El rol %1$s ha estat eliminat. S'han mogut %2$d usuaris al rol predeterminat %3$s."
 
-#: ../manager.php:420
+#: ../manager.php:327
+msgid "Needed function to create default roles not found!"
+msgstr "La funció per crear els rols predeterminats no s'ha trobat!"
+
+#: ../manager.php:339
+msgid "Roles and Capabilities reset to WordPress defaults"
+msgstr "S'han restaurat Rols i Competències als valors predeterminats de WordPress."
+
+#: ../manager.php:511
 msgid "You cannot remove Manage Capabilities from Administrators"
 msgstr "No pots eliminar 'Manage Capabilities' dels administradors"
 
