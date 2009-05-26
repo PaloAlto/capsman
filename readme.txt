@@ -4,21 +4,23 @@ Donate link: http://alkivia.org/donate
 Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.7
 Tested up to: 2.8
-Stable tag: 1.1
+Stable tag: 1.2
 
 A simple way to manage WordPress roles and capabilities.
 
 == Description ==
 
 The Capability Manager plugin provides a simple way to manage role capabilities. Using it, you will be able to change the capabilities of any role, add new roles, copy existing roles into new ones, and add new capabilities to existing roles.
-You can also delegate capabilities management to other users. In this case, some restrictions apply to this users, as them can only set/unset the capabilities they have. 
-At the current version, you cannot manage capabilities at user level (only can be managed for roles) and cannont delete existing roles. This will be included in next versions.
+You can also delegate capabilities management to other users. In this case, some restrictions apply to this users, as them can only set/unset the capabilities they have.
+With the Backup/Restore tool, you can save your Roles and Capabilities before making changes and revert them if something goes wrong. You'll find it on the Tools menu. 
+At the current version, you cannot manage capabilities at user level (only can be managed for roles). This will be included in next versions.
 
 **Features:**
 
 * Manage role capabilities.
 * Add new roles or delete existing roles.
 * Add new capabilities to any existing role.
+* Backup and restore Roles and Capabilities to revert your last changes. 
 
 **Future Planned Features**
 
@@ -71,6 +73,7 @@ At the current version, you cannot manage capabilities at user level (only can b
 
 1. Setting new capabilities for a role.
 2. Actions on roles.
+3. Backup/Restore tool.
 
 == Frequently Asked Questions ==
 
@@ -97,6 +100,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
+* **1.2** - Added backup/restore tool.
 * **1.1** - Role deletion added.
 * **1.0.1** - Some code improvements. Updated Alkivia Framework.
 * **1.0** - First public version.
