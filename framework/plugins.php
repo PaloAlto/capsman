@@ -2,7 +2,7 @@
 /**
  * Plugins related functions and classes.
  * 
- * @version		$Rev: 145 $
+ * @version		$Rev: 184 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
@@ -142,7 +142,7 @@ if ( ! class_exists('cmanPlugin') ) :
 			
 			if ( $this->isCompatible() ) {
 				// Include dashboard RSS widgets.
-				@include_once( dirname(__FILE__) . '/dash-rss.php' );
+				// @include_once( dirname(__FILE__) . '/dash-rss.php' );
 
 				// Activation and deactivation hooks.
 				register_activation_hook($this->p_file, array(&$this, '_activatePlugin'));
@@ -182,8 +182,6 @@ if ( ! class_exists('cmanPlugin') ) :
 		 * @return void
 		 */
 		final function _activatePlugin() {
-			// Plugin version
-			add_option($this->ID . '_version', $this->p_data['Version']);
 			
 			if ( method_exists($this, 'setDefaults') ) {
 				$this->setDefaults();
@@ -196,6 +194,7 @@ if ( ! class_exists('cmanPlugin') ) :
 			
 			$this->settings = $this->defaults;
 			add_option($this->ID . '_settings', $this->settings);
+			add_option($this->ID . '_version', $this->p_data['Version']);
 		}
 		
 		/**
