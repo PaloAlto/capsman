@@ -82,8 +82,22 @@ class cmanCapsManager extends cmanPlugin
 	 * @return void
 	 */
 	protected function activate() {
-		$role = get_role('administrator');
-		$role->add_cap('manage_capabilities');
+		$this->setAdminCapability();
+	}
+	
+	/**
+	 * Updates Capability Manager to a new version
+	 * 
+	 * @return void
+	 */
+	protected function update() {
+		
+		$backup = get_option($this->ID . '_backup');
+		if ( false === $backup ) {		// No previous backup found. Save it!
+			global $wpdb;
+			$roles = get_option($wpdb->prefix . 'user_roles');
+			update_option($this->ID . '_backup', $roles);
+		} 
 	}
 	
 	/**
@@ -96,26 +110,26 @@ class cmanCapsManager extends cmanPlugin
 	 */
 	function _adminMenus() {
 		// First we check if user is administrator and can 'manage_capabilities'.
-		$this->adminAlwaysManage();
-		
+		if ( current_user_can('administrator') && ! current_user_can('manage_capabilities') ) {
+			$this->setAdminCapability();
+		}
+				
 		add_users_page( __('Capability Manager', $this->ID),  __('Capabilities', $this->ID), 'manage_capabilities', $this->p_dirs['subdir'], array(&$this, '_generalManager'));
+		add_management_page(__('Capability Manager', $this->ID),  __('Capability Manager', $this->ID), 'manage_capabilities', $this->p_dirs['subdir'] . '-tool', array(&$this, '_backupTool'));
 	}
 	
 	/**
-	 * Chacks if user is administrator and cannot manage capabilities.
-	 * Resets the 'manage_capabilities' to admin as it cannot be removed from admin.
+	 * Sets the 'manage_capabilities' cap to the administrator role.
 	 * 
 	 * @return void
 	 */
-	private function adminAlwaysManage() {
-		if ( current_user_can('administrator') && ! current_user_can('manage_capabilities') ) {
-			$role = get_role('administrator');
-			$role->add_cap('manage_capabilities');
-		}
+	private function setAdminCapability() {
+		$admin = get_role('administrator');
+		$admin->add_cap('manage_capabilities');
 	}
 	
 	/**
-	 * Includes global settings admin.
+	 * Manages global settings admin.
 	 * 
 	 * @hook add_submenu_page
 	 * @return void
@@ -146,13 +160,37 @@ class cmanCapsManager extends cmanPlugin
 			$this->current = array_shift($roles);
 		}
 		
-		$wp_roles = new WP_Roles();
-		include ( CMAN_PATH . '/admin-general.php');
+		include ( CMAN_PATH . '/admin-general.php' );
 	}
 
 	/**
+	 * Manages backup, restore and resset roles and capabilities
+	 * 
+	 * @hook add_management_page
+	 * @return void
+	 */
+	function _backupTool() {
+		if ( ! current_user_can('manage_capabilities') && ! current_user_can('administrator') ) {		// Verify user permissions.
+			wp_die('<strong>' .__('What do you think you\'re doing?!?', $this->ID) . '</strong>');
+		}
+
+		if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
+			check_admin_referer('capsman-backup-tool');
+			$this->processBackupTool();
+		}
+		
+		if ( isset($_GET['action']) && 'reset-defaults' == $_GET['action']) {
+			check_admin_referer('capsman-reset-defaults');
+			$this->backupToolReset();
+		}
+		
+		include ( CMAN_PATH . '/backup.php' );
+	}
+	
+	/**
 	 * Processes and saves the changes in the general capabilities form.
-	 * @return unknown_type
+	 * 
+	 * @return void
 	 */
 	private function processAdminGeneral() {
 		global $wp_roles;
@@ -209,6 +247,36 @@ class cmanCapsManager extends cmanPlugin
 	}
 	
 	/**
+	 * Processes backups and restores.
+	 * 
+	 * @return void
+	 */
+	private function processBackupTool() {
+		if ( isset($_POST['Perform']) ) {
+			global $wpdb;
+			$wp_roles = $wpdb->prefix . 'user_roles';
+			$cm_roles = $this->ID . '_backup';
+			
+			switch ( $_POST['action'] ) {
+				case 'backup':
+					$roles = get_option($wp_roles);
+					update_option($cm_roles, $roles);
+					akv_admin_notify(__('New backup saved.', $this->ID));
+					break;
+				case 'restore':
+					$roles = get_option($cm_roles);
+					if ( $roles ) {
+						update_option($wp_roles, $roles);
+						akv_admin_notify(__('Roles and Capabilities restored from last backup.', $this->ID));
+					} else {
+						akv_admin_error(__('Restore failed. No backup found.', $this->ID));
+					}
+					break;	
+			}
+		}
+	} 
+	
+	/**
 	 * Deletes a role.
 	 * The role comes from the $_GET['role'] var and the nonce has already been checked.
 	 * Default WordPress role cannot be deleted and if trying to do it, throws an error.
@@ -240,12 +308,35 @@ class cmanCapsManager extends cmanPlugin
 			}
 		}
 		
-		$roles = new WP_Roles();
-		$roles->remove_role($this->current);
+		remove_role($this->current);
 		unset($this->roles[$this->current]);
 		
 		akv_admin_notify(sprintf(__('Role %1$s has been deleted. %2$d users moved to default role %3$s.', $this->ID), $this->roles[$this->current], $count, $this->roles[$default]));
 		$this->current = $default;
+	}
+	
+	/**
+	 * Resets roles to WordPress defaults.
+	 * 
+	 * @return void
+	 */
+	private function backupToolReset() {
+		require_once(ABSPATH . 'wp-admin/includes/schema.php');
+		
+		if ( ! function_exists('populate_roles') ) {
+			akv_admin_error(__('Needed function to create default roles not found!', $this->ID));
+			return;
+		}
+		
+		$roles = array_keys($this->roles);
+		foreach ( $roles as $role) {
+			remove_role($role);
+		}
+		
+		populate_roles();
+		$this->setAdminCapability();
+		
+		akv_admin_notify(__('Roles and Capabilities reset to WordPress defaults', $this->ID));
 	}
 	
 	/**
