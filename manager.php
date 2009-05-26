@@ -233,10 +233,10 @@ class cmanCapsManager extends cmanPlugin
 			
 		// Create New Capability and adds it to current role.
 		} elseif ( isset($post['AddCap']) &&  __('Add to role', $this->ID) == $post['AddCap'] ) {
-			$wp_roles = new WP_Roles();
+			$role = get_role($post['current']);
 			
 			if ( $newname = $this->createNewName($post['capability-name']) ) {
-				$wp_roles->add_cap($post['current'], $newname['name']);
+				$role->add_cap($newname['name']);
 				akv_admin_notify(__('New capability added to role.', $this->ID));
 			} else {
 				akv_admin_error(__('Incorrect capability name.', $this->ID));
