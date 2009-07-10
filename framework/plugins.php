@@ -1,8 +1,8 @@
-<?php // $Id$ 
+<?php 
 /**
  * Plugins related functions and classes.
  * 
- * @version		$Rev: 184 $
+ * @version		$Rev: 213 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
@@ -33,6 +33,7 @@ if ( ! class_exists('cmanPlugin') ) :
 	 * 		- activate: (Protected) Actions to run when activating the plugin.
 	 * 		- _deactivate: (Hook, must be public) Actions to run when deactivating the plugin.
 	 * 		- update: (Protected) Actions to update the plugin to a new version. (Updating version on DB is done after this).
+	 * 						Takes plugin running version as a parameter.
 	 * 		- setDefaults: (Protected) Fills the $defaults class var with the default settings.
 	 * 		- init: (Protected) Actions to run when plugins initialization is performed (In plugins loaded).
 	 * 		- widgetsInit: (Protected) Actions to init plugin widgets (In widgets_init).
@@ -120,13 +121,25 @@ if ( ! class_exists('cmanPlugin') ) :
 		protected $defaults = array();
 		
 		/**
+		 * Flag to see if we are installing (activating for first time) or reactivating the plugin.
+		 * @var boolean
+		 */
+		protected $installing = false;
+		
+		/**
+		 * Flag to see if plugin needs to be updated.
+		 * @var boolean
+		 */
+		protected $needs_update = false;
+		
+		/**
 		 * Class constructor.
 		 * Calls the implementated method 'startUp' if it exists. This is done at plugins loading time.
 		 * Prepares admin menus by seting an action for the implemented method '_adminMenus' if it exists.
 		 * 
 		 * @param string $plugin_file	Full main plugin's filename (absolute to root).
 		 * @param string $ID  Plugin short name (known as plugin ID).
-		 * @return akvPlugin|false	The plugin object or false if not compatible. 
+		 * @return cmanPlugin|false	The plugin object or false if not compatible. 
 		 */
 		final function __construct( $plugin_file, $ID = '' ) {
 
@@ -141,9 +154,6 @@ if ( ! class_exists('cmanPlugin') ) :
 			$this->loadPaths();
 			
 			if ( $this->isCompatible() ) {
-				// Include dashboard RSS widgets.
-				// @include_once( dirname(__FILE__) . '/dash-rss.php' );
-
 				// Activation and deactivation hooks.
 				register_activation_hook($this->p_file, array(&$this, '_activatePlugin'));
 				if ( method_exists($this, '_deactivate') ) {
@@ -174,7 +184,7 @@ if ( ! class_exists('cmanPlugin') ) :
 		}
 
 		/**
-		 * Activates the plugin.
+		 * Activates the plugin. Only runs on first activation.
 		 * Saves the plugin version in DB, and calls the 'activate' method.
 		 * 
 		 * @hook register_activation_hook
@@ -210,10 +220,10 @@ if ( ! class_exists('cmanPlugin') ) :
 			$this->loadTranslations();
 						
 			// First, check if the plugin needs to be updated.
-			$ver = get_option($this->ID . '_version');
-			if ( false !== $ver && version_compare($ver, $this->p_data['Version'], 'ne') ) {
+			if ( $this->needs_update ) {
 				if ( method_exists($this, 'update') ) {
-					$this->update();
+					$version = get_option($this->ID . '_version');
+					$this->update($version);
 				}
 				update_option($this->ID . '_version', $this->p_data['Version']);
 				update_option($this->ID . '_settings', $this->settings);
@@ -395,7 +405,7 @@ if ( ! class_exists('cmanPlugin') ) :
 				} 
 				
 				$p_data = get_plugin_data($this->p_file);
-				$r_data = akv_plugin_readme_data($this->p_file);
+				$r_data = plugin_readme_data($this->p_file);
 				$this->p_data = array_merge($r_data, $p_data);
 			}
 			
@@ -406,6 +416,13 @@ if ( ! class_exists('cmanPlugin') ) :
 				} else {
 					$this->settings = $this->defaults;
 				}
+			}
+			
+			$ver = get_option($this->ID . '_version');
+			if ( false === $ver ) {
+				$this->installing = true;
+			} elseif ( version_compare($ver, $this->p_data['Version'], 'ne') ) {
+				$this->needs_update = true;
 			}
 		}
 		
@@ -530,7 +547,7 @@ endif;
 
 // ======================================================= FUNCTIONS ==========
 
-if ( ! function_exists('akv_plugin_readme_data') ) :
+if ( ! function_exists('plugin_readme_data') ) :
 	/**
 	 * Parse the plugin readme.txt file to retrieve plugin's metadata.
 	 *
@@ -565,7 +582,7 @@ if ( ! function_exists('akv_plugin_readme_data') ) :
 	 * @param string $plugin_file Path to the plugin file (not the readme file)
 	 * @return array See above for description.
 	 */
-	function akv_plugin_readme_data( $plugin_file ) {
+	function plugin_readme_data( $plugin_file ) {
 	
 		$file = dirname($plugin_file) . '/readme.txt';
 	
@@ -600,7 +617,7 @@ if ( ! function_exists('akv_plugin_readme_data') ) :
 	}
 endif;
 
-if ( ! function_exists('akv_deactivate_plugin') ) :
+if ( ! function_exists('deactivate_plugin') ) :
 	/**
 	 * Deactivated the plugin. Normally in case incompatibilities were detected.
 	 *
@@ -609,7 +626,7 @@ if ( ! function_exists('akv_deactivate_plugin') ) :
 	 * @param string $name	Plugin name.
 	 * @return void
 	 */
-	function akv_deactivate_plugin( $name ) {
+	function deactivate_plugin( $name ) {
 		$plugins = get_option('active_plugins');
 	
 		if ( in_array($name, $plugins)) {

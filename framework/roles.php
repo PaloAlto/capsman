@@ -1,8 +1,8 @@
-<?php // $Id$
+<?php
 /**
  * Roles and Capabilities related functions.
  * 
- * @version		$Rev: 166 $
+ * @version		$Rev: 213 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
@@ -25,7 +25,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if ( ! function_exists('akv_get_roles') ) :
+if ( ! function_exists('ak_get_roles') ) :
 	/**
 	 * Returns all valid roles.
 	 * The returned list can be translated or not.
@@ -34,7 +34,7 @@ if ( ! function_exists('akv_get_roles') ) :
 	 * @param boolean $translate If the returned roles have to be translated or not.
 	 * @return array All defined roles. If translated, the key is the role name and value is the translated role.
 	 */
-	function akv_get_roles( $translate = false ) {
+	function ak_get_roles( $translate = false ) {
 		global $wp_roles;
 		if ( ! isset( $wp_roles ) ) {
 			$wp_roles = new WP_Roles();
@@ -55,14 +55,14 @@ if ( ! function_exists('akv_get_roles') ) :
 	}
 endif;
 
-if ( ! function_exists('akv_get_user_role') ) :
+if ( ! function_exists('ak_get_user_role') ) :
 	/**
 	 * Return the user role. Taken from WordPress roles and Capabilities.
 	 * 
 	 * @param int|object $user_ID	User ID or the user object to find the role.	
 	 * @return string		User role in this blog (key, not translated).
 	 */
-	function akv_get_user_role( $user ) {
+	function ak_get_user_role( $user ) {
 		global $wpdb, $wp_roles;
 		if ( ! isset( $wp_roles ) ) {
 			$wp_roles = new WP_Roles();
@@ -78,7 +78,7 @@ if ( ! function_exists('akv_get_user_role') ) :
 	}
 endif;
 
-if ( ! function_exists('akv_level2caps') ) :
+if ( ! function_exists('ak_level2caps') ) :
 
 	/**
 	 * Generates the caps names from user level.
@@ -86,7 +86,7 @@ if ( ! function_exists('akv_level2caps') ) :
 	 * @param int $level	Level to convert to caps
 	 * @return array		Generated caps
 	 */
-	function akv_level2caps( $level ) {
+	function ak_level2caps( $level ) {
 		$caps = array();
 		$level = min(10, intval($level));
 		
@@ -100,17 +100,17 @@ if ( ! function_exists('akv_level2caps') ) :
 
 endif;
 
-if ( ! function_exists('akv_caps2level') ) :
+if ( ! function_exists('ak_caps2level') ) :
 
 	/**
 	 * Finds the proper level from a capabilities list.
 	 * 
-	 * @uses _akv_level_reduce()
+	 * @uses _ak_level_reduce()
 	 * @param array $caps	List of capabilities.
 	 * @return int 			Level found, if no level found, will return 0.
 	 */
-	function akv_caps2level( $caps ) {
-		$level = array_reduce( array_keys( $caps ), '_akv_caps2level_CB', 0);
+	function ak_caps2level( $caps ) {
+		$level = array_reduce( array_keys( $caps ), '_ak_caps2level_CB', 0);
 		return $level;
 	}
 
@@ -120,7 +120,7 @@ if ( ! function_exists('akv_caps2level') ) :
 	 * 
 	 * @return int level Level found.
 	 */
-	function _akv_caps2level_CB( $max, $item ) {
+	function _ak_caps2level_CB( $max, $item ) {
 		if ( preg_match( '/^level_(10|[0-9])$/i', $item, $matches ) ) {
 			$level = intval( $matches[1] );
 			return max( $max, $level );

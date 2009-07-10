@@ -196,7 +196,7 @@ class cmanCapsManager extends cmanPlugin
 		global $wp_roles;
 		
 		if (! isset($_POST['action']) || 'update' != $_POST['action'] ) {
-			akv_admin_error(__('Bad form Received', $this->ID));
+			ak_admin_error(__('Bad form Received', $this->ID));
 			return;
 		}
 		
@@ -211,25 +211,25 @@ class cmanCapsManager extends cmanPlugin
 		// Create a new role.
 		} elseif ( isset($post['Create']) && __('Create', $this->ID) == $post['Create'] ) {
 			if ( $newrole = $this->createRole($post['create-name']) ) {
-				akv_admin_notify(__('New role created.', $this->ID));
+				ak_admin_notify(__('New role created.', $this->ID));
 				$this->current = $newrole;
 			} else {
-				akv_admin_error(__('Error: Failed creating the new role.', $this->ID));
+				ak_admin_error(__('Error: Failed creating the new role.', $this->ID));
 			}
 		
 		// Copy current role to a new one.
 		} elseif ( isset($post['Copy']) && __('Copy', $this->ID) == $post['Copy'] ) {
 			$current = get_role($post['current']);
 			if ( $newrole = $this->createRole($post['copy-name'], $current->capabilities) ) {
-				akv_admin_notify(__('New role created.', $this->ID));
+				ak_admin_notify(__('New role created.', $this->ID));
 				$this->current = $newrole;
 			} else {
-				akv_admin_error(__('Error: Failed creating the new role.', $this->ID));
+				ak_admin_error(__('Error: Failed creating the new role.', $this->ID));
 			}
 			
 		// Save role changes. Already saved at start with self::saveRoleCapabilities().
 		}elseif ( isset($post['Save']) && __('Save Changes', $this->ID) == $post['Save'] ) {
-			akv_admin_notify(__('New capabilities saved.', $this->ID));
+			ak_admin_notify(__('New capabilities saved.', $this->ID));
 			
 		// Create New Capability and adds it to current role.
 		} elseif ( isset($post['AddCap']) &&  __('Add to role', $this->ID) == $post['AddCap'] ) {
@@ -237,12 +237,12 @@ class cmanCapsManager extends cmanPlugin
 			
 			if ( $newname = $this->createNewName($post['capability-name']) ) {
 				$role->add_cap($newname['name']);
-				akv_admin_notify(__('New capability added to role.', $this->ID));
+				ak_admin_notify(__('New capability added to role.', $this->ID));
 			} else {
-				akv_admin_error(__('Incorrect capability name.', $this->ID));
+				ak_admin_error(__('Incorrect capability name.', $this->ID));
 			}
 		} else {
-			akv_admin_error(__('Bad form received.', $this->ID));
+			ak_admin_error(__('Bad form received.', $this->ID));
 		}
 	}
 	
@@ -261,15 +261,15 @@ class cmanCapsManager extends cmanPlugin
 				case 'backup':
 					$roles = get_option($wp_roles);
 					update_option($cm_roles, $roles);
-					akv_admin_notify(__('New backup saved.', $this->ID));
+					ak_admin_notify(__('New backup saved.', $this->ID));
 					break;
 				case 'restore':
 					$roles = get_option($cm_roles);
 					if ( $roles ) {
 						update_option($wp_roles, $roles);
-						akv_admin_notify(__('Roles and Capabilities restored from last backup.', $this->ID));
+						ak_admin_notify(__('Roles and Capabilities restored from last backup.', $this->ID));
 					} else {
-						akv_admin_error(__('Restore failed. No backup found.', $this->ID));
+						ak_admin_error(__('Restore failed. No backup found.', $this->ID));
 					}
 					break;	
 			}
@@ -290,7 +290,7 @@ class cmanCapsManager extends cmanPlugin
 		$this->current = $_GET['role'];
 		$default = get_option('default_role'); 
 		if (  $default == $this->current ) {
-			akv_admin_error(sprintf(__('Cannot delete default role. You <a href="%s">have to change it first</a>.', $this->ID), 'options-general.php'));
+			ak_admin_error(sprintf(__('Cannot delete default role. You <a href="%s">have to change it first</a>.', $this->ID), 'options-general.php'));
 			return;
 		}
 
@@ -311,7 +311,7 @@ class cmanCapsManager extends cmanPlugin
 		remove_role($this->current);
 		unset($this->roles[$this->current]);
 		
-		akv_admin_notify(sprintf(__('Role %1$s has been deleted. %2$d users moved to default role %3$s.', $this->ID), $this->roles[$this->current], $count, $this->roles[$default]));
+		ak_admin_notify(sprintf(__('Role %1$s has been deleted. %2$d users moved to default role %3$s.', $this->ID), $this->roles[$this->current], $count, $this->roles[$default]));
 		$this->current = $default;
 	}
 	
@@ -324,7 +324,7 @@ class cmanCapsManager extends cmanPlugin
 		require_once(ABSPATH . 'wp-admin/includes/schema.php');
 		
 		if ( ! function_exists('populate_roles') ) {
-			akv_admin_error(__('Needed function to create default roles not found!', $this->ID));
+			ak_admin_error(__('Needed function to create default roles not found!', $this->ID));
 			return;
 		}
 		
@@ -336,7 +336,7 @@ class cmanCapsManager extends cmanPlugin
 		populate_roles();
 		$this->setAdminCapability();
 		
-		akv_admin_notify(__('Roles and Capabilities reset to WordPress defaults', $this->ID));
+		ak_admin_notify(__('Roles and Capabilities reset to WordPress defaults', $this->ID));
 	}
 	
 	/**
@@ -363,7 +363,7 @@ class cmanCapsManager extends cmanPlugin
 	 */
 	private function generateSysNames() {
 		$this->max_level = 10;
-		$this->roles = akv_get_roles(true);
+		$this->roles = ak_get_roles(true);
 		$caps = array();
 		
 		foreach ( array_keys($this->roles) as $role ) {
@@ -399,13 +399,13 @@ class cmanCapsManager extends cmanPlugin
 		
 		global $user_ID;
 		$user = new WP_User($user_ID);
-		$this->max_level = akv_caps2level($user->allcaps); 
+		$this->max_level = ak_caps2level($user->allcaps); 
 		
 		$keys = array_keys($user->allcaps);
 		$names = array_map(array(&$this, '_capNamesCB'), $keys);
 		$this->capabilities = array_combine($keys, $names);
 		
-		$roles = akv_get_roles(true);
+		$roles = ak_get_roles(true);
 		unset($roles['administrator']);
 		
 		foreach ( $user->roles as $role ) {			// Unset the roles from capability list.
@@ -416,7 +416,7 @@ class cmanCapsManager extends cmanPlugin
 
 		foreach ( array_keys($roles) as $role ) {
 			$r = get_role($role);
-			$level = akv_caps2level($r->capabilities);
+			$level = ak_caps2level($r->capabilities);
 
 			if ( $level > $this->max_level ) {
 				unset($roles[$role]);
@@ -442,7 +442,7 @@ class cmanCapsManager extends cmanPlugin
 		$pattern = '/^[a-zA-Z][a-zA-Z0-9 _]+$/';
 
 		if ( preg_match($pattern, $name) ) {
-			$roles = akv_get_roles();
+			$roles = ak_get_roles();
 			
 			$name = strtolower($name);
 			$name = str_replace(' ', '_', $name);
@@ -495,7 +495,7 @@ class cmanCapsManager extends cmanPlugin
 		
 		$old_caps = array_intersect_key($role->capabilities, $this->capabilities);
 		$new_caps = ( is_array($caps) ) ? array_map('intval', $caps) : array();
-		$new_caps = array_merge($new_caps, akv_level2caps($level));
+		$new_caps = array_merge($new_caps, ak_level2caps($level));
 
 		// Find caps to add and remove
 		$add_caps = array_diff_key($new_caps, $old_caps);
@@ -508,7 +508,7 @@ class cmanCapsManager extends cmanPlugin
 				
 		if ( 'administrator' == $role_name && isset($del_caps['manage_capabilities']) ) {
 			unset($del_caps['manage_capabilities']);
-			akv_admin_error(__('You cannot remove Manage Capabilities from Administrators', $this->ID));
+			ak_admin_error(__('You cannot remove Manage Capabilities from Administrators', $this->ID));
 		}
 		// Add new capabilities to role
 		foreach ( $add_caps as $cap => $grant ) {

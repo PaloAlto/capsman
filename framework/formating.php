@@ -1,9 +1,9 @@
-<?php // $Id$
+<?php
 /**
  * General formating functions.
  * Used to format output data and send messages to user.
  * 
- * @version		$Rev: 148 $
+ * @version		$Rev: 213 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
@@ -26,14 +26,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if ( ! function_exists('akv_admin_notify') ) :
+if ( ! function_exists('ak_admin_notify') ) :
 	/**
 	 * Displays admin notices.
 	 * 
 	 * @param $message	Message to display.
 	 * @return void
 	 */
-	function akv_admin_notify( $message = '' ) {
+	function ak_admin_notify( $message = '' ) {
 		if ( empty($message) ) {
 			$message = __('Settings saved.');
 		}
@@ -42,19 +42,19 @@ if ( ! function_exists('akv_admin_notify') ) :
 	}
 endif;
 
-if ( ! function_exists('akv_admin_error') ) :
+if ( ! function_exists('ak_admin_error') ) :
 	/**
 	 * Displays admin ERRORS.
 	 * 
 	 * @param $message	Message to display.
 	 * @return void
 	 */
-	function akv_admin_error( $message ) {
+	function ak_admin_error( $message ) {
 		echo '<div id="error" class="error"><p><strong>' . $message . '</strong></p></div>';
 	}
 endif;
 
-if ( ! function_exists('akv_pager') ) :
+if ( ! function_exists('ak_pager') ) :
 	/**
 	 * Generic pager.
 	 * 
@@ -65,7 +65,7 @@ if ( ! function_exists('akv_pager') ) :
 	 * @return string		Formated pager.
 	 */
 
-	function akv_pager( $total, $in_page, $url, $current = 0 ) {
+	function ak_pager( $total, $in_page, $url, $current = 0 ) {
 		if ( 0 == $current ) $current = 1;
 	
 		$pages = $total / $in_page; 
@@ -74,25 +74,25 @@ if ( ! function_exists('akv_pager') ) :
 		if ( $pages == 1 ) {
 			$out = '';
 		} else {
-			$out = '<div class="pager">';
+			$out = "<div class='pager'>\n";
 			if ( $current != 1 ) {
 				$start = $current - 1;
-				$out .= '<a class="prev page-numbers" href="'. $url . $start .'">&laquo;&laquo;</a>';
+				$out .= '<a class="prev page-numbers" href="'. $url . $start .'">&laquo;&laquo;</a>' . "\n";
 			}
 
 			for ( $i = 1; $i <= $pages; $i++ ) {
 				if ( $i == $current ) {
-					$out .= '<span class="page-numbers current">'. $i .'</span>';
+					$out .= '<span class="page-numbers current">'. $i ."</span>\n";
 				} else {
-					$out .= '<a class="page-numbers" href="'. $url . $i .'">'. $i .'</a>';  
+					$out .= '<a class="page-numbers" href="'. $url . $i .'">'. $i ."</a>\n";  
 				}
 			}
 
 			if ( $current != $pages ) {
 				$start = $current + 1;
-				$out .= '<a class="next page-numbers" href="'. $url . $start .'">&raquo;&raquo;</a>';
+				$out .= '<a class="next page-numbers" href="'. $url . $start .'">&raquo;&raquo;</a>' . "\n";
 			} 
-			$out .= '</div>';
+			$out .= "</div>\n";
 		}
 	
 		return $out;

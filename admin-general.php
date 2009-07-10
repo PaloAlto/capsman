@@ -90,7 +90,7 @@ $default = $this->current;
 					$i = 0;
 				}
 				
-				$level = akv_caps2level($rcaps);
+				$level = ak_caps2level($rcaps);
 				?>
 				<td><?php _e('Level:', $this->ID) ;?><select name="level">
 				<?php for ( $l = $this->max_level; $l >= 0; $l-- ) {?>
