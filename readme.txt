@@ -3,7 +3,7 @@ Contributors: txanny
 Donate link: http://alkivia.org/donate
 Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.7
-Tested up to: 2.8
+Tested up to: 2.8.2
 Stable tag: 1.2
 
 A simple way to manage WordPress roles and capabilities.
