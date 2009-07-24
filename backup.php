@@ -2,14 +2,14 @@
 /**
  * User Community General settings page.
  * Plugin to create and manage communities in any WordPress blog.
- * 
+ *
  * @version		$Rev$
  * @author		Jordi Canals
  * @package		CapsMan
  * @link		http://alkivia.org/plugins/community
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
-	Copyright 2009 Jordi Canals <gpl@alkivia.com>
+	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && 'backup.php' == basename($_SERVER['SCR
 					<?php _e('If you have installed any plugin that adds new roles or capabilities, these will be lost.', $this->ID)?><br />
 					<strong><?php _e('It is recommended to use this only as a last resource!')?></strong></p>
 				<p style="text-align:center;"><a class="ak-delete" title="<?php echo attribute_escape(__('Reset Roles and Capabilities to WordPress defaults', $this->ID)) ?>" href="<?php echo wp_nonce_url("tools.php?page={$this->p_dirs['subdir']}-tool&amp;action=reset-defaults", 'capsman-reset-defaults'); ?>" onclick="if ( confirm('<?php echo js_escape(sprintf(__("You are about to reset Roles and Capabilities to WordPress defaults.\n 'Cancel' to stop, 'OK' to reset.", $this->ID), $roles[$default])); ?>') ) { return true;}return false;"><?php _e('Reset to WordPress defaults', $this->ID)?></a>
-				
+
 			</dd>
 		</dl>
 

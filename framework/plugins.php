@@ -1,15 +1,15 @@
-<?php 
+<?php
 /**
  * Plugins related functions and classes.
- * 
- * @version		$Rev: 213 $
+ *
+ * @version		$Rev: 222 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
  * @link 		http://alkivia.org
  * @license 	http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
-	Copyright 2009 Jordi Canals <gpl@alkivia.com>
+	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ if ( ! class_exists('cmanPlugin') ) :
 	 * 		- widgetsInit: (Protected) Actions to init plugin widgets (In widgets_init).
 	 * 		- startUp: (Protected) Actions to run at system startup (before plugins are loaded).
 	 * 		- _adminMenus: (Hook, must be public) Set the menus in WordPress Dashboard.
-	 *  
+	 *
 	 * @uses		plugins.php
 	 * @author		Jordi Canals
 	 * @package		Alkivia
@@ -54,7 +54,7 @@ if ( ! class_exists('cmanPlugin') ) :
 		 * @var string
 		 */
 		protected $ID;
-		
+
 		/**
 		 * Plugin main file.
 		 * Filled in constructor (as a constructor param).
@@ -88,7 +88,7 @@ if ( ! class_exists('cmanPlugin') ) :
 		 * @var array
 		 */
 		protected $p_data;
-	
+
 		/**
 		 * Plugin paths: folder name, absolute path to plugin's folder and folder url.
 		 * Filled in loadPaths(). Called in constructor.
@@ -98,84 +98,84 @@ if ( ! class_exists('cmanPlugin') ) :
 		 * @var array
 		 */
 		protected $p_dirs;
-	
+
 		/**
 		 * Plugin saved data.
 		 *		- 'post' - Saves the current post.
-		 *		- 'more' - Saves the read more status.  
+		 *		- 'more' - Saves the read more status.
 		 * @var array
 		 */
 		protected $saved;
-		
+
 		/**
 		 * Plugin settings (from DB)
 		 * @var array
 		 */
 		protected $settings;
-		
+
 		/**
 		 * Plugin default settings.
 		 * This settings can difer from install defaults and are used to fill settings loaded from DB
 		 * @var array
 		 */
 		protected $defaults = array();
-		
+
 		/**
 		 * Flag to see if we are installing (activating for first time) or reactivating the plugin.
 		 * @var boolean
 		 */
 		protected $installing = false;
-		
+
 		/**
 		 * Flag to see if plugin needs to be updated.
 		 * @var boolean
 		 */
 		protected $needs_update = false;
-		
+
 		/**
 		 * Class constructor.
 		 * Calls the implementated method 'startUp' if it exists. This is done at plugins loading time.
 		 * Prepares admin menus by seting an action for the implemented method '_adminMenus' if it exists.
-		 * 
+		 *
 		 * @param string $plugin_file	Full main plugin's filename (absolute to root).
 		 * @param string $ID  Plugin short name (known as plugin ID).
-		 * @return cmanPlugin|false	The plugin object or false if not compatible. 
+		 * @return cmanPlugin|false	The plugin object or false if not compatible.
 		 */
 		final function __construct( $plugin_file, $ID = '' ) {
 
 			$this->p_file = trim($plugin_file);
 			$this->ID = ( empty($ID) ) ? strtolower(basename($this->p_file, '.php')) : trim($ID) ;
-			
+
 			// Load component data and settings.
 			if ( method_exists($this, 'setDefaults') ) {
 				$this->setDefaults();
 			}
 			$this->loadPluginData();
 			$this->loadPaths();
-			
+
 			if ( $this->isCompatible() ) {
 				// Activation and deactivation hooks.
 				register_activation_hook($this->p_file, array(&$this, '_activatePlugin'));
 				if ( method_exists($this, '_deactivate') ) {
 					register_deactivation_hook($this->p_file, array(&$this, '_deactivate'));
 				}
-			
+
 				// Load style files.
 				if ( is_admin() ) {
 					add_action('admin_print_styles', array(&$this, '_enqueueStyles'));	// For Compatibility with WP 2.8
 				} else {
 					add_action('wp_print_styles', array(&$this, '_enqueueStyles'));
 				}
-				
+
 				// Init plugins at plugins and widgets
 				add_action('plugins_loaded', array(&$this, '_initPlugin'));
 				add_action('widgets_init', array(&$this, '_initWidgets'));
-				
+
 				// Add administration menus.
 				if ( method_exists($this, '_adminMenus') ) {
-					add_action('admin_menu', array(&$this, '_adminMenus'));		// Add Panel menus.	
+					add_action('admin_menu', array(&$this, '_adminMenus'));		// Add Panel menus.
 				}
-				
+
 				// Startup the plugin.
 				if ( method_exists($this, 'startUp') ) {
 					$this->startUp();
@@ -186,39 +186,39 @@ if ( ! class_exists('cmanPlugin') ) :
 		/**
 		 * Activates the plugin. Only runs on first activation.
 		 * Saves the plugin version in DB, and calls the 'activate' method.
-		 * 
+		 *
 		 * @hook register_activation_hook
 		 * @access private
 		 * @return void
 		 */
 		final function _activatePlugin() {
-			
+
 			if ( method_exists($this, 'setDefaults') ) {
 				$this->setDefaults();
 			}
-		
-			// If there is an additional function to perform on activate. 
+
+			// If there is an additional function to perform on activate.
 			if ( method_exists($this, 'activate') ) {
 				$this->activate();
 			}
-			
+
 			$this->settings = $this->defaults;
 			add_option($this->ID . '_settings', $this->settings);
 			add_option($this->ID . '_version', $this->p_data['Version']);
 		}
-		
+
 		/**
 		 * Init the plugin (In action 'plugins_loaded')
 		 * Here whe call the 'update' and 'init' functions. This is done after the plugins are loaded.
 		 * Also the plugin version and settings are updated here.
-		 * 
+		 *
 		 * @hook action plugins_loaded
 		 * @access private
 		 * @return void
 		 */
 		final function _initPlugin() {
 			$this->loadTranslations();
-						
+
 			// First, check if the plugin needs to be updated.
 			if ( $this->needs_update ) {
 				if ( method_exists($this, 'update') ) {
@@ -228,7 +228,7 @@ if ( ! class_exists('cmanPlugin') ) :
 				update_option($this->ID . '_version', $this->p_data['Version']);
 				update_option($this->ID . '_settings', $this->settings);
 			}
-			
+
 			// Call the custom init for the plugin.
 			if ( method_exists($this, 'init') ) {
 				$this->init();
@@ -238,7 +238,7 @@ if ( ! class_exists('cmanPlugin') ) :
 		/**
 		 * Inits the widgets (In action 'widgets_init')
 		 * Before loading the widgets, we check that standard sidebar is present.
-		 * 
+		 *
 		 * @hook action 'widgets_init'
 		 * @return void
 		 */
@@ -247,22 +247,22 @@ if ( ! class_exists('cmanPlugin') ) :
 				$this->widgetsInit();
 			}
 		}
-		
+
 		/**
 		 * Loads translations file, located on the plugin's lang subdir.
-		 *  
+		 *
 		 * @return void
 		 */
 		final protected function loadTranslations() {
 			load_plugin_textdomain($this->ID, false, $this->p_dirs['subdir'] . '/lang');
 		}
-		
+
 		/**
 		 * Prepares and enqueues plugin styles.
 		 * Filters used:
 		 * 		- 'pluginID_style_admin' - For the admin style URL.
 		 * 		- 'pluginID_style_url' - For the public style URL.
-		 * 
+		 *
 		 * @uses apply_filters() Calls the 'ID_style_url' and 'ID_style_admin' on the style file URL.
 		 * @hook action wp_print_styles and admin_print_styles
 		 * @access private
@@ -291,19 +291,19 @@ if ( ! class_exists('cmanPlugin') ) :
 
 		/**
 		 * Returns the plguin Folder basename.
-		 * 
+		 *
 		 * @return string
 		 */
 		final public function getFolder() {
 			if ( empty($p_dirs) ) {
 				$this->loadPaths();
-			}	
+			}
 			return $this->p_dirs['subdir'];
 		}
-		
+
 		/**
 		 * Returns the URL to the plugin folder (with trailing slash).
-		 * 
+		 *
 		 * @return string
 		 */
 		final public function getURL() {
@@ -312,10 +312,10 @@ if ( ! class_exists('cmanPlugin') ) :
 			}
 			return $this->p_dirs['url'];
 		}
-		
+
 		/**
 		 * Returns the Absolute path to plugin folder (with trailing slash).
-		 * 
+		 *
 		 * @return string
 		 */
 		final public function getPath() {
@@ -324,11 +324,11 @@ if ( ! class_exists('cmanPlugin') ) :
 			}
 			return $this->p_dirs['path'];
 		}
-		
+
     	/**
     	 * Returns private or protected values.
     	 * @since 0.6
-    	 * 
+    	 *
     	 * @param $name	Name of the value.
     	 * @return mixed Requested value.
     	 */
@@ -337,7 +337,7 @@ if ( ! class_exists('cmanPlugin') ) :
     		if ( empty($this->p_data) ) {
 				$this->loadPluginData();
     		}
-			
+
     		$name = strtolower($name);
     		switch ( $name ) {
     			case 'id':
@@ -348,7 +348,7 @@ if ( ! class_exists('cmanPlugin') ) :
     				break;
     			case 'version':
     				return $this->p_data['Version'];
-    				break; 
+    				break;
     			default:
    					return false;
     		}
@@ -359,7 +359,7 @@ if ( ! class_exists('cmanPlugin') ) :
     	 * Returns a plugin setting.
     	 * If no specific settings is requested, returns all settings.
     	 * If requested a non existent settings, returns $default.
-    	 *  
+    	 *
     	 * @param $name	Name for the settings to return.
     	 * @param $default Default value to use if setting does not exists.
     	 * @return mixed	The settings value or an array with all settings.
@@ -372,13 +372,13 @@ if ( ! class_exists('cmanPlugin') ) :
     		} else {
     			return $default;
     		}
-    		
+
     	}
-    	
+
 		/**
 		 * Returns plugin data.
 		 * This data is loaded from the main plugin's file.
-		 * 
+		 *
 		 * @see $p_data
 		 * @return mixed The parameter requested or an array wil all data.
 		 */
@@ -395,20 +395,20 @@ if ( ! class_exists('cmanPlugin') ) :
 		/**
 		 * Loads plugin data and settings.
 		 * Data is loaded from plugin and readme file headers. Settings from Database.
-		 * 
+		 *
 		 * @return void
 		 */
 		final private function loadPluginData() {
 			if ( empty($this->p_data) ) {
 				if ( ! function_exists('get_plugin_data') ) {
 					require_once ( ABSPATH . 'wp-admin/includes/plugin.php' );
-				} 
-				
+				}
+
 				$p_data = get_plugin_data($this->p_file);
 				$r_data = plugin_readme_data($this->p_file);
 				$this->p_data = array_merge($r_data, $p_data);
 			}
-			
+
 			$this->settings = get_option($this->ID . '_settings');
 			if ( ! empty($this->defaults) && is_array($this->defaults) ) {
 				if ( is_array($this->settings) ) {
@@ -417,7 +417,7 @@ if ( ! class_exists('cmanPlugin') ) :
 					$this->settings = $this->defaults;
 				}
 			}
-			
+
 			$ver = get_option($this->ID . '_version');
 			if ( false === $ver ) {
 				$this->installing = true;
@@ -425,10 +425,10 @@ if ( ! class_exists('cmanPlugin') ) :
 				$this->needs_update = true;
 			}
 		}
-		
+
 		/**
 		 * Saves the current post state.
-		 * 
+		 *
 		 * @return void
 		 */
 		final protected function savePost() {
@@ -437,25 +437,25 @@ if ( ! class_exists('cmanPlugin') ) :
 			$this->saved['post'] = $post;
 			$this->saved['more'] = $more;
 		}
-		
+
 		/**
 		 * Restores the current post state.
 		 * Saved in savePost()
-		 * 
+		 *
 		 * @return void
 		 */
 		final protected function restorePost() {
 			global $post, $more;
-			
+
 			$more = $this->saved['more'];
 			$post = $this->saved['post'];
 			setup_postdata($post);
 		}
-		
+
 		/**
 		 * Checks if the plugin is compatible with the current WordPress version.
 		 * If it's not compatible, sets an admin warning.
-		 * 
+		 *
 		 * @return boolean	Plugin is compatible with this WordPress version or not.
 		 */
 		final private function isCompatible() {
@@ -468,7 +468,7 @@ if ( ! class_exists('cmanPlugin') ) :
 				return false;
 			}
 		}
-	
+
 		/**
 		 * Shows a warning message when the plugin is not compatible with current WordPress version.
 		 * This is used by calling the action 'admin_notices' in isCompatible()
@@ -479,20 +479,20 @@ if ( ! class_exists('cmanPlugin') ) :
 		 */
 		final function _compatibleWarning() {
 			$this->loadTranslations(); // We have not loaded translations yet.
-			
-			echo '<div class="error"><p><strong>' . __('Warning:', $this->ID) . '</strong> ' 
+
+			echo '<div class="error"><p><strong>' . __('Warning:', $this->ID) . '</strong> '
 				. sprintf(__('The active plugin %s is not compatible with your WordPress version.', $this->ID),
 					'&laquo;' . $this->p_data['Name'] . ' ' . $this->p_data['Version'] . '&raquo;')
-				. '</p><p>' . sprintf(__('WordPress %s is required to run this plugin.', $this->ID), $this->p_data['Requires']) 
-				. '</p></div>';  
+				. '</p><p>' . sprintf(__('WordPress %s is required to run this plugin.', $this->ID), $this->p_data['Requires'])
+				. '</p></div>';
 		}
-	
+
 		/**
 		 * Checks if standard functions for Widgets are present.
 		 * If them are not present, we are not using the standard sidebar: an admin warning is set.
-		 * 
+		 *
 		 * MAYBE: Move to a new Widget Class ?
-		 * 
+		 *
 		 * @return boolean	Standard widget functions were found ot not.
 		 */
 		final private function isStandardSidebar() {
@@ -506,33 +506,33 @@ if ( ! class_exists('cmanPlugin') ) :
 			} else {
 				add_action('admin_notices', array(&$this, '_standardSidebarWarning'));
 				return false;
-			}	
+			}
 		}
-	
+
 		/**
 		 * Shows an admin warning when not using the WordPress standard sidebar.
 		 * This is done by calling the action 'admin_notices' in isStandardSidebar()
-		 * 
+		 *
 		 * MAYBE: Move to a new Widget Class ?
-		 * 
+		 *
 		 * @hook action admin_notices
 		 * @access private
 		 * @return void
 		 */
 		final function _standardSidebarWarning() {
 			$this->loadTranslations(); // We have not loaded translations yet.
-			
-			echo '<div class="error"><p><strong>' . __('Warning:', $this->ID) . '</strong> ' 
+
+			echo '<div class="error"><p><strong>' . __('Warning:', $this->ID) . '</strong> '
 				. __('Standard sidebar functions are not present.', $this->ID) . '</p><p>'
-				. sprintf(__('It is required to use the standard sidebar to run %s', $this->ID), 
+				. sprintf(__('It is required to use the standard sidebar to run %s', $this->ID),
 					'&laquo;' . $this->p_data['Name'] . ' ' . $this->p_data['Version'] . '&raquo;')
 				. '</p></div>';
 		}
-	
+
 		/**
 		 * Loads the plugin paths based on the plugin main file.
 		 * Paths are set as $this->p_dirs.
-		 * 
+		 *
 		 * @see $p_dirs
 		 * @return void
 		 */
@@ -562,7 +562,7 @@ if ( ! function_exists('plugin_readme_data') ) :
 	 * Tested up to: Higher WordPress version the plugin has been tested.
 	 * Stable tag: Latest stable tag in repository.
 	 * </code>
-	 * 
+	 *
 	 * Readme data returned array cointains the following:
 	 * 		- 'Contributors' - An array with all contributors nicknames.
 	 * 		- 'Tags' - An array with all plugin tags.
@@ -570,7 +570,7 @@ if ( ! function_exists('plugin_readme_data') ) :
 	 *      - 'Required' - Minimum required WordPress version.
 	 *      - 'Tested' - Higher WordPress version this plugin has been tested.
 	 *      - 'Stable' - Last stable tag when this was released.
-	 *      
+	 *
 	 * The first 8kiB of the file will be pulled in and if the readme data is not
 	 * within that first 8kiB, then the plugin author should correct their plugin
 	 * and move the plugin data headers to the top.
@@ -583,12 +583,12 @@ if ( ! function_exists('plugin_readme_data') ) :
 	 * @return array See above for description.
 	 */
 	function plugin_readme_data( $plugin_file ) {
-	
+
 		$file = dirname($plugin_file) . '/readme.txt';
-	
+
 		$fp = fopen($file, 'r');	// Open just for reading.
 		$data = fread( $fp, 8192 );	// Pull the first 8kiB of the file in.
-		fclose($fp);				// Close the file.	
+		fclose($fp);				// Close the file.
 
 		preg_match( '|Contributors:(.*)$|mi', $data, $contributors );
 		preg_match( '|Donate link:(.*)$|mi', $data, $uri );
@@ -605,7 +605,7 @@ if ( ! function_exists('plugin_readme_data') ) :
 			}
 		}
 
-		$readme_data = array(	
+		$readme_data = array(
 			'Contributors' => array_map('trim', explode(',', $contributors)),
 			'Tags' => array_map('trim', explode(',', $tags)),
 			'DonateURI' => trim($uri),
@@ -622,13 +622,13 @@ if ( ! function_exists('deactivate_plugin') ) :
 	 * Deactivated the plugin. Normally in case incompatibilities were detected.
 	 *
 	 * TODO: Run Deactivation HOOK
-	 * 
+	 *
 	 * @param string $name	Plugin name.
 	 * @return void
 	 */
 	function deactivate_plugin( $name ) {
 		$plugins = get_option('active_plugins');
-	
+
 		if ( in_array($name, $plugins)) {
 			array_splice($plugins, array_search($name, $plugins), 1);
 			update_option('active_plugins', $plugins);

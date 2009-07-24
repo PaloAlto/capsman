@@ -2,14 +2,14 @@
 /**
  * User Community General settings page.
  * Plugin to create and manage communities in any WordPress blog.
- * 
+ *
  * @version		$Rev$
  * @author		Jordi Canals
  * @package		CapsMan
  * @link		http://alkivia.org/plugins/community
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
-	Copyright 2009 Jordi Canals <gpl@alkivia.com>
+	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && 'admin-general.php' == basename($_SERV
 }
 
 $roles = $this->roles;
-$default = $this->current;	
+$default = $this->current;
 
 ?>
 <div class="wrap">
@@ -54,7 +54,7 @@ $default = $this->current;
 				$current = get_role($default);
 				$rcaps = $current->capabilities;
 				foreach ( $this->capabilities as $key => $cap ) :
-				
+
 					// Levels are not shown.
 					if ( preg_match( '/^level_(10|[0-9])$/i', $key ) ) {
 						continue;
@@ -65,14 +65,14 @@ $default = $this->current;
 						$i = 0; $first_row = false;
 					}
 					$style = ( isset($rcaps[$key]) && $rcaps[$key] ) ? 'color:green;font-weight:bold;' : 'color:red;';
-				
+
 					$disable = '';
 					if ( 'manage_capabilities' == $key ) {
 						if ( ! current_user_can('administrator') ) {
 							continue;
 						} elseif ( 'administrator' == $default ) {
 							$disable = 'disabled="disabled"';
-						} 
+						}
 					}
 				?>
 					<td style="<?php echo $style; ?>"><label for="caps[<?php echo $key; ?>]"><input id=caps[<?php echo $key; ?>] type="checkbox" name="caps[<?php echo $key; ?>]" value="1" <?php checked(1, $rcaps[$key]); echo $disable;?> />
@@ -81,15 +81,15 @@ $default = $this->current;
 						echo '<input type="hidden" name="caps[manage_capabilities]" value="1" />';
 					}
 					?></label></td>
-				<?php 
+				<?php
 					$i++;
 				endforeach;
-				
+
 				if ( $i == $this->settings['form-rows'] ) {
 					echo '</tr><tr>';
 					$i = 0;
 				}
-				
+
 				$level = ak_caps2level($rcaps);
 				?>
 				<td><?php _e('Level:', $this->ID) ;?><select name="level">
@@ -97,7 +97,7 @@ $default = $this->current;
 						<option value="<?php echo $l; ?>" style="text-align:right;"<?php selected($level, $l); ?>>&nbsp;<?php echo $l; ?>&nbsp;</option>
 					<?php }
 					++$i;
-					
+
 					if ( ! $first_row ) {
 						// Now close a wellformed table
 						for ( $i; $i < $this->settings['form-rows']; $i++ ){
@@ -106,7 +106,7 @@ $default = $this->current;
 					}
 					?>
 				</select>
-				
+
 				</tr>
 				</table>
 			</dd>
@@ -136,16 +136,16 @@ $default = $this->current;
 					</ul>
 				</dd>
 			</dl>
-			
+
 			<dl>
 				<dt><?php _e('Select New Role', $this->ID); ?></dt>
 				<dd style="text-align:center;">
 					<p><select name="role">
-					<?php 
+					<?php
 					foreach ( $roles as $role => $name ) {
-						echo '<option value="' . $role .'"'; selected($default, $role); echo '> ' . $name . ' &nbsp;</option>';						
-					} 
-					?>					
+						echo '<option value="' . $role .'"'; selected($default, $role); echo '> ' . $name . ' &nbsp;</option>';
+					}
+					?>
 					</select><br /><input type="submit" name="Change" value="<?php _e('Change', $this->ID) ?>" class="button" /></p>
 				</dd>
 			</dl>

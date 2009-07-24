@@ -1,15 +1,15 @@
 <?php
 /**
  * Roles and Capabilities related functions.
- * 
- * @version		$Rev: 213 $
+ *
+ * @version		$Rev: 222 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
  * @link		http://alkivia.org
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
-	Copyright 2009 Jordi Canals <gpl@alkivia.com>
+	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@ if ( ! function_exists('ak_get_roles') ) :
 	/**
 	 * Returns all valid roles.
 	 * The returned list can be translated or not.
-	 * 
-	 * @uses apply_filters() Calls the 'alkivia_roles_translate' hook on translated roles array. 
+	 *
+	 * @uses apply_filters() Calls the 'alkivia_roles_translate' hook on translated roles array.
 	 * @param boolean $translate If the returned roles have to be translated or not.
 	 * @return array All defined roles. If translated, the key is the role name and value is the translated role.
 	 */
@@ -39,7 +39,7 @@ if ( ! function_exists('ak_get_roles') ) :
 		if ( ! isset( $wp_roles ) ) {
 			$wp_roles = new WP_Roles();
 		}
-	
+
 		$roles = $wp_roles->get_names();
 		if ( $translate ) {
 			foreach ($roles as $k => $r) {
@@ -49,7 +49,7 @@ if ( ! function_exists('ak_get_roles') ) :
 			return apply_filters('alkivia_roles_translate', $roles);
 		} else {
 			$roles = array_keys($roles);
-			asort($roles); 
+			asort($roles);
 			return $roles;
 		}
 	}
@@ -58,8 +58,8 @@ endif;
 if ( ! function_exists('ak_get_user_role') ) :
 	/**
 	 * Return the user role. Taken from WordPress roles and Capabilities.
-	 * 
-	 * @param int|object $user_ID	User ID or the user object to find the role.	
+	 *
+	 * @param int|object $user_ID	User ID or the user object to find the role.
 	 * @return string		User role in this blog (key, not translated).
 	 */
 	function ak_get_user_role( $user ) {
@@ -68,7 +68,7 @@ if ( ! function_exists('ak_get_user_role') ) :
 			$wp_roles = new WP_Roles();
 		}
 		$caps_name = $wpdb->prefix . 'capabilities';
-	
+
 		if ( ! is_object($user) ) {
 			$user = get_userdata($user);
 		}
@@ -82,20 +82,20 @@ if ( ! function_exists('ak_level2caps') ) :
 
 	/**
 	 * Generates the caps names from user level.
-	 * 
+	 *
 	 * @param int $level	Level to convert to caps
 	 * @return array		Generated caps
 	 */
 	function ak_level2caps( $level ) {
 		$caps = array();
 		$level = min(10, intval($level));
-		
+
 		for ( $i = $level; $i >= 0; $i--) {
 			$caps["level_{$i}"] = "Level {$i}";
 		}
-		
+
 		return $caps;
-		
+
 	}
 
 endif;
@@ -104,7 +104,7 @@ if ( ! function_exists('ak_caps2level') ) :
 
 	/**
 	 * Finds the proper level from a capabilities list.
-	 * 
+	 *
 	 * @uses _ak_level_reduce()
 	 * @param array $caps	List of capabilities.
 	 * @return int 			Level found, if no level found, will return 0.
@@ -117,7 +117,7 @@ if ( ! function_exists('ak_caps2level') ) :
 	/**
 	 * Callback function to find the level from caps.
 	 * Taken from WordPress 2.7.1
-	 * 
+	 *
 	 * @return int level Level found.
 	 */
 	function _ak_caps2level_CB( $max, $item ) {
@@ -128,7 +128,7 @@ if ( ! function_exists('ak_caps2level') ) :
 			return $max;
 		}
 	}
-	
+
 endif;
 
 ?>

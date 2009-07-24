@@ -3,7 +3,7 @@
 Plugin Name: Capability Manager
 Plugin URI: http://alkivia.org/plugins/capsman
 Description: Manage user capabilities and roles.
-Version: 1.2
+Version: 1.2.1
 Author: Jordi Canals
 Author URI: http://alkivia.org
  */
@@ -11,14 +11,14 @@ Author URI: http://alkivia.org
 /**
  * User Community Builder. Main Plugin File.
  * Plugin to create and manage communities in any WordPress blog.
- * 
+ *
  * @version		$Rev$
  * @author		Jordi Canals
  * @package		CapsMan
  * @link		http://alkivia.org/plugins/community
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
- 
-	Copyright 2009 Jordi Canals <gpl@alkivia.com>
+
+	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -38,20 +38,20 @@ define ( 'CMAN_PATH', dirname(__FILE__));
 
 /**
  * Sets an admin warning regarding required PHP version.
- * 
+ *
  * @hook action 'admin_notices'
  * @return void
  */
 function _cman_php_warning() {
-	
+
 	$data = get_plugin_data(__FILE__);
 	load_plugin_textdomain('capsman', false, basename(dirname(__FILE__)) .'/lang');
 
-	echo '<div class="error"><p><strong>' . __('Warning:', 'capsman') . '</strong> ' 
+	echo '<div class="error"><p><strong>' . __('Warning:', 'capsman') . '</strong> '
 		. sprintf(__('The active plugin %s is not compatible with your PHP version.', 'capsman') .'</p><p>',
 			'&laquo;' . $data['Name'] . ' ' . $data['Version'] . '&raquo;')
-		. sprintf(__('%s is required for this plugin.', 'capsman'), 'PHP-5 ') 
-		. '</p></div>';  
+		. sprintf(__('%s is required for this plugin.', 'capsman'), 'PHP-5 ')
+		. '</p></div>';
 }
 
 // ============================================ START PROCEDURE ==========
