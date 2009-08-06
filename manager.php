@@ -1,7 +1,7 @@
 <?php
 /**
- * User Community Builder. Main Plugin Class.
- * Plugin to create and manage communities in any WordPress blog.
+ * Capability Manager.
+ * Plugin to create and manage roles and capabilities.
  *
  * @version		$Rev$
  * @author		Jordi Canals
@@ -30,7 +30,7 @@ include_once ( CMAN_PATH . '/framework/roles.php' );
 
 /**
  * Class cmanCapsManager.
- * Sets the main environment for all Community components.
+ * Sets the main environment for all Capability Manager components.
  *
  * @author		Jordi Canals
  * @package		CapsMan
@@ -114,8 +114,8 @@ class cmanCapsManager extends cmanPlugin
 			$this->setAdminCapability();
 		}
 
-		add_users_page( __('Capability Manager', $this->ID),  __('Capabilities', $this->ID), 'manage_capabilities', $this->p_dirs['subdir'], array(&$this, '_generalManager'));
-		add_management_page(__('Capability Manager', $this->ID),  __('Capability Manager', $this->ID), 'manage_capabilities', $this->p_dirs['subdir'] . '-tool', array(&$this, '_backupTool'));
+		add_users_page( __('Capability Manager', $this->ID),  __('Capabilities', $this->ID), 'manage_capabilities', $this->p_dirs['subdir'], array($this, '_generalManager'));
+		add_management_page(__('Capability Manager', $this->ID),  __('Capability Manager', $this->ID), 'manage_capabilities', $this->p_dirs['subdir'] . '-tool', array($this, '_backupTool'));
 	}
 
 	/**
@@ -372,7 +372,7 @@ class cmanCapsManager extends cmanPlugin
 		}
 
 		$keys = array_keys($caps);
-		$names = array_map(array(&$this, '_capNamesCB'), $keys);
+		$names = array_map(array($this, '_capNamesCB'), $keys);
 		$this->capabilities = array_combine($keys, $names);
 
 		if ( is_array($this->settings['syscaps']) ) {
@@ -402,7 +402,7 @@ class cmanCapsManager extends cmanPlugin
 		$this->max_level = ak_caps2level($user->allcaps);
 
 		$keys = array_keys($user->allcaps);
-		$names = array_map(array(&$this, '_capNamesCB'), $keys);
+		$names = array_map(array($this, '_capNamesCB'), $keys);
 		$this->capabilities = array_combine($keys, $names);
 
 		$roles = ak_get_roles(true);
@@ -521,4 +521,3 @@ class cmanCapsManager extends cmanPlugin
 		}
 	}
 }
-?>

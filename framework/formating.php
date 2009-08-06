@@ -3,7 +3,7 @@
  * General formating functions.
  * Used to format output data and send messages to user.
  *
- * @version		$Rev: 222 $
+ * @version		$Rev: 63 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
@@ -98,4 +98,3 @@ if ( ! function_exists('ak_pager') ) :
 		return $out;
 	}
 endif;
-?>

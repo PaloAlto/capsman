@@ -2,7 +2,7 @@
 /**
  * Plugins related functions and classes.
  *
- * @version		$Rev: 222 $
+ * @version		$Rev: 63 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
@@ -155,25 +155,25 @@ if ( ! class_exists('cmanPlugin') ) :
 
 			if ( $this->isCompatible() ) {
 				// Activation and deactivation hooks.
-				register_activation_hook($this->p_file, array(&$this, '_activatePlugin'));
+				register_activation_hook($this->p_file, array($this, '_activatePlugin'));
 				if ( method_exists($this, '_deactivate') ) {
-					register_deactivation_hook($this->p_file, array(&$this, '_deactivate'));
+					register_deactivation_hook($this->p_file, array($this, '_deactivate'));
 				}
 
 				// Load style files.
 				if ( is_admin() ) {
-					add_action('admin_print_styles', array(&$this, '_enqueueStyles'));	// For Compatibility with WP 2.8
+					add_action('admin_print_styles', array($this, '_enqueueStyles'));	// For Compatibility with WP 2.8
 				} else {
-					add_action('wp_print_styles', array(&$this, '_enqueueStyles'));
+					add_action('wp_print_styles', array($this, '_enqueueStyles'));
 				}
 
 				// Init plugins at plugins and widgets
-				add_action('plugins_loaded', array(&$this, '_initPlugin'));
-				add_action('widgets_init', array(&$this, '_initWidgets'));
+				add_action('plugins_loaded', array($this, '_initPlugin'));
+				add_action('widgets_init', array($this, '_initWidgets'));
 
 				// Add administration menus.
 				if ( method_exists($this, '_adminMenus') ) {
-					add_action('admin_menu', array(&$this, '_adminMenus'));		// Add Panel menus.
+					add_action('admin_menu', array($this, '_adminMenus'));		// Add Panel menus.
 				}
 
 				// Startup the plugin.
@@ -464,7 +464,7 @@ if ( ! class_exists('cmanPlugin') ) :
 			if ( version_compare($wp_version, $this->p_data['Requires'] , '>=') ) {
 				return true;
 			} else {
-				add_action('admin_notices', array(&$this, '_compatibleWarning'));
+				add_action('admin_notices', array($this, '_compatibleWarning'));
 				return false;
 			}
 		}
@@ -504,7 +504,7 @@ if ( ! class_exists('cmanPlugin') ) :
 			{
 				return true;
 			} else {
-				add_action('admin_notices', array(&$this, '_standardSidebarWarning'));
+				add_action('admin_notices', array($this, '_standardSidebarWarning'));
 				return false;
 			}
 		}
@@ -635,5 +635,3 @@ if ( ! function_exists('deactivate_plugin') ) :
 		}
 	}
 endif;
-
-?>

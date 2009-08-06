@@ -1,7 +1,7 @@
 <?php
 /**
- * User Community General settings page.
- * Plugin to create and manage communities in any WordPress blog.
+ * General Admin for Capability Manager.
+ * Provides admin pages to create and manage roles and capabilities.
  *
  * @version		$Rev$
  * @author		Jordi Canals

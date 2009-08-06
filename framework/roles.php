@@ -2,7 +2,7 @@
 /**
  * Roles and Capabilities related functions.
  *
- * @version		$Rev: 222 $
+ * @version		$Rev: 63 $
  * @author		Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
@@ -130,5 +130,3 @@ if ( ! function_exists('ak_caps2level') ) :
 	}
 
 endif;
-
-?>

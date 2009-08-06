@@ -3,8 +3,8 @@ Contributors: txanny
 Donate link: http://alkivia.org/donate
 Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.7
-Tested up to: 2.8.2
-Stable tag: 1.2.1
+Tested up to: 2.8.3
+Stable tag: 1.2.2
 
 A simple way to manage WordPress roles and capabilities.
 
@@ -14,6 +14,14 @@ The Capability Manager plugin provides a simple way to manage role capabilities.
 You can also delegate capabilities management to other users. In this case, some restrictions apply to this users, as them can only set/unset the capabilities they have.
 With the Backup/Restore tool, you can save your Roles and Capabilities before making changes and revert them if something goes wrong. You'll find it on the Tools menu. 
 At the current version, you cannot manage capabilities at user level (only can be managed for roles). This will be included in next versions.
+
+**Languages included:**
+
+* English
+* Spanish
+* Catalan *by <a href="http://txanny.net">Jordi Canals</a>*
+* Russian *by <a href="http://www.fatcow.com" rel="nofollow">Marcis Gasuns</a>*
+* POT file for easy translation to other languages included. If you translated SidePosts to your language, <a href="http://alkivia.org/contact/">you can tell us</a>
 
 **Features:**
 
@@ -100,6 +108,8 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
+* **1.2.2** - Added Russian translation.
+* **1.2.1** - Coding Standards. Corrected internal links. Updated Framework.
 * **1.2** - Added backup/restore tool.
 * **1.1** - Role deletion added.
 * **1.0.1** - Some code improvements. Updated Alkivia Framework.

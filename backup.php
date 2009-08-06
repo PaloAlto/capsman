@@ -1,7 +1,7 @@
 <?php
 /**
- * User Community General settings page.
- * Plugin to create and manage communities in any WordPress blog.
+ * Capability Manager Backup Tool.
+ * Provides backup and restore functionality to Capability Manager.
  *
  * @version		$Rev$
  * @author		Jordi Canals
