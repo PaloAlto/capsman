@@ -3,8 +3,8 @@ Contributors: txanny
 Donate link: http://alkivia.org/donate
 Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.7
-Tested up to: 2.8.3
-Stable tag: 1.2.2
+Tested up to: 2.8.4
+Stable tag: 1.2.3
 
 A simple way to manage WordPress roles and capabilities.
 
@@ -20,6 +20,8 @@ At the current version, you cannot manage capabilities at user level (only can b
 * English
 * Spanish
 * Catalan *by <a href="http://txanny.net">Jordi Canals</a>*
+* German *by <a href="http://great-solution.de/" rel="nofollow">Carsten Tauber</a>*
+* Byelorussian *by <a href="http://antsar.info/" rel="nofollow">Ilyuha</a>*
 * Russian *by <a href="http://www.fatcow.com" rel="nofollow">Marcis Gasuns</a>*
 * POT file for easy translation to other languages included. If you translated SidePosts to your language, <a href="http://alkivia.org/contact/">you can tell us</a>
 
@@ -87,8 +89,8 @@ At the current version, you cannot manage capabilities at user level (only can b
 
 **Where can I find more information about this plugin, usage and support ?**
 
-* Take a look to the <a href="http://alkivia.org/plugins/capsman">Plugin Homepage</a>.
-* A <a href="http://alkivia.org/plugins/capsman">complete manual</a> is available for users and developers.
+* Take a look to the <a href="http://alkivia.org/wordpress/capsman">Plugin Homepage</a>.
+* A <a href="http://alkivia.org/wordpress/capsman">complete manual</a> is available for users and developers.
 * The <a href="http://alkivia.org/cat/capsman">plugin posts archive</a> with new announcements about this plugin.
 * If you need help, <a href="http://wordpress.org/tags/capsman?forum_id=10">ask in the Support forum</a>.
 
@@ -108,6 +110,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
+* **1.2.2** - Added German and Byelorussian translations.
 * **1.2.2** - Added Russian translation.
 * **1.2.1** - Coding Standards. Corrected internal links. Updated Framework.
 * **1.2** - Added backup/restore tool.

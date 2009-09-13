@@ -6,7 +6,7 @@
  * @version		$Rev$
  * @author		Jordi Canals
  * @package		CapsMan
- * @link		http://alkivia.org/plugins/community
+ * @link		http://alkivia.org/wordpress/community
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
 	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
@@ -156,7 +156,7 @@ class cmanCapsManager extends cmanPlugin
 			$this->adminDeleteRole();
 		}
 
-		if ( ! in_array($this->current, $roles) ) {
+		if ( ! in_array($this->current, $roles) ) {    // Current role has been deleted.
 			$this->current = array_shift($roles);
 		}
 

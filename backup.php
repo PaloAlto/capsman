@@ -6,7 +6,7 @@
  * @version		$Rev$
  * @author		Jordi Canals
  * @package		CapsMan
- * @link		http://alkivia.org/plugins/community
+ * @link		http://alkivia.org/wordpress/community
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
 	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
@@ -78,7 +78,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && 'backup.php' == basename($_SERVER['SCR
 				<dt>Capability Manager</dt>
 				<dd>
 					<ul>
-						<li><a href="http://alkivia.org/plugins/capsman" class="capsman-home"><?php _e('Plugin Homepage', $this->ID); ?></a></li>
+						<li><a href="http://alkivia.org/wordpress/capsman" class="capsman-home"><?php _e('Plugin Homepage', $this->ID); ?></a></li>
 						<li><a href="http://wordpress.org/tags/capsman?forum_id=10" class="support-forum"><?php _e('Support Forum', $this->ID); ?></a></li>
 						<li><a href="http://alkivia.org" class="ak-home"><?php _e('Author Homepage', $this->ID)?></a></li>
 						<li><a href="http://alkivia.org/donate" class="donate"><?php _e('Help donating', $this->ID)?></a></li>

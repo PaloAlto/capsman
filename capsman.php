@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Capability Manager
-Plugin URI: http://alkivia.org/plugins/capsman
+Plugin URI: http://alkivia.org/wordpress/capsman
 Description: Manage user capabilities and roles.
-Version: 1.2.2
+Version: 1.2.3
 Author: Jordi Canals
 Author URI: http://alkivia.org
  */
@@ -15,7 +15,7 @@ Author URI: http://alkivia.org
  * @version		$Rev$
  * @author		Jordi Canals
  * @package		CapsMan
- * @link		http://alkivia.org/plugins/community
+ * @link		http://alkivia.org/wordpress/community
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
 	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
