@@ -18,8 +18,8 @@ At the current version, you cannot manage capabilities at user level (only can b
 **Languages included:**
 
 * English
+* Catalan
 * Spanish
-* Catalan *by <a href="http://txanny.net">Jordi Canals</a>*
 * Italian *by <a href="http://gidibao.net" rel="nofollow">Gianni Diurno</a>*
 * German *by <a href="http://great-solution.de/" rel="nofollow">Carsten Tauber</a>*
 * Byelorussian *by <a href="http://antsar.info/" rel="nofollow">Ilyuha</a>*
@@ -29,13 +29,13 @@ At the current version, you cannot manage capabilities at user level (only can b
 **Features:**
 
 * Manage role capabilities.
-* Add new roles or delete existing roles.
+* Add new roles or delete existing ones.
 * Add new capabilities to any existing role.
 * Backup and restore Roles and Capabilities to revert your last changes. 
 
 **Future Planned Features**
 
-* Manage capabilities at user level.
+* Allow WordPress MU site wide management.
 
 **Who can manage?**
 
