@@ -3,8 +3,8 @@ Contributors: txanny
 Donate link: http://alkivia.org/donate
 Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.7
-Tested up to: 2.8.5
-Stable tag: 1.2.4
+Tested up to: 2.9.1
+Stable tag: trunk
 
 A simple way to manage WordPress roles and capabilities.
 
@@ -19,7 +19,7 @@ At the current version, you cannot manage capabilities at user level (only can b
 
 * English
 * Spanish
-* Catalan *by <a href="http://txanny.net">Jordi Canals</a>*
+* Catalan *by <a href="http://jcanals.cat">Jordi Canals</a>*
 * Italian *by <a href="http://gidibao.net" rel="nofollow">Gianni Diurno</a>*
 * German *by <a href="http://great-solution.de/" rel="nofollow">Carsten Tauber</a>*
 * Byelorussian *by <a href="http://antsar.info/" rel="nofollow">Ilyuha</a>*
@@ -101,7 +101,7 @@ At the current version, you cannot manage capabilities at user level (only can b
 
 == License ==
 
-Copyright (C) 2009  Jordi Canals
+Copyright (C) 2004-2010 Jordi Canals
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
@@ -111,6 +111,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
+* **1.2.5** - Tested up to WP 2.9.1.
 * **1.2.4** - Added Italian translation.
 * **1.2.3** - Added German and Belorussian translations.
 * **1.2.2** - Added Russian translation.

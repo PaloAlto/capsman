@@ -4,12 +4,14 @@
  * Provides admin pages to create and manage roles and capabilities.
  *
  * @version		$Rev$
- * @author		Jordi Canals
- * @package		CapsMan
+ * @author		Jordi Canals <jcanals@gmail.com>
+ * @copyright	Copyright (C) 2004-2010 Jordi Canals
+ * @package		Alkivia
+ * @subpackage	Capsman
  * @link		http://alkivia.org/wordpress/community
  * @license		http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
-	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
+	Copyright (C) 2004-2010 Jordi Canals <jcanals@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

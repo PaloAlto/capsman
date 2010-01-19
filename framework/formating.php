@@ -3,14 +3,15 @@
  * General formating functions.
  * Used to format output data and send messages to user.
  *
- * @version		$Rev: 63 $
- * @author		Jordi Canals
+ * @version		$Rev: 473 $
+ * @author		Jordi Canals <jcanals@gmail.com>
+ * @copyright	Copyright (C) 2004-2010 Jordi Canals
  * @package		Alkivia
  * @subpackage	Framework
  * @link 		http://alkivia.org
  * @license 	http://www.gnu.org/licenses/gpl.html GNU General Public License v3
 
-	Copyright 2009 Jordi Canals <alkivia@jcanals.net>
+	Copyright (C) 2004-2010 Jordi Canals <jcanals@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
