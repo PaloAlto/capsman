@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Capability Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-27 01:01+0100\n"
+"POT-Creation-Date: 2010-01-23 02:16+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jordi Canals <alkivia@jcanals.net>\n"
-"Language-Team: Jordi Canals | http://alkivia.org <jcanals@gmail.com>\n"
+"Language-Team: Jordi Canals | http://alkivia.org <devel@jcanals.cat>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,266 +15,266 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../admin-general.php:39
+#: ../admin-general.php:41
 msgid "Roles and Capabilities"
 msgstr ""
 
-#: ../admin-general.php:48
+#: ../admin-general.php:50
 #, php-format
 msgid "Capabilities for %s"
 msgstr ""
 
-#: ../admin-general.php:95
+#: ../admin-general.php:97
 msgid "Level:"
 msgstr ""
 
-#: ../admin-general.php:118
-#: ../manager.php:231
+#: ../admin-general.php:120
+#: ../manager.php:233
 msgid "Save Changes"
 msgstr ""
 
-#: ../admin-general.php:120
+#: ../admin-general.php:122
 msgid "Delete this role"
 msgstr ""
 
-#: ../admin-general.php:120
+#: ../admin-general.php:122
 #, php-format
 msgid ""
 "You are about to delete the %s role.\n"
 " 'Cancel' to stop, 'OK' to delete."
 msgstr ""
 
-#: ../admin-general.php:120
+#: ../admin-general.php:122
 msgid "Delete Role"
-msgstr ""
-
-#: ../admin-general.php:132
-#: ../backup.php:81
-msgid "Plugin Homepage"
-msgstr ""
-
-#: ../admin-general.php:133
-#: ../backup.php:82
-msgid "Support Forum"
 msgstr ""
 
 #: ../admin-general.php:134
 #: ../backup.php:83
-msgid "Author Homepage"
+msgid "Plugin Homepage"
 msgstr ""
 
 #: ../admin-general.php:135
 #: ../backup.php:84
+msgid "Support Forum"
+msgstr ""
+
+#: ../admin-general.php:136
+#: ../backup.php:85
+msgid "Author Homepage"
+msgstr ""
+
+#: ../admin-general.php:137
+#: ../backup.php:86
 msgid "Help donating"
 msgstr ""
 
-#: ../admin-general.php:141
+#: ../admin-general.php:143
 msgid "Select New Role"
 msgstr ""
 
-#: ../admin-general.php:149
-#: ../manager.php:208
+#: ../admin-general.php:151
+#: ../manager.php:210
 msgid "Change"
 msgstr ""
 
-#: ../admin-general.php:154
+#: ../admin-general.php:156
 msgid "Create New Role"
 msgstr ""
 
-#: ../admin-general.php:157
-#: ../manager.php:212
+#: ../admin-general.php:159
+#: ../manager.php:214
 msgid "Create"
 msgstr ""
 
-#: ../admin-general.php:162
+#: ../admin-general.php:164
 msgid "Copy this role to"
 msgstr ""
 
-#: ../admin-general.php:165
-#: ../manager.php:221
+#: ../admin-general.php:167
+#: ../manager.php:223
 msgid "Copy"
 msgstr ""
 
-#: ../admin-general.php:170
+#: ../admin-general.php:172
 msgid "Add Capability"
 msgstr ""
 
-#: ../admin-general.php:173
-#: ../manager.php:235
+#: ../admin-general.php:175
+#: ../manager.php:237
 msgid "Add to role"
 msgstr ""
 
-#: ../backup.php:36
+#: ../backup.php:38
 msgid "Backup Tool for Capability Manager"
 msgstr ""
 
-#: ../backup.php:45
+#: ../backup.php:47
 msgid "Backup and Restore"
 msgstr ""
 
-#: ../backup.php:49
+#: ../backup.php:51
 msgid "Select action:"
 msgstr ""
 
-#: ../backup.php:52
+#: ../backup.php:54
 msgid "Backup roles and capabilities"
 msgstr ""
 
-#: ../backup.php:53
+#: ../backup.php:55
 msgid "Restore last saved backup"
 msgstr ""
 
-#: ../backup.php:55
+#: ../backup.php:57
 msgid "Do Action"
 msgstr ""
 
-#: ../backup.php:63
+#: ../backup.php:65
 msgid "Reset WordPress Defaults"
 msgstr ""
 
-#: ../backup.php:65
+#: ../backup.php:67
 msgid "WARNING:"
 msgstr ""
 
-#: ../backup.php:65
+#: ../backup.php:67
 msgid "Reseting default Roles and Capabilities will set them to the WordPress install defaults."
 msgstr ""
 
-#: ../backup.php:66
+#: ../backup.php:68
 msgid "If you have installed any plugin that adds new roles or capabilities, these will be lost."
 msgstr ""
 
-#: ../backup.php:67
+#: ../backup.php:69
 msgid "It is recommended to use this only as a last resource!"
 msgstr ""
 
-#: ../backup.php:68
+#: ../backup.php:70
 msgid "Reset Roles and Capabilities to WordPress defaults"
 msgstr ""
 
-#: ../backup.php:68
+#: ../backup.php:70
 msgid ""
 "You are about to reset Roles and Capabilities to WordPress defaults.\n"
 " 'Cancel' to stop, 'OK' to reset."
 msgstr ""
 
-#: ../backup.php:68
+#: ../backup.php:70
 msgid "Reset to WordPress defaults"
 msgstr ""
 
-#: ../capsman.php:50
-#: ../framework/plugins.php:467
-#: ../framework/plugins.php:509
+#: ../capsman.php:52
+#: ../framework/plugins.php:484
+#: ../framework/plugins.php:526
 msgid "Warning:"
-msgstr ""
-
-#: ../capsman.php:51
-#, php-format
-msgid "The active plugin %s is not compatible with your PHP version."
 msgstr ""
 
 #: ../capsman.php:53
 #, php-format
+msgid "The active plugin %s is not compatible with your PHP version."
+msgstr ""
+
+#: ../capsman.php:55
+#, php-format
 msgid "%s is required for this plugin."
 msgstr ""
 
-#: ../manager.php:117
-#: ../manager.php:118
+#: ../manager.php:119
+#: ../manager.php:120
 msgid "Capability Manager"
 msgstr ""
 
-#: ../manager.php:117
+#: ../manager.php:119
 msgid "Capabilities"
 msgstr ""
 
-#: ../manager.php:140
-#: ../manager.php:174
+#: ../manager.php:142
+#: ../manager.php:176
 msgid "What do you think you're doing?!?"
 msgstr ""
 
-#: ../manager.php:199
+#: ../manager.php:201
 msgid "Bad form Received"
 msgstr ""
 
-#: ../manager.php:214
-#: ../manager.php:224
+#: ../manager.php:216
+#: ../manager.php:226
 msgid "New role created."
 msgstr ""
 
-#: ../manager.php:217
-#: ../manager.php:227
+#: ../manager.php:219
+#: ../manager.php:229
 msgid "Error: Failed creating the new role."
 msgstr ""
 
-#: ../manager.php:232
+#: ../manager.php:234
 msgid "New capabilities saved."
 msgstr ""
 
-#: ../manager.php:240
+#: ../manager.php:242
 msgid "New capability added to role."
 msgstr ""
 
-#: ../manager.php:242
+#: ../manager.php:244
 msgid "Incorrect capability name."
 msgstr ""
 
-#: ../manager.php:245
+#: ../manager.php:247
 msgid "Bad form received."
 msgstr ""
 
-#: ../manager.php:264
+#: ../manager.php:266
 msgid "New backup saved."
 msgstr ""
 
-#: ../manager.php:270
+#: ../manager.php:272
 msgid "Roles and Capabilities restored from last backup."
 msgstr ""
 
-#: ../manager.php:272
+#: ../manager.php:274
 msgid "Restore failed. No backup found."
 msgstr ""
 
-#: ../manager.php:293
+#: ../manager.php:295
 #, php-format
 msgid "Cannot delete default role. You <a href=\"%s\">have to change it first</a>."
 msgstr ""
 
-#: ../manager.php:314
+#: ../manager.php:316
 #, php-format
 msgid "Role %1$s has been deleted. %2$d users moved to default role %3$s."
 msgstr ""
 
-#: ../manager.php:327
+#: ../manager.php:329
 msgid "Needed function to create default roles not found!"
 msgstr ""
 
-#: ../manager.php:339
+#: ../manager.php:341
 msgid "Roles and Capabilities reset to WordPress defaults"
 msgstr ""
 
-#: ../manager.php:511
+#: ../manager.php:513
 msgid "You cannot remove Manage Capabilities from Administrators"
 msgstr ""
 
-#: ../framework/formating.php:38
+#: ../framework/formating.php:39
 msgid "Settings saved."
 msgstr ""
 
-#: ../framework/plugins.php:468
+#: ../framework/plugins.php:485
 #, php-format
 msgid "The active plugin %s is not compatible with your WordPress version."
 msgstr ""
 
-#: ../framework/plugins.php:470
+#: ../framework/plugins.php:487
 #, php-format
 msgid "WordPress %s is required to run this plugin."
 msgstr ""
 
-#: ../framework/plugins.php:510
+#: ../framework/plugins.php:527
 msgid "Standard sidebar functions are not present."
 msgstr ""
 
-#: ../framework/plugins.php:511
+#: ../framework/plugins.php:528
 #, php-format
 msgid "It is required to use the standard sidebar to run %s"
 msgstr ""
