@@ -3,7 +3,7 @@
 Plugin Name: Capability Manager
 Plugin URI: http://alkivia.org/wordpress/capsman
 Description: Manage user capabilities and roles.
-Version: 1.2.5
+Version: 1.3
 Author: Jordi Canals
 Author URI: http://alkivia.org
  */
@@ -36,7 +36,8 @@ Author URI: http://alkivia.org
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define ( 'CMAN_PATH', dirname(__FILE__));
+define ( 'AK_CMAN_PATH', dirname(__FILE__) );
+define ( 'AK_CMAN_LIB', AK_CMAN_PATH . '/includes' );
 
 /**
  * Sets an admin warning regarding required PHP version.
@@ -64,11 +65,8 @@ if ( version_compare(PHP_VERSION, '5.0.0', '<') ) {
 	add_action('admin_notices', '_cman_php_warning');
 } else {
 	// Run the plugin
-	include ( CMAN_PATH . '/manager.php' );
-	$objCapsManager = new cmanCapsManager(__FILE__, 'capsman');
+	include_once ( AK_CMAN_PATH . '/framework/loader.php' );
+	include ( AK_CMAN_LIB . '/manager.php' );
 
-	if ( $objCapsManager ) {	// The system is compatible
-		include_once ( CMAN_PATH . '/framework/formating.php' );
-		include_once ( CMAN_PATH . '/framework/roles.php' );
-	}
+	ak_create_object('capsman', new CapabilityManager(__FILE__, 'capsman'));
 }

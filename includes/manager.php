@@ -27,8 +27,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once ( dirname(__FILE__) . '/framework/plugins.php');
-include_once ( CMAN_PATH . '/framework/roles.php' );
+include_once ( AK_CLASSES . '/abstract/plugin.php' );
 
 /**
  * Class cmanCapsManager.
@@ -38,7 +37,7 @@ include_once ( CMAN_PATH . '/framework/roles.php' );
  * @package		CapsMan
  * @link		http://alkivia.org
  */
-class cmanCapsManager extends cmanPlugin
+class CapabilityManager extends akPluginAbstract
 {
 	/**
 	 * Array with all capabilities to be managed. (Depends on user caps).
@@ -67,23 +66,43 @@ class cmanCapsManager extends cmanPlugin
 	private $max_level;
 
 	/**
+	 * Creates some filters at module load time.
+	 *
+	 * @see akModuleAbstract#moduleLoad()
+	 *
+	 * @return void
+	 */
+    protected function moduleLoad ()
+    {
+        // Only roles that a user can administer can be assigned to others.
+        add_filter('editable_roles', array($this, 'filterEditRoles'));
+
+        // Users with roles that cannot be managed, are not allowed to be edited.
+        add_filter('map_meta_cap', array(&$this, 'filterUserEdit'), 10, 4);
+    }
+
+	/**
 	 * Sets default settings values.
 	 *
 	 * @return void
 	 */
-	protected function setDefaults() {
+	protected function defaultOptions ()
+	{
 		$this->generateSysNames();
-		$this->defaults = array(
+
+		return array(
 			'form-rows' => 5,
-			'syscaps' => $this->capabilities
+			'syscaps'   => $this->capabilities
 		);
 	}
 
 	/**
 	 * Activates the plugin and sets the new capability 'Manage Capabilities'
+	 *
 	 * @return void
 	 */
-	protected function activate() {
+	protected function pluginActivate ()
+	{
 		$this->setAdminCapability();
 	}
 
@@ -92,8 +111,8 @@ class cmanCapsManager extends cmanPlugin
 	 *
 	 * @return void
 	 */
-	protected function update() {
-
+	protected function pluginUpdate ( $version )
+	{
 		$backup = get_option($this->ID . '_backup');
 		if ( false === $backup ) {		// No previous backup found. Save it!
 			global $wpdb;
@@ -110,14 +129,15 @@ class cmanCapsManager extends cmanPlugin
 	 * @hook action admin_menu
 	 * @return void
 	 */
-	function _adminMenus() {
+	public function adminMenus ()
+	{
 		// First we check if user is administrator and can 'manage_capabilities'.
 		if ( current_user_can('administrator') && ! current_user_can('manage_capabilities') ) {
 			$this->setAdminCapability();
 		}
 
-		add_users_page( __('Capability Manager', $this->ID),  __('Capabilities', $this->ID), 'manage_capabilities', $this->p_dirs['subdir'], array($this, '_generalManager'));
-		add_management_page(__('Capability Manager', $this->ID),  __('Capability Manager', $this->ID), 'manage_capabilities', $this->p_dirs['subdir'] . '-tool', array($this, '_backupTool'));
+		add_users_page( __('Capability Manager', $this->ID),  __('Capabilities', $this->ID), 'manage_capabilities', $this->ID, array($this, 'generalManager'));
+		add_management_page(__('Capability Manager', $this->ID),  __('Capability Manager', $this->ID), 'manage_capabilities', $this->ID . '-tool', array($this, 'backupTool'));
 	}
 
 	/**
@@ -125,9 +145,66 @@ class cmanCapsManager extends cmanPlugin
 	 *
 	 * @return void
 	 */
-	private function setAdminCapability() {
+	private function setAdminCapability ()
+	{
 		$admin = get_role('administrator');
 		$admin->add_cap('manage_capabilities');
+	}
+
+	/**
+	 * Filters roles that can be shown in roles list.
+	 * This is mainly used to prevent an user admin to create other users with
+	 * higher capabilities.
+	 *
+	 * @hook 'editable_roles' filter.
+	 *
+	 * @param $roles List of roles to check.
+	 * @return array Restircted roles list
+	 */
+	function filterEditRoles ( $roles )
+	{
+	    $this->generateUserNames();
+        $valid = array_keys($this->roles);
+
+        foreach ( $roles as $role => $caps ) {
+            if ( ! in_array($role, $valid) ) {
+                unset($roles[$role]);
+            }
+        }
+
+        return $roles;
+	}
+
+	/**
+	 * Checks if a user can be edited or not by current administrator.
+	 * Returns array('do_not_allow') if user cannot be edited.
+	 *
+	 * @hook 'map_meta_cap' filter
+	 *
+	 * @param array $caps Current user capabilities
+	 * @param string $cap Capability to check
+	 * @param int $user_id Current user ID
+	 * @param array $args For our purpose, we receive edited user id at $args[0]
+	 * @return array Allowed capabilities.
+	 */
+	function filterUserEdit ( $caps, $cap, $user_id, $args )
+	{
+	    if ( 'edit_user' != $cap || $user_id == (int) $args[0] ) {
+	        return $caps;
+	    }
+
+	    $this->generateUserNames();
+	    $valid = array_keys($this->roles);
+
+        $user = new WP_User( (int) $args[0] );
+        foreach ( $user->roles as $role ) {
+		    if ( ! in_array($role, $valid) ) {
+		        $caps = array('do_not_allow');
+		        break;
+            }
+		}
+
+		return $caps;
 	}
 
 	/**
@@ -136,10 +213,11 @@ class cmanCapsManager extends cmanPlugin
 	 * @hook add_submenu_page
 	 * @return void
 	 */
-	function _generalManager() {
-
-		if ( ! current_user_can('manage_capabilities') && ! current_user_can('administrator') ) {		// Verify user permissions.
-			wp_die('<strong>' .__('What do you think you\'re doing?!?', $this->ID) . '</strong>');
+	function generalManager ()
+	{
+		if ( ! current_user_can('manage_capabilities') && ! current_user_can('administrator') ) {
+            // TODO: Implement exceptions.
+		    wp_die('<strong>' .__('What do you think you\'re doing?!?', $this->ID) . '</strong>');
 		}
 
 		global $wp_roles;
@@ -162,7 +240,7 @@ class cmanCapsManager extends cmanPlugin
 			$this->current = array_shift($roles);
 		}
 
-		include ( CMAN_PATH . '/admin-general.php' );
+		include ( AK_CMAN_LIB . '/admin.php' );
 	}
 
 	/**
@@ -171,8 +249,10 @@ class cmanCapsManager extends cmanPlugin
 	 * @hook add_management_page
 	 * @return void
 	 */
-	function _backupTool() {
-		if ( ! current_user_can('manage_capabilities') && ! current_user_can('administrator') ) {		// Verify user permissions.
+	function backupTool ()
+	{
+		if ( ! current_user_can('manage_capabilities') && ! current_user_can('administrator') ) {
+		    // TODO: Implement exceptions.
 			wp_die('<strong>' .__('What do you think you\'re doing?!?', $this->ID) . '</strong>');
 		}
 
@@ -186,7 +266,7 @@ class cmanCapsManager extends cmanPlugin
 			$this->backupToolReset();
 		}
 
-		include ( CMAN_PATH . '/backup.php' );
+		include ( AK_CMAN_LIB . '/backup.php' );
 	}
 
 	/**
@@ -194,15 +274,21 @@ class cmanCapsManager extends cmanPlugin
 	 *
 	 * @return void
 	 */
-	private function processAdminGeneral() {
+	private function processAdminGeneral ()
+	{
 		global $wp_roles;
 
 		if (! isset($_POST['action']) || 'update' != $_POST['action'] ) {
+		    // TODO: Implement exceptions. This must be a fatal error.
 			ak_admin_error(__('Bad form Received', $this->ID));
 			return;
 		}
 
 		$post = stripslashes_deep($_POST);
+		if ( empty ($post['caps']) ) {
+		    $post['caps'] = array();
+		}
+
 		$this->saveRoleCapabilities($post['current'], $post['caps'], $post['level']);
 		$this->current = $post['current'];
 
@@ -244,7 +330,8 @@ class cmanCapsManager extends cmanPlugin
 				ak_admin_error(__('Incorrect capability name.', $this->ID));
 			}
 		} else {
-			ak_admin_error(__('Bad form received.', $this->ID));
+		    // TODO: Implement exceptions. This must be a fatal error.
+		    ak_admin_error(__('Bad form received.', $this->ID));
 		}
 	}
 
@@ -253,7 +340,8 @@ class cmanCapsManager extends cmanPlugin
 	 *
 	 * @return void
 	 */
-	private function processBackupTool() {
+	private function processBackupTool ()
+	{
 		if ( isset($_POST['Perform']) ) {
 			global $wpdb;
 			$wp_roles = $wpdb->prefix . 'user_roles';
@@ -286,7 +374,8 @@ class cmanCapsManager extends cmanPlugin
 	 *
 	 * @return void
 	 */
-	private function adminDeleteRole() {
+	private function adminDeleteRole ()
+	{
 		global $wpdb;
 
 		$this->current = $_GET['role'];
@@ -313,7 +402,7 @@ class cmanCapsManager extends cmanPlugin
 		remove_role($this->current);
 		unset($this->roles[$this->current]);
 
-		ak_admin_notify(sprintf(__('Role %1$s has been deleted. %2$d users moved to default role %3$s.', $this->ID), $this->roles[$this->current], $count, $this->roles[$default]));
+		ak_admin_notify(sprintf(__('Role has been deleted. %1$d users moved to default role %2$s.', $this->ID), $count, $this->roles[$default]));
 		$this->current = $default;
 	}
 
@@ -322,7 +411,8 @@ class cmanCapsManager extends cmanPlugin
 	 *
 	 * @return void
 	 */
-	private function backupToolReset() {
+	private function backupToolReset ()
+	{
 		require_once(ABSPATH . 'wp-admin/includes/schema.php');
 
 		if ( ! function_exists('populate_roles') ) {
@@ -349,7 +439,8 @@ class cmanCapsManager extends cmanPlugin
 	 * @param string $cap Capability name.
 	 * @return string	The generated name.
 	 */
-	function _capNamesCB( $cap ) {
+	function _capNamesCB ( $cap )
+	{
 		$cap = str_replace('_', ' ', $cap);
 		$cap = ucfirst($cap);
 
@@ -357,13 +448,14 @@ class cmanCapsManager extends cmanPlugin
 	}
 
 	/**
-	 * Generates an array with the capability names.
+	 * Generates an array with the system capability names.
 	 * The key is the capability and the value the created screen name.
 	 *
 	 * @uses self::_capNamesCB()
 	 * @return void
 	 */
-	private function generateSysNames() {
+	private function generateSysNames ()
+	{
 		$this->max_level = 10;
 		$this->roles = ak_get_roles(true);
 		$caps = array();
@@ -377,8 +469,9 @@ class cmanCapsManager extends cmanPlugin
 		$names = array_map(array($this, '_capNamesCB'), $keys);
 		$this->capabilities = array_combine($keys, $names);
 
-		if ( is_array($this->settings['syscaps']) ) {
-			$this->capabilities = array_merge($this->settings['syscaps'], $this->capabilities);
+		$sys_caps = $this->getOption('syscaps');
+		if ( is_array($sys_caps) ) {
+			$this->capabilities = array_merge($sys_caps, $this->capabilities);
 		}
 
 		asort($this->capabilities);
@@ -386,19 +479,15 @@ class cmanCapsManager extends cmanPlugin
 
 	/**
 	 * Generates an array with the user capability names.
-	 * If user has 'administrator' role, system roles are generated.
-	 * The key is the capability and the value the created screen name.
 	 * A user cannot manage more capabilities that has himself (Except for administrators).
+	 * Only loads roles and capabilities that current user can manage.
+	 * The key is the capability and the value the created screen name.
 	 *
 	 * @uses self::_capNamesCB()
 	 * @return void
 	 */
-	private function generateNames() {
-		if ( current_user_can('administrator') ) {
-			$this->generateSysNames();
-			return;
-		}
-
+	private function generateUserNames ()
+	{
 		global $user_ID;
 		$user = new WP_User($user_ID);
 		$this->max_level = ak_caps2level($user->allcaps);
@@ -426,6 +515,24 @@ class cmanCapsManager extends cmanPlugin
 		}
 
 		$this->roles = $roles;
+	}
+
+	/**
+	 * Generates an array with the user capability names.
+	 * If user has 'administrator' role, system roles are generated.
+	 * The key is the capability and the value the created screen name.
+	 * A user cannot manage more capabilities that has himself (Except for administrators).
+	 *
+	 * @uses self::_capNamesCB()
+	 * @return void
+	 */
+	private function generateNames ()
+	{
+		if ( current_user_can('administrator') ) {
+			$this->generateSysNames();
+		} else {
+		    $this->generateUserNames();
+		}
 	}
 
 	/**
@@ -522,4 +629,9 @@ class cmanCapsManager extends cmanPlugin
 			$role->remove_cap($cap);
 		}
 	}
+
+	protected function pluginDeactivate() {}
+    protected function pluginsLoaded() {}
+    protected function registerWidgets() {}
+    public function wpInit() {}
 }

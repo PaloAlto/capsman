@@ -1,8 +1,10 @@
 === Capability Manager ===
 Contributors: txanny
 Donate link: http://alkivia.org/donate
+Help link: http://wordpress.org/tags/capsman?forum_id=10
+Docs link: http://wiki.alkivia.org/capsman
 Tags: roles, capabilities, manager, rights, role, capability
-Requires at least: 2.7
+Requires at least: 2.8
 Tested up to: 2.9.1
 Stable tag: trunk
 
@@ -13,53 +15,32 @@ A simple way to manage WordPress roles and capabilities.
 The Capability Manager plugin provides a simple way to manage role capabilities. Using it, you will be able to change the capabilities of any role, add new roles, copy existing roles into new ones, and add new capabilities to existing roles.
 You can also delegate capabilities management to other users. In this case, some restrictions apply to this users, as them can only set/unset the capabilities they have.
 With the Backup/Restore tool, you can save your Roles and Capabilities before making changes and revert them if something goes wrong. You'll find it on the Tools menu. 
-At the current version, you cannot manage capabilities at user level (only can be managed for roles). This will be included in next versions.
+
+  * Capability manager has been tested to support only one role per user.
+  * Only users with 'manage_capabilities' can manage them. This capability is created at install time and assigned only to administrators.
+  * Administrator role cannot be deleted.
+  * Non-administrators can only manage roles or users with same or lower capabilities.
+  
+See the <a href="http://wiki.alkivia.org/capsman" target="_blank">plugin manual</a> for more information.
 
 = Features: =
 
 * Manage role capabilities.
-* Add new roles or delete existing roles.
+* Create new roles or delete existing ones.
 * Add new capabilities to any existing role.
-* Backup and restore Roles and Capabilities to revert your last changes. 
-
+* Backup and restore Roles and Capabilities to revert your last changes.
+* Revert Roles and Capabilities to WordPress defaults. 
+ 
 = Languages included: =
 
 * English
+* Catalan
 * Spanish
-* Catalan *by <a href="http://jcanals.cat">Jordi Canals</a>*
 * Italian *by <a href="http://gidibao.net" rel="nofollow">Gianni Diurno</a>*
 * German *by <a href="http://great-solution.de/" rel="nofollow">Carsten Tauber</a>*
 * Byelorussian *by <a href="http://antsar.info/" rel="nofollow">Ilyuha</a>*
 * Russian *by <a href="http://www.fatcow.com" rel="nofollow">Marcis Gasuns</a>*
-* POT file for easy translation to other languages included. If you translated SidePosts to your language, <a href="http://alkivia.org/contact/">you can tell us</a>
-
-= Who can manage? =
-
-* Capability manager only supports one role per user.
-* Only users with 'manage_capabilities' can manage them. This capability is created at install time and assigned to administrators.
-* Administrator role cannot be deleted.
-
-*Administrators*
-
-* Only administrators can grant or remove 'manage_capabilities' to other users. Cannot be removed from administrators.
-* Can grant or remove any capability, included the ones them not have.
-* Only administrators can manage the 'administrator' role.
-* Only administrators can delete roles.
-
-*Other users granted to manage capabilities*
-
-* Cannot grant or remove 'manage_capabilities'.
-* Cannot manage 'administrator' role.
-* Cannot delete roles.
-* Can only manage roles that have the same or lower level than the user.
-* Can only grant or remove capabilities they have.
-* Cannot manage roles they have. (This is to prevent granting/removing his own capabilities).
-
-**Rules to create new capabilities or roles**
-
-* Can be maximum 40 characters lenght.
-* Have to start with a letter.
-* Can contain only letters, digits, spaces and underscores.
+* POT file for easy translation to other languages included.
 
 == Installation ==
 
@@ -87,13 +68,13 @@ At the current version, you cannot manage capabilities at user level (only can b
 = Where can I find more information about this plugin, usage and support ? =
 
 * Take a look to the <a href="http://alkivia.org/wordpress/capsman">Plugin Homepage</a>.
-* A <a href="http://alkivia.org/wordpress/capsman">complete manual</a> is available for users and developers.
+* A <a href="http://wiki.alkivia.org/capsman">manual is available</a> for users and developers.
 * The <a href="http://alkivia.org/cat/capsman">plugin posts archive</a> with new announcements about this plugin.
 * If you need help, <a href="http://wordpress.org/tags/capsman?forum_id=10">ask in the Support forum</a>.
 
 = I've found a bug or want to suggest a new feature. Where can I do it? =
 
-* To fill a bug report or suggest a new feature, please fill a report in our <a href="http://alkivia.org/tracker/set_project.php?project_id=7&ref=view_all_bug_page.php">Bug Tracker</a>.
+* To fill a bug report or suggest a new feature, please fill a report in our <a href="http://tracker.alkivia.org/set_project.php?project_id=7&ref=view_all_bug_page.php">Bug Tracker</a>.
 
 == License ==
 
@@ -107,8 +88,12 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
-= 1.2.6 =
-* Changed license to GPL version 2.
+= 1.3 =
+  * Cannot edit users with more capabilities than current user.
+  * Cannot assign to users a role with more capabilities than current user.
+  * Solved an incompatibility with Chameleon theme.
+  * Migrated to the new Alkivia Framework.
+  * Changed license to GPL version 2.
 
 = 1.2.5 =
 * Tested up to WP 2.9.1.
@@ -123,7 +108,9 @@ You should have received a copy of the GNU General Public License along with thi
 * Added Russian translation.
 
 = 1.2.1 =
-* Coding Standards. Corrected internal links. Updated Framework.
+* Coding Standards.
+* Corrected internal links.
+* Updated Framework.
 
 = 1.2 =
 * Added backup/restore tool.
@@ -135,9 +122,10 @@ You should have received a copy of the GNU General Public License along with thi
 * Some code improvements.
 * Updated Alkivia Framework.
 
-= 1.0 =* First public version.
+= 1.0 =
+* First public version.
 
 == Upgrade Notice ==
 
-= 1.2.6 =
-Changed GPL license to version 2.
+=1.3=
+Improved security esiting users. You can now create real user managers. 

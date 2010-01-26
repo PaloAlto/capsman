@@ -1,17 +1,17 @@
+<?php
 /**
- * Settings for admin dashboard.
- * Based on the styles for Maintenance Mode plugin by Michael Wöhrer
+ * Functions related to WordPress system.
  *
  * @version		$Rev$
  * @author		Jordi Canals
- * @copyright   Copyright (C) 2009, 2010 Jordi Canals
+ * @copyright   Copyright (C) 2008, 2009, 2010 Jordi Canals
  * @license		GNU General Public License version 2
  * @link		http://alkivia.org
  * @package		Alkivia
- * @subpackage	CapsMan
+ * @subpackage	Framework
  *
 
-	Copyright 2009, 2010 Jordi Canals <devel@jcanals.cat>
+	Copyright 2008, 2009, 2010 Jordi Canals <devel@jcanals.cat>
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -26,16 +26,11 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* =========================================================== SETTINGS */
-
-#icon-capsman-admin {
-	background: transparent url('images/cman32.png') no-repeat;
-	}
-
-/* ====================================================== SIDEBAR ICONS */
-
-td.sidebar a.capsman {
-	background-image: url('images/capsman.png');
-	}
-
-/* EOF */
+/**
+ * Checks is we are running on WordPress MU
+ * @return boolean
+ */
+function ak_is_mu()
+{
+    return ( defined('VHOST') ) ? true : false;
+}

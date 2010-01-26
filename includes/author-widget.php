@@ -1,6 +1,6 @@
+<?php
 /**
- * Settings for admin dashboard.
- * Based on the styles for Maintenance Mode plugin by Michael Wöhrer
+ * Admin Pages Quthoring widget.
  *
  * @version		$Rev$
  * @author		Jordi Canals
@@ -25,17 +25,17 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+?>
 
-/* =========================================================== SETTINGS */
-
-#icon-capsman-admin {
-	background: transparent url('images/cman32.png') no-repeat;
-	}
-
-/* ====================================================== SIDEBAR ICONS */
-
-td.sidebar a.capsman {
-	background-image: url('images/capsman.png');
-	}
-
-/* EOF */
+			<dl>
+				<dt>Capability Manager</dt>
+				<dd>
+					<ul>
+						<li><a href="http://alkivia.org/wordpress/capsman" class="capsman" target="_blank"><?php _e('Plugin Homepage', $this->ID); ?></a></li>
+						<li><a href="http://wiki.alkivia.org/capsman" class="docs" target="_blank"><?php _e('Documentation', $this->ID); ?></a></li>
+						<li><a href="http://wordpress.org/tags/capsman?forum_id=10" class="help" target="_blank"><?php _e('Support Forum', $this->ID); ?></a></li>
+						<li><a href="http://alkivia.org" class="home" target="_blank"><?php _e('Author Homepage', $this->ID)?></a></li>
+						<li><a href="http://alkivia.org/donate" class="donate" target="_blank"><?php _e('Help donating', $this->ID)?></a></li>
+					</ul>
+				</dd>
+			</dl>
