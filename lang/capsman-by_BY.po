@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Capability Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-26 22:12+0100\n"
+"POT-Creation-Date: 2010-01-29 15:03+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Jordi Canals <alkivia@jcanals.net>\n"
+"Last-Translator: Jordi Canals <devel@jcanals.cat>\n"
 "Language-Team: antsar.info <iliamrv@ya.ru>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,8 +15,6 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: ../capsman.php:53
-#: ../framework/classes/abstract/plugin.php:210
-#: ../framework/classes/abstract/plugin.php:229
 msgid "Warning:"
 msgstr "Папярэджанне:"
 
@@ -29,269 +27,6 @@ msgstr "Убудова %s не сумяшчальны з вашай версія
 #, php-format
 msgid "%s is required for this plugin."
 msgstr "%s неабходзен лоя ўбудовы."
-
-#: ../framework/classes/abstract/module.php:507
-msgid "Option blocked by administrator."
-msgstr ""
-
-#: ../framework/classes/abstract/plugin.php:211
-#, php-format
-msgid "The active plugin %s is not compatible with your WordPress version."
-msgstr "Актыўная ўбудова %s не сумяшчальны з бягучай версіяй WordPress."
-
-#: ../framework/classes/abstract/plugin.php:213
-#, php-format
-msgid "WordPress %s is required to run this plugin."
-msgstr "WordPress %s неабходзен для запуску гэтай убудовы."
-
-#: ../framework/classes/abstract/plugin.php:230
-msgid "Standard sidebar functions are not present."
-msgstr "Стандартныя функцыі бакавой панэлі не прадстаўлены."
-
-#: ../framework/classes/abstract/plugin.php:231
-#, php-format
-msgid "It is required to use the standard sidebar to run %s"
-msgstr "Гэта неабходна для выкарыстання стандартнай бакавой панэлі для запуску %s"
-
-#: ../framework/lib/formating.php:52
-msgid "Settings saved."
-msgstr "Налады захаваны."
-
-#: ../framework/lib/formating.php:161
-msgid "Just Now"
-msgstr ""
-
-#: ../framework/lib/formating.php:164
-msgid "1 minute ago"
-msgstr ""
-
-#: ../framework/lib/formating.php:167
-msgid "1 hour ago"
-msgstr ""
-
-#: ../framework/lib/formating.php:171
-#, php-format
-msgid "Today at %s"
-msgstr ""
-
-#: ../framework/lib/formating.php:171
-#, php-format
-msgid "Yesterday at %s"
-msgstr ""
-
-#: ../framework/lib/themes.php:160
-msgid "Plugin Homepage"
-msgstr "Хатняя старонка ўбудовы"
-
-#: ../framework/lib/themes.php:164
-#, fuzzy
-msgid "Theme Homepage"
-msgstr "Хатняя старонка аўтара"
-
-#: ../framework/lib/themes.php:168
-#, fuzzy
-msgid "Documentation"
-msgstr "Няма дзеянняў"
-
-#: ../framework/lib/themes.php:172
-msgid "Support Forum"
-msgstr "Форум падтрымкі"
-
-#: ../framework/lib/themes.php:176
-msgid "Author Homepage"
-msgstr "Хатняя старонка аўтара"
-
-#: ../framework/lib/themes.php:180
-msgid "Donate to project"
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2172
-msgid "File error. Please try again."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2173
-msgid "Local file doesn't exist."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2174
-msgid "Local file is not readable."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2175
-msgid "File upload error (the uploaded file exceeds the upload_max_filesize directive in php.ini)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2176
-msgid "File upload error (the uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2177
-msgid "File upload error (the uploaded file was only partially uploaded)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2178
-msgid "File upload error (no file was uploaded)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2179
-msgid "File upload error (missing a temporary folder)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2180
-msgid "File upload error (failed to write file to disk)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2181
-msgid "File upload error (file upload stopped by extension)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2182
-msgid "File upload error (unknown error code)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2183
-msgid "File upload error. Please try again."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2184
-msgid "File too big."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2185
-msgid "MIME type can't be detected."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2186
-#, fuzzy
-msgid "Incorrect type of file."
-msgstr "Некарэктнае імя магчымасці."
-
-#: ../framework/vendor/upload/class.upload.php:2187
-msgid "Image too wide."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2188
-msgid "Image too narrow."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2189
-msgid "Image too high."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2190
-msgid "Image too short."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2191
-msgid "Image ratio too high (image too wide)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2192
-msgid "Image ratio too low (image too high)."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2193
-msgid "Image has too many pixels."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2194
-msgid "Image has not enough pixels."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2195
-msgid "File not uploaded. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2196
-#, php-format
-msgid "%s already exists. Please change the file name."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2197
-msgid "No correct temp source file. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2198
-msgid "No correct uploaded source file. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2199
-msgid "Destination directory can't be created. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2200
-msgid "Destination directory doesn't exist. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2201
-msgid "Destination path is not a directory. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2202
-msgid "Destination directory can't be made writeable. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2203
-msgid "Destination path is not a writeable. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2204
-msgid "Can't create the temporary file. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2205
-msgid "Source file is not readable. Can't carry on a process."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2206
-#, php-format
-msgid "No create from %s support."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2207
-#, fuzzy, php-format
-msgid "Error in creating %s image from source."
-msgstr "Памылка: Новая роля не створана."
-
-#: ../framework/vendor/upload/class.upload.php:2208
-msgid "Can't read image source. Not an image?."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2209
-msgid "GD doesn't seem to be present."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2210
-#, php-format
-msgid "No create from %s support, can't read watermark."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2211
-#, php-format
-msgid "No %s read support, can't create watermark."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2212
-msgid "Unknown image format, can't read watermark."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2213
-#, php-format
-msgid "No %s create support."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2214
-msgid "No conversion type defined."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2215
-msgid "Error copying file on the server. copy() failed."
-msgstr ""
-
-#: ../framework/vendor/upload/class.upload.php:2216
-#, fuzzy
-msgid "Error reading the file."
-msgstr "Памылка: Новая роля не створана."
 
 #: ../includes/admin.php:36
 msgid "Roles and Capabilities"
@@ -363,10 +98,6 @@ msgstr "Дадаць магчымасць"
 #: ../includes/manager.php:323
 msgid "Add to role"
 msgstr "Дадаць ролю"
-
-#: ../includes/author-widget.php:38
-msgid "Help donating"
-msgstr "Дапамога праз ахвяраванні"
 
 #: ../includes/backup.php:33
 msgid "Backup Tool for Capability Manager"
@@ -490,9 +221,9 @@ msgid "Cannot delete default role. You <a href=\"%s\">have to change it first</a
 msgstr "Не выдалена стандартная роля. Вы <a href=\"%s\">павінны спачатку змяніць гэта</a>."
 
 #: ../includes/manager.php:405
-#, fuzzy, php-format
+#, php-format
 msgid "Role has been deleted. %1$d users moved to default role %2$s."
-msgstr "Роля %1$s была выдалена. %2$d карыстачоў перамешчана ў стандартную ролю %3$s."
+msgstr "Роля была выдалена. %1$d карыстачоў перамешчана ў стандартную ролю %2$s."
 
 #: ../includes/manager.php:419
 msgid "Needed function to create default roles not found!"
@@ -502,10 +233,49 @@ msgstr "Неабходная функцыя па стварэнні роляў �
 msgid "Roles and Capabilities reset to WordPress defaults"
 msgstr "Ролі і магчымасці скінуты да стандартных для WordPress "
 
-#: ../includes/manager.php:620
+#: ../includes/manager.php:606
 msgid "You cannot remove Manage Capabilities from Administrators"
 msgstr "Вы не можаце выдаліць Manage Capabilities праз адміністратараў ."
 
+#~ msgid "The active plugin %s is not compatible with your WordPress version."
+#~ msgstr "Актыўная ўбудова %s не сумяшчальны з бягучай версіяй WordPress."
+#~ msgid "WordPress %s is required to run this plugin."
+#~ msgstr "WordPress %s неабходзен для запуску гэтай убудовы."
+#~ msgid "Standard sidebar functions are not present."
+#~ msgstr "Стандартныя функцыі бакавой панэлі не прадстаўлены."
+#~ msgid "It is required to use the standard sidebar to run %s"
+#~ msgstr ""
+#~ "Гэта неабходна для выкарыстання стандартнай бакавой панэлі для запуску %s"
+#~ msgid "Settings saved."
+#~ msgstr "Налады захаваны."
+#~ msgid "Plugin Homepage"
+#~ msgstr "Хатняя старонка ўбудовы"
+
+#, fuzzy
+#~ msgid "Theme Homepage"
+#~ msgstr "Хатняя старонка аўтара"
+
+#, fuzzy
+#~ msgid "Documentation"
+#~ msgstr "Няма дзеянняў"
+#~ msgid "Support Forum"
+#~ msgstr "Форум падтрымкі"
+#~ msgid "Author Homepage"
+#~ msgstr "Хатняя старонка аўтара"
+
+#, fuzzy
+#~ msgid "Incorrect type of file."
+#~ msgstr "Некарэктнае імя магчымасці."
+
+#, fuzzy
+#~ msgid "Error in creating %s image from source."
+#~ msgstr "Памылка: Новая роля не створана."
+
+#, fuzzy
+#~ msgid "Error reading the file."
+#~ msgstr "Памылка: Новая роля не створана."
+#~ msgid "Help donating"
+#~ msgstr "Дапамога праз ахвяраванні"
 #~ msgid "Managing %s"
 #~ msgstr "Administrando %s"
 

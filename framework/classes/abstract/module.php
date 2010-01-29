@@ -504,7 +504,7 @@ abstract class akModuleAbstract
 	{
 	    if ( $this->cfg->isForced($this->ID, $option) ) {
 	        if ( $show_notice ) {
-	            echo '<em>' . __('Option blocked by administrator.', 'aktheme') . '</em>';
+	            echo '<em>' . __('Option blocked by administrator.', 'akfw') . '</em>';
 	        }
             return false;
 	    } else {

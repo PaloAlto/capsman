@@ -40,6 +40,8 @@ function ak_styles_url ()
    return str_replace($dir, WP_CONTENT_URL, $fmw) . '/styles';
 }
 
+// ================================================= SET GLOBAL CONSTANTS =====
+
 if ( ! defined('AK_STYLES_URL') ) {
     /** Define the framework URL */
     define ( 'AK_STYLES_URL', ak_styles_url() );
@@ -75,6 +77,8 @@ if ( ! defined('AK_UPLOAD_URL') ) {
     define ( 'AK_UPLOAD_URL', $akf_uploads['baseurl'] . '/alkivia');
 }
 
+// ============================================== SET GLOBAL ACTION HOOKS =====
+
 /**
  * Adds meta name for Alkivia Framework to head.
  *
@@ -82,12 +86,27 @@ if ( ! defined('AK_UPLOAD_URL') ) {
  * @access private
  * @return void
  */
-function _ak_framework_meta_tags(){
+function _ak_framework_meta_tags() {
     echo '<meta name="framework" content="Alkivia Framework ' . get_option('ak_framework_version') . '" />' . PHP_EOL;
 }
 add_action('wp_head', '_ak_framework_meta_tags');
 
-/************************************************** INIT main objects ********/
+/**
+ * Loads the framework translations.
+ * Sets the translation text domain to 'akvf'.
+ *
+ * @return bool true on success, false on failure
+ */
+function _ak_framework_translation()
+{
+    $locale = get_locale();
+    $mofile = AK_FRAMEWORK . "/lang/$locale.mo";
+
+    return load_textdomain('akfw', $mofile);
+}
+add_action('init', '_ak_framework_translation');
+
+// ================================================ INCLUDE ALL LIBRARIES =====
 
 // Create the upload folder if does not exist.
 if ( ! is_dir(AK_UPLOAD_DIR) ) {

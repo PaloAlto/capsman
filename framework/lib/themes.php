@@ -157,27 +157,27 @@ function ak_admin_authoring ( $mod_id )
 		<dd>
 			<ul>
 				<?php if ( ! empty($data['PluginURI']) ) : ?>
-					<li><a href="<?php echo $data['PluginURI']; ?>" class="<?php echo $mod_id; ?>" target="_blank"><?php _e('Plugin Homepage', $mod_id); ?></a></li>
+					<li><a href="<?php echo $data['PluginURI']; ?>" class="<?php echo $mod_id; ?>" target="_blank"><?php _e('Plugin Homepage', 'akfw'); ?></a></li>
 				<?php endif; ?>
 
 				<?php if ( ! empty($data['URI']) ) : ?>
-					<li><a href="<?php echo $data['URI']; ?>" class="theme" target="_blank"><?php _e('Theme Homepage', $mod_id); ?></a></li>
+					<li><a href="<?php echo $data['URI']; ?>" class="theme" target="_blank"><?php _e('Theme Homepage', 'akfw'); ?></a></li>
 				<?php endif; ?>
 
 				<?php if ( ! empty($data['DocsURI']) ) : ?>
-					<li><a href="<?php echo $data['DocsURI']; ?>" class="docs" target="_blank"><?php _e('Documentation', $mod_id); ?></a></li>
+					<li><a href="<?php echo $data['DocsURI']; ?>" class="docs" target="_blank"><?php _e('Documentation', 'akfw'); ?></a></li>
 				<?php endif; ?>
 
 				<?php if ( ! empty($data['HelpURI']) ) : ?>
-					<li><a href="<?php echo $data['HelpURI']; ?>" class="help" target="_blank"><?php _e('Support Forum', $mod_id); ?></a></li>
+					<li><a href="<?php echo $data['HelpURI']; ?>" class="help" target="_blank"><?php _e('Support Forum', 'akfw'); ?></a></li>
 				<?php endif; ?>
 
 				<?php if ( ! empty($data['AuthorURI']) ) : ?>
-					<li><a href="<?php echo $data['AuthorURI']; ?>" class="home" target="_blank"><?php _e('Author Homepage', $mod_id)?></a></li>
+					<li><a href="<?php echo $data['AuthorURI']; ?>" class="home" target="_blank"><?php _e('Author Homepage', 'akfw')?></a></li>
 				<?php endif; ?>
 
 				<?php if ( ! empty($data['DonateURI']) ) : ?>
-					<li><a href="<?php echo $data['DonateURI']; ?>" class="donate" target="_blank"><?php _e('Donate to project', $mod_id)?></a></li>
+					<li><a href="<?php echo $data['DonateURI']; ?>" class="donate" target="_blank"><?php _e('Donate to project', 'akfw')?></a></li>
 				<?php endif; ?>
 			</ul>
 		</dd>

@@ -2126,9 +2126,8 @@ class akUpload {
      * @access private
      * @param  array  $file $_FILES['form_field']
      *    or   string $file Local filename
-     * @param  string $textDomain Optional translation textdomain
      */
-    function akUpload( $file, $textDomain = '' ) {
+    function akUpload( $file ) {
 
         $this->version            = '0.28';
         $this->language 		  = 'en_US'; // Not used.
@@ -2169,51 +2168,51 @@ class akUpload {
         $mime_from_browser        = null;
 
 		$this->translation = array();
-        $this->translation['file_error']                  = __('File error. Please try again.', $textDomain);
-        $this->translation['local_file_missing']          = __('Local file doesn\'t exist.', $textDomain);
-        $this->translation['local_file_not_readable']     = __('Local file is not readable.', $textDomain);
-        $this->translation['uploaded_too_big_ini']        = __('File upload error (the uploaded file exceeds the upload_max_filesize directive in php.ini).', $textDomain);
-        $this->translation['uploaded_too_big_html']       = __('File upload error (the uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form).', $textDomain);
-        $this->translation['uploaded_partial']            = __('File upload error (the uploaded file was only partially uploaded).', $textDomain);
-        $this->translation['uploaded_missing']            = __('File upload error (no file was uploaded).', $textDomain);
-        $this->translation['uploaded_no_tmp_dir']         = __('File upload error (missing a temporary folder).', $textDomain);
-        $this->translation['uploaded_cant_write']         = __('File upload error (failed to write file to disk).', $textDomain);
-        $this->translation['uploaded_err_extension']      = __('File upload error (file upload stopped by extension).', $textDomain);
-        $this->translation['uploaded_unknown']            = __('File upload error (unknown error code).', $textDomain);
-        $this->translation['try_again']                   = __('File upload error. Please try again.', $textDomain);
-        $this->translation['file_too_big']                = __('File too big.', $textDomain);
-        $this->translation['no_mime']                     = __('MIME type can\'t be detected.', $textDomain);
-        $this->translation['incorrect_file']              = __('Incorrect type of file.', $textDomain);
-        $this->translation['image_too_wide']              = __('Image too wide.', $textDomain);
-        $this->translation['image_too_narrow']            = __('Image too narrow.', $textDomain);
-        $this->translation['image_too_high']              = __('Image too high.', $textDomain);
-        $this->translation['image_too_short']             = __('Image too short.', $textDomain);
-        $this->translation['ratio_too_high']              = __('Image ratio too high (image too wide).', $textDomain);
-        $this->translation['ratio_too_low']               = __('Image ratio too low (image too high).', $textDomain);
-        $this->translation['too_many_pixels']             = __('Image has too many pixels.', $textDomain);
-        $this->translation['not_enough_pixels']           = __('Image has not enough pixels.', $textDomain);
-        $this->translation['file_not_uploaded']           = __('File not uploaded. Can\'t carry on a process.', $textDomain);
-        $this->translation['already_exists']              = __('%s already exists. Please change the file name.', $textDomain);
-        $this->translation['temp_file_missing']           = __('No correct temp source file. Can\'t carry on a process.', $textDomain);
-        $this->translation['source_missing']              = __('No correct uploaded source file. Can\'t carry on a process.', $textDomain);
-        $this->translation['destination_dir']             = __('Destination directory can\'t be created. Can\'t carry on a process.', $textDomain);
-        $this->translation['destination_dir_missing']     = __('Destination directory doesn\'t exist. Can\'t carry on a process.', $textDomain);
-        $this->translation['destination_path_not_dir']    = __('Destination path is not a directory. Can\'t carry on a process.', $textDomain);
-        $this->translation['destination_dir_write']       = __('Destination directory can\'t be made writeable. Can\'t carry on a process.', $textDomain);
-        $this->translation['destination_path_write']      = __('Destination path is not a writeable. Can\'t carry on a process.', $textDomain);
-        $this->translation['temp_file']                   = __('Can\'t create the temporary file. Can\'t carry on a process.', $textDomain);
-        $this->translation['source_not_readable']         = __('Source file is not readable. Can\'t carry on a process.', $textDomain);
-        $this->translation['no_create_support']           = __('No create from %s support.', $textDomain);
-        $this->translation['create_error']                = __('Error in creating %s image from source.', $textDomain);
-        $this->translation['source_invalid']              = __('Can\'t read image source. Not an image?.', $textDomain);
-        $this->translation['gd_missing']                  = __('GD doesn\'t seem to be present.', $textDomain);
-        $this->translation['watermark_no_create_support'] = __('No create from %s support, can\'t read watermark.', $textDomain);
-        $this->translation['watermark_create_error']      = __('No %s read support, can\'t create watermark.', $textDomain);
-        $this->translation['watermark_invalid']           = __('Unknown image format, can\'t read watermark.', $textDomain);
-        $this->translation['file_create']                 = __('No %s create support.', $textDomain);
-        $this->translation['no_conversion_type']          = __('No conversion type defined.', $textDomain);
-        $this->translation['copy_failed']                 = __('Error copying file on the server. copy() failed.', $textDomain);
-        $this->translation['reading_failed']              = __('Error reading the file.', $textDomain);
+        $this->translation['file_error']                  = __('File error. Please try again.', 'akfw');
+        $this->translation['local_file_missing']          = __('Local file doesn\'t exist.', 'akfw');
+        $this->translation['local_file_not_readable']     = __('Local file is not readable.', 'akfw');
+        $this->translation['uploaded_too_big_ini']        = __('File upload error (the uploaded file exceeds the upload_max_filesize directive in php.ini).', 'akfw');
+        $this->translation['uploaded_too_big_html']       = __('File upload error (the uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form).', 'akfw');
+        $this->translation['uploaded_partial']            = __('File upload error (the uploaded file was only partially uploaded).', 'akfw');
+        $this->translation['uploaded_missing']            = __('File upload error (no file was uploaded).', 'akfw');
+        $this->translation['uploaded_no_tmp_dir']         = __('File upload error (missing a temporary folder).', 'akfw');
+        $this->translation['uploaded_cant_write']         = __('File upload error (failed to write file to disk).', 'akfw');
+        $this->translation['uploaded_err_extension']      = __('File upload error (file upload stopped by extension).', 'akfw');
+        $this->translation['uploaded_unknown']            = __('File upload error (unknown error code).', 'akfw');
+        $this->translation['try_again']                   = __('File upload error. Please try again.', 'akfw');
+        $this->translation['file_too_big']                = __('File too big.', 'akfw');
+        $this->translation['no_mime']                     = __('MIME type can\'t be detected.', 'akfw');
+        $this->translation['incorrect_file']              = __('Incorrect type of file.', 'akfw');
+        $this->translation['image_too_wide']              = __('Image too wide.', 'akfw');
+        $this->translation['image_too_narrow']            = __('Image too narrow.', 'akfw');
+        $this->translation['image_too_high']              = __('Image too high.', 'akfw');
+        $this->translation['image_too_short']             = __('Image too short.', 'akfw');
+        $this->translation['ratio_too_high']              = __('Image ratio too high (image too wide).', 'akfw');
+        $this->translation['ratio_too_low']               = __('Image ratio too low (image too high).', 'akfw');
+        $this->translation['too_many_pixels']             = __('Image has too many pixels.', 'akfw');
+        $this->translation['not_enough_pixels']           = __('Image has not enough pixels.', 'akfw');
+        $this->translation['file_not_uploaded']           = __('File not uploaded. Can\'t carry on a process.', 'akfw');
+        $this->translation['already_exists']              = __('%s already exists. Please change the file name.', 'akfw');
+        $this->translation['temp_file_missing']           = __('No correct temp source file. Can\'t carry on a process.', 'akfw');
+        $this->translation['source_missing']              = __('No correct uploaded source file. Can\'t carry on a process.', 'akfw');
+        $this->translation['destination_dir']             = __('Destination directory can\'t be created. Can\'t carry on a process.', 'akfw');
+        $this->translation['destination_dir_missing']     = __('Destination directory doesn\'t exist. Can\'t carry on a process.', 'akfw');
+        $this->translation['destination_path_not_dir']    = __('Destination path is not a directory. Can\'t carry on a process.', 'akfw');
+        $this->translation['destination_dir_write']       = __('Destination directory can\'t be made writeable. Can\'t carry on a process.', 'akfw');
+        $this->translation['destination_path_write']      = __('Destination path is not a writeable. Can\'t carry on a process.', 'akfw');
+        $this->translation['temp_file']                   = __('Can\'t create the temporary file. Can\'t carry on a process.', 'akfw');
+        $this->translation['source_not_readable']         = __('Source file is not readable. Can\'t carry on a process.', 'akfw');
+        $this->translation['no_create_support']           = __('No create from %s support.', 'akfw');
+        $this->translation['create_error']                = __('Error in creating %s image from source.', 'akfw');
+        $this->translation['source_invalid']              = __('Can\'t read image source. Not an image?.', 'akfw');
+        $this->translation['gd_missing']                  = __('GD doesn\'t seem to be present.', 'akfw');
+        $this->translation['watermark_no_create_support'] = __('No create from %s support, can\'t read watermark.', 'akfw');
+        $this->translation['watermark_create_error']      = __('No %s read support, can\'t create watermark.', 'akfw');
+        $this->translation['watermark_invalid']           = __('Unknown image format, can\'t read watermark.', 'akfw');
+        $this->translation['file_create']                 = __('No %s create support.', 'akfw');
+        $this->translation['no_conversion_type']          = __('No conversion type defined.', 'akfw');
+        $this->translation['copy_failed']                 = __('Error copying file on the server. copy() failed.', 'akfw');
+        $this->translation['reading_failed']              = __('Error reading the file.', 'akfw');
 
         // determines the supported MIME types, and matching image format
         $this->image_supported = array();

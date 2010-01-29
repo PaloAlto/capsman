@@ -49,7 +49,7 @@ function ak_admin_notify( $message = '' )
 {
     if ( is_admin() ) {
 	    if ( empty($message) ) {
-		    $message = __('Settings saved.');
+		    $message = __('Settings saved.', 'akfw');
     	}
     	echo '<div id="message" class="updated fade"><p><strong>' . $message . '</strong></p></div>';
     }
@@ -131,10 +131,9 @@ function ak_pager( $total, $per_page, $url, $current = 0 )
  * Creates an string telling how many time ago
  *
  * @param $datetime Date Time in mySql Format.
- * @param $text_domain Translations textDomain.
  * @return string The time from the date to now, just looks to yesterday.
  */
-function ak_time_ago( $datetime, $text_domain= '' )
+function ak_time_ago( $datetime )
 {
     $before = strtotime($datetime);
     $is_today = ( date('Y-m-d') == substr($datetime, 0, 10) );
@@ -158,17 +157,17 @@ function ak_time_ago( $datetime, $text_domain= '' )
     $format = get_option('date_format') . ' | ' . get_option('time_format');  // Date-Time format
     switch ( $unit ) {
         case 's':
-            $ago = __('Just Now', $text_domain);
+            $ago = __('Just Now', 'akfw');
             break;
         case 'm':
-            $ago = sprintf(_n('1 minute ago', '%d minutes ago', $value, $text_domain), $value);
+            $ago = sprintf(_n('1 minute ago', '%d minutes ago', $value, 'akfw'), $value);
             break;
         case 'h' :
-            $ago = sprintf(_n('1 hour ago', '%d hours ago', $value, $text_domain), $value);
+            $ago = sprintf(_n('1 hour ago', '%d hours ago', $value, 'akfw'), $value);
             break;
         case 'd' :
             if ( 1 == $value ) {
-                $literal = ( $is_today ) ? __('Today at %s', $text_domain) : __('Yesterday at %s', $text_domain);
+                $literal = ( $is_today ) ? __('Today at %s', 'akfw') : __('Yesterday at %s', 'akfw');
                 $ago = sprintf($literal, date('H:i', $before));
             } else {
                 $ago = mysql2date($format, $datetime);

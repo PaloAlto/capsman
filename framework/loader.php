@@ -31,7 +31,7 @@
 // TODO: Load Framework at plugins_loaded or init to allow filters on plugins?
 //       If loaded on plufins_loaded will not load for themes.
 
-$akf_version = '0.5';
+$akf_version = '0.6';
 
 if ( file_exists(WP_CONTENT_DIR . '/alkivia.php') ) {
     /** Loads alkivia.php to override some default constants */

@@ -125,6 +125,7 @@ function ak_return_units( $value, $max = 'G' )
  */
 function ak_dir_content($directory, $args='')
 {
+
     $directory = realpath($directory); // Be sure the directory path is well formed.
     if ( ! is_dir($directory) ) {      // Check if it is a directory.
         return array();                // If not, return an ampty array.
@@ -163,7 +164,24 @@ function ak_dir_content($directory, $args='')
 		}
 	}
 	$d->close();
-	sort($dir_tree);
+	asort($dir_tree);
 
 	return $dir_tree;
+}
+
+/**
+ * Returns a list of templates found in an array of directories
+ *
+ * @param array|string $folders Array of folders to search in.
+ * @return array Found templates (all found php files).
+ */
+function ak_get_templates( $folders )
+{
+    $paths = array();
+    foreach ( (array) $folders as $folder ) {
+        $templates = ak_dir_content($folder, 'tree=0&extensions=php&with_ext=0');
+        $paths = array_merge($templates, $paths);
+    }
+
+    return $paths;
 }

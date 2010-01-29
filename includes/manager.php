@@ -163,7 +163,7 @@ class CapabilityManager extends akPluginAbstract
 	 */
 	function filterEditRoles ( $roles )
 	{
-	    $this->generateUserNames();
+	    $this->generateNames();
         $valid = array_keys($this->roles);
 
         foreach ( $roles as $role => $caps ) {
@@ -193,7 +193,7 @@ class CapabilityManager extends akPluginAbstract
 	        return $caps;
 	    }
 
-	    $this->generateUserNames();
+	    $this->generateNames();
 	    $valid = array_keys($this->roles);
 
         $user = new WP_User( (int) $args[0] );
@@ -479,46 +479,6 @@ class CapabilityManager extends akPluginAbstract
 
 	/**
 	 * Generates an array with the user capability names.
-	 * A user cannot manage more capabilities that has himself (Except for administrators).
-	 * Only loads roles and capabilities that current user can manage.
-	 * The key is the capability and the value the created screen name.
-	 *
-	 * @uses self::_capNamesCB()
-	 * @return void
-	 */
-	private function generateUserNames ()
-	{
-		global $user_ID;
-		$user = new WP_User($user_ID);
-		$this->max_level = ak_caps2level($user->allcaps);
-
-		$keys = array_keys($user->allcaps);
-		$names = array_map(array($this, '_capNamesCB'), $keys);
-		$this->capabilities = array_combine($keys, $names);
-
-		$roles = ak_get_roles(true);
-		unset($roles['administrator']);
-
-		foreach ( $user->roles as $role ) {			// Unset the roles from capability list.
-			unset ( $this->capabilities[$role] );
-			unset ( $roles[$role]);					// User cannot manage his roles.
-		}
-		asort($this->capabilities);
-
-		foreach ( array_keys($roles) as $role ) {
-			$r = get_role($role);
-			$level = ak_caps2level($r->capabilities);
-
-			if ( $level > $this->max_level ) {
-				unset($roles[$role]);
-			}
-		}
-
-		$this->roles = $roles;
-	}
-
-	/**
-	 * Generates an array with the user capability names.
 	 * If user has 'administrator' role, system roles are generated.
 	 * The key is the capability and the value the created screen name.
 	 * A user cannot manage more capabilities that has himself (Except for administrators).
@@ -531,7 +491,33 @@ class CapabilityManager extends akPluginAbstract
 		if ( current_user_can('administrator') ) {
 			$this->generateSysNames();
 		} else {
-		    $this->generateUserNames();
+		    global $user_ID;
+		    $user = new WP_User($user_ID);
+		    $this->max_level = ak_caps2level($user->allcaps);
+
+		    $keys = array_keys($user->allcaps);
+    		$names = array_map(array($this, '_capNamesCB'), $keys);
+	    	$this->capabilities = array_combine($keys, $names);
+
+		    $roles = ak_get_roles(true);
+    		unset($roles['administrator']);
+
+	    	foreach ( $user->roles as $role ) {			// Unset the roles from capability list.
+		    	unset ( $this->capabilities[$role] );
+			    unset ( $roles[$role]);					// User cannot manage his roles.
+    		}
+	    	asort($this->capabilities);
+
+		    foreach ( array_keys($roles) as $role ) {
+			    $r = get_role($role);
+    			$level = ak_caps2level($r->capabilities);
+
+	    		if ( $level > $this->max_level ) {
+		    		unset($roles[$role]);
+			    }
+    		}
+
+	    	$this->roles = $roles;
 		}
 	}
 

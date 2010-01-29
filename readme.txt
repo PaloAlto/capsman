@@ -36,11 +36,11 @@ See the <a href="http://wiki.alkivia.org/capsman" target="_blank">plugin manual<
 * English
 * Catalan
 * Spanish
-* Italian *by <a href="http://gidibao.net" rel="nofollow">Gianni Diurno</a>*
+* Belorussian *by <a href="http://antsar.info/" rel="nofollow">Ilyuha</a>*
 * German *by <a href="http://great-solution.de/" rel="nofollow">Carsten Tauber</a>*
-* Byelorussian *by <a href="http://antsar.info/" rel="nofollow">Ilyuha</a>*
+* Italian *by <a href="http://gidibao.net" rel="nofollow">Gianni Diurno</a>*
 * Russian *by <a href="http://www.fatcow.com" rel="nofollow">Marcis Gasuns</a>*
-* POT file for easy translation to other languages included.
+* POT file for easy <a href="http://wiki.alkivia.org/general/translators">translation to other languages</a> included.
 
 == Installation ==
 
@@ -88,6 +88,9 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
+= 1.3.1 =
+  * Fixed a bug where administrators could not create or manage other administrators.
+  
 = 1.3 =
   * Cannot edit users with more capabilities than current user.
   * Cannot assign to users a role with more capabilities than current user.
@@ -96,36 +99,39 @@ You should have received a copy of the GNU General Public License along with thi
   * Changed license to GPL version 2.
 
 = 1.2.5 =
-* Tested up to WP 2.9.1.
+  * Tested up to WP 2.9.1.
 
 = 1.2.4 =
-* Added Italian translation.
+  * Added Italian translation.
 
 = 1.2.3 =
-* Added German and Belorussian translations.
+  * Added German and Belorussian translations.
 
 = 1.2.2 =
-* Added Russian translation.
+  * Added Russian translation.
 
 = 1.2.1 =
-* Coding Standards.
-* Corrected internal links.
-* Updated Framework.
+  * Coding Standards.
+  * Corrected internal links.
+  * Updated Framework.
 
 = 1.2 =
-* Added backup/restore tool.
+  * Added backup/restore tool.
 
 = 1.1 =
-* Role deletion added.
+  * Role deletion added.
 
 = 1.0.1 =
-* Some code improvements.
-* Updated Alkivia Framework.
+  * Some code improvements.
+  * Updated Alkivia Framework.
 
 = 1.0 =
-* First public version.
+  * First public version.
 
 == Upgrade Notice ==
 
-=1.3=
+= 1.3.1 =
+Bug fixes.
+  
+= 1.3 =
 Improved security esiting users. You can now create real user managers. 

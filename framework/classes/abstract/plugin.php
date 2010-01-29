@@ -207,10 +207,10 @@ abstract class akPluginAbstract extends akModuleAbstract
 	{
 		$this->loadTranslations(); // We have not loaded translations yet.
 
-		echo '<div class="error"><p><strong>' . __('Warning:', $this->ID) . '</strong> '
-			. sprintf(__('The active plugin %s is not compatible with your WordPress version.', $this->ID),
+		echo '<div class="error"><p><strong>' . __('Warning:', 'akfw') . '</strong> '
+			. sprintf(__('The active plugin %s is not compatible with your WordPress version.', 'akfw'),
 				'&laquo;' . $this->mod_data['Name'] . ' ' . $this->mod_data['Version'] . '&raquo;')
-			. '</p><p>' . sprintf(__('WordPress %s is required to run this plugin.', $this->ID), $this->mod_data['Requires'])
+			. '</p><p>' . sprintf(__('WordPress %s is required to run this plugin.', 'akfw'), $this->mod_data['Requires'])
 			. '</p></div>';
 	}
 
