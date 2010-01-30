@@ -40,7 +40,7 @@ See the <a href="http://wiki.alkivia.org/capsman" target="_blank">plugin manual<
 * German *by <a href="http://great-solution.de/" rel="nofollow">Carsten Tauber</a>*
 * Italian *by <a href="http://gidibao.net" rel="nofollow">Gianni Diurno</a>*
 * Russian *by <a href="http://www.fatcow.com" rel="nofollow">Marcis Gasuns</a>*
-* POT file for easy <a href="http://wiki.alkivia.org/general/translators">translation to other languages</a> included.
+* POT file for easy translation to other languages included. See the <a href="http://wiki.alkivia.org/general/translators">translators page</a> for more information.
 
 == Installation ==
 
