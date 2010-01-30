@@ -8,7 +8,7 @@ Requires at least: 2.8
 Tested up to: 2.9.1
 Stable tag: trunk
 
-A simple way to manage WordPress roles and capabilities.
+A simple way to manage WordPress roles and capabilities. With this plugin you will be able to easily create and manage roles and capabilities.
 
 == Description ==
 
