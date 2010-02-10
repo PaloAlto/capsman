@@ -120,6 +120,7 @@ function ak_return_units( $value, $max = 'G' )
  * 								- tree: recurses into subdirectories. 0 = No, 1 (default) = Yes
  * 								- extensions: array or comma delimited list of wanted extensions (default all extensions).
  * 								- with_ext: Return filename with extension. 0 = No, 1 (default) = Yes
+ * 								- prefix: A filename prefix for returned files (default = No prefix).
  * @param boolean $withexst	We want returned filenames with extension. Defaults true.
  * @return array List of files found.
  */
@@ -173,15 +174,25 @@ function ak_dir_content($directory, $args='')
  * Returns a list of templates found in an array of directories
  *
  * @param array|string $folders Array of folders to search in.
+ * @param string $prefix Templates prefix filter.
  * @return array Found templates (all found php files).
  */
-function ak_get_templates( $folders )
+function ak_get_templates( $folders, $prefix = '' )
 {
-    $paths = array();
+    // Compatibility with a bug in Sideposts 3.0 and 3.0.1
+    if ( strpos($prefix, '&') ) $prefix = '';
+
+    $list = array();
     foreach ( (array) $folders as $folder ) {
-        $templates = ak_dir_content($folder, 'tree=0&extensions=php&with_ext=0');
-        $paths = array_merge($templates, $paths);
+        $found = ak_dir_content($folder, "tree=0&extensions=php&with_ext=0&prefix={$prefix}");
+        $list = array_merge($found, $list);
     }
 
-    return $paths;
+    $start = strlen($prefix);
+    foreach ( $list as $item ) {
+        $name = substr($item, $start);
+        $templates[$name] = ucfirst(str_replace('_', ' ', $name));
+    }
+
+    return $templates;
 }

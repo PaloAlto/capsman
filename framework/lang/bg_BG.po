@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alkivia SidePosts\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 20:57+0100\n"
-"PO-Revision-Date: 2010-01-29 00:35+0100\n"
+"POT-Creation-Date: 2010-02-06 01:15+0100\n"
+"PO-Revision-Date: 2010-02-06 01:15+0100\n"
 "Last-Translator: Jordi Canals <devel@jcanals.cat>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,33 +17,45 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../classes/abstract/module.php:507
+#: ../classes/abstract/module.php:599
 msgid "Option blocked by administrator."
 msgstr "Опцията е блокирана от администратора."
 
-#: ../classes/abstract/plugin.php:210
-#: ../classes/abstract/plugin.php:229
+#: ../classes/abstract/plugin.php:344
+#: ../classes/abstract/plugin.php:363
 msgid "Warning:"
 msgstr "Предупреждение: "
 
-#: ../classes/abstract/plugin.php:211
+#: ../classes/abstract/plugin.php:345
 #, php-format
 msgid "The active plugin %s is not compatible with your WordPress version."
 msgstr "Активната приставка %s е несъвместима с вашата версия на WordPress."
 
-#: ../classes/abstract/plugin.php:213
+#: ../classes/abstract/plugin.php:347
 #, php-format
 msgid "WordPress %s is required to run this plugin."
 msgstr "ЗА работата на тази приставка се изисква WordPress %s."
 
-#: ../classes/abstract/plugin.php:230
+#: ../classes/abstract/plugin.php:364
 msgid "Standard sidebar functions are not present."
 msgstr "Стандартните функция за страничната лента не са налични."
 
-#: ../classes/abstract/plugin.php:231
+#: ../classes/abstract/plugin.php:365
 #, php-format
 msgid "It is required to use the standard sidebar to run %s"
 msgstr "За да работи %s трябва да работи стандартната странична лента."
+
+#: ../classes/abstract/plugin.php:412
+msgid "Activate Components"
+msgstr ""
+
+#: ../classes/abstract/plugin.php:421
+msgid "Yes"
+msgstr ""
+
+#: ../classes/abstract/plugin.php:422
+msgid "No"
+msgstr ""
 
 #: ../lib/formating.php:52
 msgid "Settings saved."

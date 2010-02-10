@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alkivia Framework\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 20:57+0100\n"
+"POT-Creation-Date: 2010-02-08 13:50+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jordi Canals <devel@jcanals.cat>\n"
 "Language-Team: Jordi Canals | http://alkivia.org <devel@jcanals.cat>\n"
@@ -13,33 +13,63 @@ msgstr ""
 "X-Poedit-Language: Catalan\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../classes/abstract/module.php:507
+#: ../classes/template.php:90
+msgid "Template class: Received template paths are not valid directories."
+msgstr "Classe 'Template': Les rutes de plantilla rebudes no són directoris vàlids."
+
+#: ../classes/template.php:98
+msgid "Template class: Received config paths are not valid directories."
+msgstr "Classe 'Template': Les rutes de configuració rebudes no són directoris vàlids."
+
+#: ../classes/template.php:174
+#, php-format
+msgid "Template class: %s is a reserved template variable."
+msgstr "Classe 'Template': %s és una variable reservada."
+
+#: ../classes/template.php:338
+#, php-format
+msgid "Template file %1$s not found. Default template %2$s not found."
+msgstr "L'arxiu de plantilla %1$s no s'ha trobat. Tampoc s'ha trobat la plantilla predeterminada %2$s."
+
+#: ../classes/abstract/module.php:614
 msgid "Option blocked by administrator."
 msgstr "Opció desactivada per l'administrador."
 
-#: ../classes/abstract/plugin.php:210
-#: ../classes/abstract/plugin.php:229
+#: ../classes/abstract/plugin.php:344
+#: ../classes/abstract/plugin.php:363
 msgid "Warning:"
 msgstr "Atenció:"
 
-#: ../classes/abstract/plugin.php:211
+#: ../classes/abstract/plugin.php:345
 #, php-format
 msgid "The active plugin %s is not compatible with your WordPress version."
 msgstr "L'extensió activa %s no és compatible amb la vostra versió de WordPress."
 
-#: ../classes/abstract/plugin.php:213
+#: ../classes/abstract/plugin.php:347
 #, php-format
 msgid "WordPress %s is required to run this plugin."
 msgstr "Aquesta extensió requereix WordPress %s."
 
-#: ../classes/abstract/plugin.php:230
+#: ../classes/abstract/plugin.php:364
 msgid "Standard sidebar functions are not present."
 msgstr "No s'han trobat les funcions necessàries de la barra lateral estàndard."
 
-#: ../classes/abstract/plugin.php:231
+#: ../classes/abstract/plugin.php:365
 #, php-format
 msgid "It is required to use the standard sidebar to run %s"
 msgstr "La barra lateral estàndard és necessària per executar %s."
+
+#: ../classes/abstract/plugin.php:418
+msgid "Activate Components"
+msgstr "Activa Components"
+
+#: ../classes/abstract/plugin.php:427
+msgid "Yes"
+msgstr "Sí"
+
+#: ../classes/abstract/plugin.php:428
+msgid "No"
+msgstr "No"
 
 #: ../lib/formating.php:52
 msgid "Settings saved."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SidePosts WordPress Widget in italiano\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 20:57+0100\n"
+"POT-Creation-Date: 2010-02-06 01:15+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jordi Canals <devel@jcanals.cat>\n"
 "Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao@gmail.com>\n"
@@ -17,33 +17,45 @@ msgstr ""
 "X-Poedit-Country: ITALY\n"
 "X-Poedit-SearchPath-0: \n"
 
-#: ../classes/abstract/module.php:507
+#: ../classes/abstract/module.php:599
 msgid "Option blocked by administrator."
 msgstr "Opzione bloccata dall'amministratore"
 
-#: ../classes/abstract/plugin.php:210
-#: ../classes/abstract/plugin.php:229
+#: ../classes/abstract/plugin.php:344
+#: ../classes/abstract/plugin.php:363
 msgid "Warning:"
 msgstr "Avvertimento:"
 
-#: ../classes/abstract/plugin.php:211
+#: ../classes/abstract/plugin.php:345
 #, php-format
 msgid "The active plugin %s is not compatible with your WordPress version."
 msgstr "Il plugin attivo %s non é compatibile con la tua versione WordPress."
 
-#: ../classes/abstract/plugin.php:213
+#: ../classes/abstract/plugin.php:347
 #, php-format
 msgid "WordPress %s is required to run this plugin."
 msgstr "E' necessario WordPress %s affinché questo plugin possa funzionare."
 
-#: ../classes/abstract/plugin.php:230
+#: ../classes/abstract/plugin.php:364
 msgid "Standard sidebar functions are not present."
 msgstr "Non sono presenti le funzioni standard della sidebar."
 
-#: ../classes/abstract/plugin.php:231
+#: ../classes/abstract/plugin.php:365
 #, php-format
 msgid "It is required to use the standard sidebar to run %s"
 msgstr "E' necessario l'utilizzo della sidebar standard affinché funzioni %s"
+
+#: ../classes/abstract/plugin.php:412
+msgid "Activate Components"
+msgstr ""
+
+#: ../classes/abstract/plugin.php:421
+msgid "Yes"
+msgstr "Sí"
+
+#: ../classes/abstract/plugin.php:422
+msgid "No"
+msgstr "No"
 
 #: ../lib/formating.php:52
 msgid "Settings saved."
@@ -368,10 +380,6 @@ msgstr "Errore nella lettura del file."
 #~ msgstr "Tamaño de vídeo:"
 #~ msgid "Show Related Videos?"
 #~ msgstr "¿Mostrar vídeos relacionados?"
-#~ msgid "Yes"
-#~ msgstr "Sí"
-#~ msgid "No"
-#~ msgstr "No"
 #~ msgid "Player Color:"
 #~ msgstr "Color del reproductor:"
 #~ msgid "Show Border?"

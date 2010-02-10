@@ -31,7 +31,6 @@
  * This is an abstract class that have to be extended for use.
  *
  * TODO: Provide some sort of caching template contents.
- * TODO: Uncomment and Implement exceptions.
  *
  * @package Alkivia
  * @subpackage Framework
@@ -42,13 +41,13 @@ class akTemplate
 	 * Templates folder (Slash ended).
 	 * @var string
 	 */
-	protected $tpl_dir = '';
+	protected $tpl_dir = array();
 
 	/**
 	 * Config files folder (Slah ended).
 	 * @var string
 	 */
-	private $cfg_dir = '';
+	private $cfg_dir = array();
 
 	/**
 	 * Variables and values available to template.
@@ -80,31 +79,46 @@ class akTemplate
 	/**
 	 * Class constructor.
 	 *
-	 * TODO: Uncomment exceptions.
-	 *
 	 * @param array|string $tpl_dir Full paths to template folders.
 	 * @param string $cfg_dir Full path to config files.
 	 * @return TemplateAbstract	The class object or false if $tpl_dir is not a directory.
 	 */
 	public function __construct ( $tpl_dir, $cfg_dir = '' )
 	{
-		foreach ( (array) $tpl_dir as $path ) {
-    		if ( is_dir($path) ) {
-	    		$this->tpl_dir[] = trailingslashit($path);
-		    } else {
-			    // throw new SysException(__('Received template path is not a directory'));
+	    $this->tpl_dir = $this->checkDirectories($tpl_dir);
+	    if ( empty($this->tpl_dir) ) {
+		    wp_die(__('Template class: Received template paths are not valid directories.'));
+	    }
+
+		if ( empty($cfg_dir) ) {
+			$this->cfg_dir = $this->tpl_dir;
+		} else {
+		    $this->cfg_dir = $this->checkDirectories($cfg_dir);
+		    if ( empty($this->tpl_dir) ) {
+		        wp_die(__('Template class: Received config paths are not valid directories.'));
 		    }
 		}
 
-		if ( empty($cfg_dir) ) {
-			$this->cfg_dir = $this->tpl_dir[0];
-		} else {
-		    if ( is_dir($cfg_dir) ) {
-			    $this->cfg_dir = trailingslashit($cfg_dir);
-		    } else {
-		        // throw new SysException(__('Received config path is not a directory'));
+	}
+
+	/**
+	 * Checks an array of paths are valid directories.
+	 *
+	 * @since 0.8
+	 *
+	 * @param array|string $directories Absolute paths array
+	 * @return array An array with only valid directories, wrong directories are removed.
+	 */
+	private function checkDirectories ( $directories )
+	{
+        $valid = array();
+        foreach ( (array) $directories as $path ) {
+    		if ( is_dir($path) ) {
+	    		$valid[] = trailingslashit($path);
 		    }
 		}
+
+		return $valid;
 	}
 
 	/**
@@ -129,9 +143,7 @@ class akTemplate
 	 */
 	final public function assign ( $name, $value )
 	{
-	    if ( in_array($name, array('i18n', 'tpl', 'cfg')) ) {
-	        // throw new SysException(sprintf(__('%s is a reserved template variable.'), $name) );
-	    }
+	    $this->checkReserved($name);
 		$this->vars[$name] = $value;
 	}
 
@@ -144,7 +156,23 @@ class akTemplate
 	 */
 	public function assignByRef( $name, &$value )
 	{
+	    $this->checkReserved($name);
 		$this->vars[$name] =& $value;
+	}
+
+	/**
+	 * Checks if a template var name is reserved and dies if yes.
+	 *
+	 * @since 0.8
+	 *
+	 * @param string $name Variable name to check.
+	 * @return void
+	 */
+	private function checkReserved ( $name )
+	{
+	    if ( in_array($name, array('i18n', '_template', '_default', '_config', '_filename')) ) {
+	        wp_die( sprintf(__('Template class: %s is a reserved template variable.'), $name) );
+	    }
 	}
 
 	/**
@@ -155,14 +183,13 @@ class akTemplate
 	 */
 	final public function loadConfig ( $file )
 	{
-		$filename = $this->cfg_dir . $file . '.ini';
-
-		if ( file_exists($filename) ) {
-			$config = parse_ini_file( $filename, true);
-			$this->config = array_merge($this->config, $config);
-		} else {
-	        // throw new SysException(sprintf(__('Requested \'%s\' template config file not found.'), $file) );
-		}
+	    foreach ( $this->cfg_dir as $path ) {
+            $filename = $path . $name . '.ini';
+    		if ( file_exists($filename) ) {
+			    $config = parse_ini_file( $filename, true);
+			    $this->config = array_merge($this->config, $config);
+            }
+	    }
 	}
 
 	/**
@@ -269,6 +296,19 @@ class akTemplate
         $this->resetMessages();
     }
 
+    /**
+     * Checks if a template file is available.
+     *
+     * @since 0.8
+     *
+     * @param string $template Template name (With no .php extension)
+     * @return boolean If template file was found or not.
+     */
+    final public function available( $template )
+    {
+        return ( false === $this->locateFile($template) ) ? false : true;
+    }
+
 	/**
 	 * Displays a template from the templates folder.
 	 * Inside the template all assigned vars will be available.
@@ -276,41 +316,65 @@ class akTemplate
 	 * 		- cfg is an array which cointains all config values.
 	 * 		- tpl is an string cointaining template absolute name.
 	 *
-	 * @param string $tpl Template name with no extension.
+	 * TODO: Load config file with same name as template.
+	 *
+	 * @param string $_template Template name with no extension.
+	 * @param string $_default Alternate default template name.
 	 * @return void.
 	 */
-	final public function display ( $tpl_name )
+	final public function display ( $_template, $_default = '' )
 	{
-	    foreach ( $this->tpl_dir as $path ) {
-		    $tpl = $path . $tpl_name . '.php';
-    		if ( file_exists($tpl) ) {
-	    		$cfg =& $this->config;
-		    	unset($tpl_name);
-
-			    extract($this->vars);
-    			include ( $tpl );
-
-    			break;
-    		}
+	    $_filename = $this->locateFile($_template);
+	    if ( false === $_filename && ! empty($_default) ) {
+            $_filename = $this->locateFile($_default);
 	    }
-	}
+
+	    if ( $_filename ) {
+    		$_config =& $this->config;
+		    extract($this->vars);
+   			include ( $_filename );
+
+    	} else {
+            wp_die(sprintf(__('Template file %1$s not found. Default template %2$s not found.'), $_template, $_default));
+	    }
+}
 
 	/**
 	 * Returns the template contents after processing it.
 	 * Calls to TemplateAbstract::display() for template processing.
 	 *
-	 * @param $tpl	Template name with no extension.
+	 * @param string $template Template name with no extension.
+	 * @param string $default Alternate default template name.
 	 * @return string|false	The template contents or false if failed processing.
 	 */
-	final public function getDisplay ( $tpl )
+	final public function getDisplay ( $template, $default = '' )
 	{
 		if ( ob_start() ) {
-			$this->display($tpl);
+			$this->display($template, $default);
 			$content = ob_get_contents();
 			ob_end_clean();
 			return $content;
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Locates the path for a template filename.
+	 * If template is not found, returns false.
+	 *
+	 * @param string $name Template name (with no .php extension)
+	 * @return string|false Absolute path to template file. False if not found.
+	 */
+	private function locateFile( $name )
+	{
+	    foreach ( $this->tpl_dir as $path ) {
+		    $template = $path . $name . '.php';
+    		if ( file_exists($template) ) {
+    		    return $template;
+    		}
+	    }
+
+	    return false;
 	}
 }

@@ -76,26 +76,26 @@ abstract class akThemeAbstract extends akModuleAbstract
 	 * Inits the theme at WordPress 'init' action hook
 	 * @return void
 	 */
-    abstract protected function themeInit ();
+    protected function themeInit () {}
 
     /**
      * Installs the theme.
      * @return void
      */
-	abstract protected function themeInstall ();
+	protected function themeInstall () {}
 
 	/**
 	 * Performs additional actions to update the theme.
 	 * @param string $version Theme current installed version.
 	 * @return void
 	 */
-	abstract protected function themeUpdate ( $version );
+	protected function themeUpdate ( $version ) {}
 
 	/**
 	 * Registers and sets theme sidebars.
 	 * @return void
 	 */
-    abstract protected function themeSideBars ();
+    protected function themeSideBars () {}
 
 	/**
 	 * Configure the theme based on theme settings.
@@ -136,7 +136,7 @@ abstract class akThemeAbstract extends akModuleAbstract
 
 		// Save options and version
 		$this->cfg->saveOptions($this->ID);
-		add_option($this->ID . '_version', $this->mod_data['Version']);
+		add_option($this->ID . '_version', $this->version);
 
 		do_action('ak_theme_installed');
     }
@@ -159,12 +159,12 @@ abstract class akThemeAbstract extends akModuleAbstract
 			$this->themeUpdate($version);
 
 			$this->cfg->saveOptions($this->ID);
-			update_option($this->ID . '_version', $this->mod_data['Version']);
+			update_option($this->ID . '_version', $this->version);
 
 			do_action('ak_theme_updated');
 		}
 
-		// Call the custom init for the theme when plugins are loaded.
+		// Call the custom init for the theme when system is loaded.
 		$this->themeInit();
 	}
 
@@ -246,5 +246,28 @@ abstract class akThemeAbstract extends akModuleAbstract
 	    echo '<meta name="child_theme" content="'
 	        . $this->getChildData('Name') . ' ' . $this->getChildData('Version') . '" />' . PHP_EOL;
 	    }
+	}
+
+    /**
+     * Loads theme (and child) data.
+     *
+     * @return void
+     */
+	final protected function loadData()
+	{
+		$readme_data = ak_module_readme_data(TEMPLATEPATH . '/readme.txt');
+	    if ( empty($this->mod_data) ) {
+		    $theme_data = get_theme_data(TEMPLATEPATH . '/style.css');
+			$this->mod_data = array_merge($readme_data, $theme_data);
+		}
+
+		if ( TEMPLATEPATH !== STYLESHEETPATH && empty($this->child_data) ) {
+		    $this->mod_type = self::CHILD_THEME;
+            $child_data = get_theme_data(STYLESHEETPATH . '/style.css');
+			$child_readme_data = ak_module_readme_data(STYLESHEETPATH . '/readme.txt');
+			$this->child_data = array_merge($readme_data, $child_readme_data, $child_data);
+		}
+
+		$this->version = $this->mod_data['Version'];
 	}
 }

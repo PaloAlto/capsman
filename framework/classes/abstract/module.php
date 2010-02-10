@@ -56,6 +56,23 @@ abstract class akModuleAbstract
 	public $ID;
 
 	/**
+	 * Component parent ID.
+	 * Used only for components.
+	 *
+	 * @var string
+	 */
+	public $PID = '';
+
+	/**
+	 * Module version number.
+	 *
+	 * @since 0.8
+	 *
+	 * @var string
+	 */
+	public $version;
+
+	/**
 	 * Module Type using a class constant: self::PLUGIN, self::COMPONENT, seelf::THEME, self::CHILD_THEME
 	 * By default is set to 0 (unknown).
 	 *
@@ -72,7 +89,7 @@ abstract class akModuleAbstract
 	protected $mod_file;
 
 	/**
-	 * URL to the plugin folder.
+	 * URL to the module folder.
 	 *
 	 * @var string
 	 */
@@ -82,7 +99,7 @@ abstract class akModuleAbstract
 	 * Module data. Readed from the main plugin file header and the readme file.
 	 * Filled in loadModuleData(). Called in constructor.
 	 * From the filename:
-	 * 		- 'ID' - Plugin internal short name. Taken from main plugin's file name.
+	 * 		- 'ID' - Module internal short name. Taken from main module's file name.
 	 * From themes style.css file header:
 	 *		- 'Name' - Name of the theme.
 	 *		- 'Title' - Long title for the theme. As WP 2.8 is the same as 'Name'.
@@ -102,7 +119,7 @@ abstract class akModuleAbstract
 	 *		- 'PluginURI' - Plugin's web site address.
 	 *		- 'TextDomain' - Plugin's text domain for localization.
 	 *		- 'DomainPath' - Plugin's relative directory path to .mo files.
-	 * From plugins readme.txt file :
+	 * From readme.txt file :
 	 * 		- 'Contributors' - An array with all contributors nicknames.
 	 * 		- 'Tags' - An array with all plugin tags.
 	 * 		- 'DonateURI' - The donations page address.
@@ -119,12 +136,20 @@ abstract class akModuleAbstract
 	 *
 	 * From the Component file:
 	 * 		- 'File' - FileName of the component (relative to plugin's folder).
-	 * Fom the Component file header:
-	 * 		- 'Component' - The component internal ID or Short Name.
-	 *		- 'Name' - Name or title of the component.
-	 *		- 'Description' - Description of what the component does and/or notes from the author.
-	 *
-	 * @see akModuleAbstract::mod_data
+	 * From componets file header:
+	 * 		- 'File' - The component filename, relative to the plugin folder.
+	 * 		- 'Component' - The component short name or ID.
+	 * 		- 'Name' - Descriptive name for the component.
+	 * 		- 'Description' - A descriptive text about the component.
+	 * 		- 'Author' - Component author name
+	 * 		- 'URL' - Author homepage URL.
+	 * 		- 'Link' - Author anchor to home page.
+	 * 		- 'Core' - If this is a core compoment or not.
+	 * 		- 'Version' - Component version number.
+	 * From readme.txt file:
+	 * 		- Same as seen on akModuleAbstract::mod_data.
+	 * From child themes file header:
+	 * 		- Same as seen on akModuleAbstract::mod_data for themes.
 	 *
 	 * @var array
 	 */
@@ -185,34 +210,29 @@ abstract class akModuleAbstract
 	 */
 	public function __construct ( $type = '', $ID = '', $file = '' )
 	{
+	    $this->cfg =& ak_settings_object();
+
 	    switch ( strtolower($type) ) {
 	        case 'plugin' :
 	            $this->mod_type = self::PLUGIN;
+                $this->mod_file = trim($file);
 	            break;
 	        case 'component' :
 	            $this->mod_type = self::COMPONENT;
+                $this->mod_file = trim($file);
 	            break;
 	        case 'theme' :
 	            $this->mod_type = self::THEME;
+    	        $this->mod_file = STYLESHEETPATH . '/style.css';
 	            break;
 	        default:
 	            $this->mod_type = 0; // Unknown.
 	    }
 
-        if ( $this->isTheme() ) {
-    	    $this->mod_file = STYLESHEETPATH . '/style.css';
-    	    $this->mod_url  = get_stylesheet_directory_uri();
-	        $this->ID = ( empty($ID) ) ? strtolower(basename(TEMPLATEPATH)) : trim($ID) ;
-        } else {
-            $this->mod_file = trim($file);
-            $this->mod_url  = WP_PLUGIN_URL . '/' . basename(dirname($this->mod_file));
-		    $this->ID = ( empty($ID) ) ? strtolower(basename($this->mod_file, '.php')) : trim($ID) ;
-        }
-
-        $this->loadModuleData();
-
+        $this->loadModuleData($ID);
         if ( $this->isCompatible() ) {
             add_action('init', array($this, 'systemInit'));
+            add_action('plugins_loaded', array($this, 'pluginsInit'));
 		    add_action('widgets_init', array($this, 'widgetsInit'));
 
 		    if ( ! apply_filters('ak_' . $this->ID . '_disable_admin', $this->getOption('disable-admin-page')) ) {
@@ -235,35 +255,38 @@ abstract class akModuleAbstract
 	 *
 	 * @return void
 	 */
-	abstract protected function moduleLoad();
+	protected function moduleLoad() {}
 
 	/**
 	 * Prepares and returns default module options.
 	 *
 	 * @return array Options array
 	 */
-	abstract protected function defaultOptions();
+	protected function defaultOptions()
+	{
+	    return array();
+	}
 
 	/**
 	 * Fires at 'widgets_init' action hook
 	 *.
 	 * @return void
 	 */
-	abstract public function widgetsInit ();
+	public function widgetsInit () {}
 
 	/**
 	 * Fires at 'init' action hook.
 	 *
 	 * @return void
 	 */
-    abstract public function wpInit ();
+    protected function wpInit () {}
 
     /**
      * Fires at 'admin_menus' action hook.
      *
      * @return void
      */
-    abstract public function adminMenus ();
+    public function adminMenus () {}
 
 	/**
 	 * Dummy method provided to check additional WP compatibility on inplementations.
@@ -271,10 +294,18 @@ abstract class akModuleAbstract
 	 *
 	 * @return boolean
 	 */
-	protected function isCompatible ()
+	public function isCompatible ()
 	{
 	    return true;
 	}
+
+    /**
+     * Loads module data.
+     * Loads different data for Plugin, Theme or Component.
+     *
+     * @return void
+     */
+	abstract protected function loadData ();
 
     /**
      * Functions to execute at system Init.
@@ -284,35 +315,35 @@ abstract class akModuleAbstract
 	 *
 	 * @return void
 	 */
-    final function systemInit()
-    {
-        $this->loadTranslations();
-        $this->wpInit();
-    }
-
-	/**
-	 * Load module translations.
-	 * Load translations for plugins, themes and components.
-	 *
-	 * @return void
-	 */
-    final private function loadTranslations()
+    final function systemInit ()
     {
         switch ( $this->mod_type ) {
-            case self::PLUGIN :
-		        load_plugin_textdomain($this->ID, false, basename(dirname($this->mod_file)) . '/lang');
-		        break;
-
-            case self::COMPONENT :
-                // TODO: Manage components translations.
-                break;
-
             case self::CHILD_THEME :
     		    load_theme_textdomain('akchild', STYLESHEETPATH . '/lang');
             case self::THEME :
                 load_theme_textdomain('aktheme', TEMPLATEPATH . '/lang');
                 break;
         }
+
+        $this->wpInit();
+    }
+
+    /**
+     * Functions to execute after loading plugins.
+     *
+     * @return void
+     */
+    final function pluginsInit ()
+    {
+        switch ( $this->mod_type ) {
+            case self::PLUGIN :
+		        load_plugin_textdomain($this->ID, false, basename(dirname($this->mod_file)) . '/lang');
+		        break;
+            case self::COMPONENT :
+                // TODO: Manage components translations.
+                break;
+        }
+
     }
 
     /**
@@ -349,7 +380,7 @@ abstract class akModuleAbstract
 
 		$url = apply_filters('ak_' . $this->ID . '_style_admin', $url);
 		if ( ! empty($url) ) {
-   			wp_register_style('ak_' . $this->ID . '_admin', $url, array('ak_framework_admin'), $this->mod_data['Version']);
+   			wp_register_style('ak_' . $this->ID . '_admin', $url, array('ak_framework_admin'), $this->version);
    			wp_enqueue_style('ak_' . $this->ID . '_admin');
     	}
     }
@@ -370,15 +401,18 @@ abstract class akModuleAbstract
             return;
         }
 
-        if ( file_exists(dirname($this->mod_file) . '/style.css') ) {
-		    $url = $this->mod_url . '/style.css';
-		} else {
-		    $url = '';
-		}
+        $url = $this->getOption('style-url', false);
+        if ( false === $url ) {
+            if ( file_exists(dirname($this->mod_file) . '/style.css') ) {
+    		    $url = $this->mod_url . '/style.css';
+	    	} else {
+		        $url = '';
+    		}
+        }
 
 		$url = apply_filters('ak_' . $this->ID . '_style_url', $url);
 		if ( ! empty($url) ) {
-   			wp_register_style('ak_' . $this->ID, $url, false, $this->mod_data['Version']);
+   			wp_register_style('ak_' . $this->ID, $url, false, $this->version);
    			wp_enqueue_style('ak_' . $this->ID);
     	}
     }
@@ -446,6 +480,33 @@ abstract class akModuleAbstract
    	}
 
    	/**
+   	 * Deletes a module option.
+   	 *
+   	 * @param string $name Option Name
+   	 * @return void
+   	 */
+   	final public function deleteOption( $name )
+   	{
+        $this->cfg->deleteOption($this->ID, $name);
+   	}
+
+    /**
+     * Merges new options into module settings.
+     * Replaces exsisting ones and adds new ones.
+     *
+     * @since 0.7
+     *
+     * @param array $options New options to merge into settings.
+     * @return void
+     */
+   	final protected function mergeOptions ( $options )
+   	{
+   	    $current = $this->cfg->getSetting($this->ID);
+   	    $new_opt = array_merge($current, $options);
+        $this->cfg->replaceOptions($this->ID, $new_opt);
+   	}
+
+   	/**
    	 * Replaces ALL module options by new ones.
    	 *
    	 * @param array $options Array with all options pairs (name=>value)
@@ -455,6 +516,47 @@ abstract class akModuleAbstract
    	{
    	    $this->cfg->replaceOptions($this->ID, $options);
    	}
+
+    /**
+     * Returns current module default options.
+     *
+     * @since 0.7
+     *
+     * @return array Default module options.
+     */
+    final protected function getDefaults ()
+    {
+        $this->cfg->getDefaults($this->ID);
+    }
+
+    /**
+     * Replaces current module defaults by new ones.
+     *
+     * @since 0.7
+     *
+     * @param array $options New default options-
+     * @return void
+     */
+    final protected function setDefaults ( $options )
+    {
+        $this->cfg->setDefaults($this->ID, $options);
+    }
+
+    /**
+     * Merges new options into module defaults.
+     * Replaces exsisting ones and adds new ones.
+     *
+     * @since 0.7
+     *
+     * @param array $options New options to merge into defaults.
+     * @return void
+     */
+    final protected function mergeDefaults ( $options )
+    {
+        $defaults = $this->cfg->getDefaults($this->ID);
+        $new_def  = array_merge($defaults, $options);
+        $this->cfg->setDefaults($this->ID, $new_def);
+    }
 
    	/**
 	 * Returns module data.
@@ -478,7 +580,7 @@ abstract class akModuleAbstract
 	 * Returns child module data.
 	 * This data is loaded from the child module file.
 	 *
-	 * @see akTheme::$child_data
+	 * @see akModuleAbstract::$child_data
 	 * @return mixed The parameter requested or an array wil all data.
 	 */
 	final public function getChildData ( $name = '' )
@@ -496,20 +598,22 @@ abstract class akModuleAbstract
 	 * Checks if an option can be maneged on settings page.
 	 * Looks at the alkivia.ini file and if set there, the option will be disabled.
 	 *
-	 * @param string $option Option name.
+	 * @param string|array $options Options names.
 	 * @param boolean $show_notice Show a notice if disabled.
 	 * @return boolean If administration is allowed or not.
 	 */
-	final public function allowAdmin( $option, $show_notice = true )
+	final public function allowAdmin( $options, $show_notice = true )
 	{
-	    if ( $this->cfg->isForced($this->ID, $option) ) {
-	        if ( $show_notice ) {
-	            echo '<em>' . __('Option blocked by administrator.', 'akfw') . '</em>';
+	    foreach ( (array) $options as $option ) {
+	        if ( ! $this->cfg->isForced($this->ID, $option) ) {
+                return true;
 	        }
-            return false;
-	    } else {
-	        return true;
 	    }
+
+	    if ( $show_notice ) {
+	        echo '<em>' . __('Option blocked by administrator.', 'akfw') . '</em>';
+	    }
+	    return false;
 	}
 
 	/**
@@ -518,94 +622,30 @@ abstract class akModuleAbstract
 	 *
 	 * @return void
 	 */
-	final private function loadModuleData ()
+	final private function loadModuleData ( $id )
 	{
-	    $this->cfg = ak_settings_object();
-
-	    if ( $this->isPlugin() ) {
-	        $this->loadPluginData();
-	    } elseif ( $this->isComponent() ) {
-	        $this->loadComponentData();
-	    } else {
-	        $this->loadThemeData();
+	    $this->loadData();
+	    switch ( $this->mod_type ) {
+	        case self::PLUGIN :
+                $this->mod_url = WP_PLUGIN_URL . '/' . basename(dirname($this->mod_file));
+	            $this->ID = ( empty($id) ) ? strtolower(basename($this->mod_file, '.php')) : trim($id) ;
+		        break;
+	        case self::THEME :
+	        case self::CHILD_THEME :
+    	        $this->mod_url = get_stylesheet_directory_uri();
+	            $this->ID = ( empty($id) ) ? strtolower(basename(TEMPLATEPATH)) : trim($id) ;
+	            break;
+	        case self::COMPONENT :
+                $this->mod_url  = ak_get_object($this->PID)->getUrl() . 'components/' . basename(dirname($this->mod_file));
+                $this->ID = $this->PID . '_' . $this->child_data['Component'];
+                break;
 	    }
-
    		$this->cfg->setDefaults($this->ID, $this->defaultOptions());
-		$ver = get_option($this->ID . '_version');
-		if ( false === $ver ) {
+
+   		$old_version = get_option($this->ID . '_version');
+		if ( false === $old_version ) {
 			$this->installing = true;
-		} elseif ( version_compare($ver, $this->mod_data['Version'], 'ne') ) {
-			$this->needs_update = true;
-		}
-	}
-
-    /**
-     * Loads plugins data.
-     *
-     * @return void
-     */
-	final private function loadPluginData()
-	{
-		if ( empty($this->mod_data) ) {
-			if ( ! function_exists('get_plugin_data') ) {
-				require_once ( ABSPATH . 'wp-admin/includes/plugin.php' );
-			}
-
-			$plugin_data = get_plugin_data($this->mod_file);
-			$readme_data = ak_module_readme_data($this->mod_file);
-			$this->mod_data = array_merge($readme_data, $plugin_data);
-		}
-	}
-
-    /**
-     * Loads theme (and child) data.
-     *
-     * @return void
-     */
-	final private function loadThemeData()
-	{
-		$readme_data = ak_module_readme_data(TEMPLATEPATH . '/readme.txt');
-	    if ( empty($this->mod_data) ) {
-		    $theme_data = get_theme_data(TEMPLATEPATH . '/style.css');
-			$this->mod_data = array_merge($readme_data, $theme_data);
-		}
-
-		if ( TEMPLATEPATH !== STYLESHEETPATH && empty($this->child_data) ) {
-		    $this->mod_type = self::CHILD_THEME;
-            $child_data = get_theme_data(STYLESHEETPATH . '/style.css');
-			$child_readme_data = ak_module_readme_data(STYLESHEETPATH . '/readme.txt');
-			$this->child_data = array_merge($readme_data, $child_readme_data, $child_data);
-		}
-	}
-
-	/**
-	 * Loads component data.
-	 * TODO: This method needs some revision as it does not work.
-	 * TODO: Load data from component readme.txt
-	 *
-	 * @return void
-	 */
-	final private function loadComponentData()
-	{
-		if ( empty($this->mod_data) ) {
-			$this->mod_data = ak_component_data($this->mod_file, true);
-		}
-
-		$this->ID = $this->c_data['Component'];
-		$this->option_name = $this->plugin->ID . '_' . $this->ID;
-
-		$this->settings = get_option($this->option_name);
-		if ( ! empty($this->defaults) && is_array($this->defaults) ) {
-			if ( is_array($this->settings) ) {
-				$this->settings = array_merge($this->defaults, $this->settings);
-			} else {
-				$this->settings = $this->defaults;
-			}
-		}
-
-		if ( ! isset($this->settings['version']) ) {
-			$this->installing = true;
-		} elseif ( version_compare($this->settings['version'], $this->plugin->version, 'ne') ) {
+		} elseif ( version_compare($old_version, $this->version, 'ne') ) {
 			$this->needs_update = true;
 		}
 	}
@@ -648,24 +688,31 @@ abstract class akModuleAbstract
 	 */
 	final public function getURL()
 	{
-	    switch ( $this->mod_type ) {
-	        case self::PLUGIN :
-	        case self::COMPONENT :
-	            $search = str_replace('\\', '/', WP_PLUGIN_DIR);
-	            $target = str_replace('\\', '/', dirname($this->mod_file));
-	            $url    = str_replace($search, WP_PLUGIN_URL, $target) . '/';
-	            break;
-	        case self::THEME :
-                $url = get_template_directory_uri();
-                break;
-	        case self::CHILD_THEME :
-	            $url = get_stylesheet_directory_uri();
-	            break;
-	        default :
-	            $url = '';
-	            break;
-	    }
+	    return trailingslashit($this->mod_url);
+	}
 
-	    return $url;
+	/**
+	 * Returns the absolute path to module direcotory.
+	 *
+	 * @since 0.7
+	 *
+	 * @return string Full absolute path to module directory.
+	 */
+	final public function getPath()
+	{
+        return trailingslashit(dirname($this->mod_file));
+	}
+
+	/**
+     * Returns the basename for the plugin folder.
+     *
+     * @since 0.7
+     *
+     * @return string Plugin folder name (Relative to wp-content/plugins or wp-content/themes.
+     */
+	final public function getSlug()
+	{
+	    $folder = basename(dirname($this->mod_file));
+	    return $folder;
 	}
 }

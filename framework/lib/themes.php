@@ -150,6 +150,7 @@ function ak_admin_authoring ( $mod_id )
         return;
     }
     $data = $mod->getModData();
+    $class = ( $mod->isComponent() ) ? $mod->PID : $mod_id;
 ?>
 
 	<dl>
@@ -157,7 +158,7 @@ function ak_admin_authoring ( $mod_id )
 		<dd>
 			<ul>
 				<?php if ( ! empty($data['PluginURI']) ) : ?>
-					<li><a href="<?php echo $data['PluginURI']; ?>" class="<?php echo $mod_id; ?>" target="_blank"><?php _e('Plugin Homepage', 'akfw'); ?></a></li>
+					<li><a href="<?php echo $data['PluginURI']; ?>" class="<?php echo $class; ?>" target="_blank"><?php _e('Plugin Homepage', 'akfw'); ?></a></li>
 				<?php endif; ?>
 
 				<?php if ( ! empty($data['URI']) ) : ?>
@@ -202,7 +203,7 @@ function ak_admin_footer ( $mod_id, $year = 2009 )
     }
     $data = $mod->getModData();
 
-    if ( $mod->isPlugin() ) {
+    if ( $mod->isPlugin() || $mod->isComponent() ) {
     	echo '<p class="footer"><a href="' . $mod->getModData('PluginURI') . '">' . $mod->getModData('Name') . ' ' . $mod->getModData('Version') .
     	     '</a> &nbsp; &copy; Copyright ';
 		if ( 2010 != $year ) {
@@ -222,6 +223,9 @@ function ak_admin_footer ( $mod_id, $year = 2009 )
     echo '<br />Framework Version: ' . get_option('ak_framework_version');
 	if ( $mod->isChildTheme() ) {
         echo ' - Child theme: ' . $mod->getChildData('Name') . ' ' . $mod->getChildData('Version');
+	}
+	if ( $mod->isComponent() ) {
+        echo ' - Component: ' . $mod->getChildData('Name') . ' ' . $mod->getChildData('Version');
 	}
 	echo '</p>';
 }

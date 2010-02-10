@@ -27,6 +27,17 @@
  */
 
 /**
+ * Gets current user ID.
+ *
+ * @return int Current user ID or 0 if not logged in.
+ */
+function ak_current_user_id ()
+{
+	$user = wp_get_current_user();
+    return $user->id;
+}
+
+/**
  * Returns all valid roles.
  * The returned list can be translated or not.
  *
@@ -117,6 +128,7 @@ function ak_caps2level( $caps ) {
  * Taken from WordPress 2.7.1
  *
  * @since 0.5
+ * @access private
  *
  * @return int level Level found.
  */

@@ -59,12 +59,12 @@
  * the file. This is not checked however and the file is only opened for
  * reading.
  *
- * @param string $pluginFile Path to the plugin file (not the readme file)
+ * @param string $mod_file Path to the plugin file (not the readme file)
  * @return array See above for description.
  */
-function ak_module_readme_data( $pluginFile )
+function ak_module_readme_data( $mod_file )
 {
-	$file = dirname($pluginFile) . '/readme.txt';
+	$file = dirname($mod_file) . '/readme.txt';
 
 	if ( is_readable($file) ) {
     	$fp = fopen($file, 'r');	// Open just for reading.
@@ -75,7 +75,7 @@ function ak_module_readme_data( $pluginFile )
     	preg_match( '|Donate link:(.*)$|mi', $data, $uri );
     	preg_match( '|Help link:(.*)$|mi', $data, $help ); // Not WP Standard
     	preg_match( '|Docs link:(.*)$|mi', $data, $docs ); // Not WP Standard
-    	preg_match( '|Tags:(.*)|i', $data, $tags );
+    	preg_match( '|Tags:(.*)|mi', $data, $tags );
     	preg_match( '|Requires at least:(.*)$|mi', $data, $required );
     	preg_match( '|Tested up to:(.*)$|mi', $data, $tested );
     	preg_match( '|Stable tag:(.*)$|mi', $data, $stable );
@@ -105,35 +105,103 @@ function ak_module_readme_data( $pluginFile )
 }
 
 /**
- * Returns plugin data from readme.txt
+ * Reads a component file header, and returns component data.
+ * Returned data is:
+ * 		- 'File' - The component filename, relative to the plugin folder.
+ * 		- 'Component' - The component short name or ID.
+ * 		- 'Name' - Descriptive name for the component.
+ * 		- 'Description' - A descriptive text about the component.
+ * 		- 'Author' - Component author name
+ * 		- 'URL' - Author homepage URL.
+ * 		- 'Link' - Author anchor to home page.
+ * 		- 'Core' - If this is a core compoment or not.
  *
- * @deprecated since 0.5
- * @see ak_module_readme_data()
+ * @since 0.7
  *
- * @param string $pluginFile
- * @return array
+ * @param string $file	File name to read the header
+ * @param $is_core	If will return data for core components or not.
+ * @return array Component data, see above.
  */
-function ak_plugin_readme_data( $pluginFile )
+function ak_component_data ( $file, $is_core = false )
 {
-    return ak_module_readme_data;
+	$fp = fopen($file, 'r');	// Open just for reading.
+	$data = fread( $fp, 8192 );	// Pull the first 8kiB of the file in.
+	fclose($fp);				// Close the file.
+
+	preg_match( '|Module Component:(.*)$|mi', $data, $component );
+	if ( empty($component) && $is_core ) {
+		preg_match( '|Core Component:(.*)$|mi', $data, $component );
+		$core = 1;
+	} else {
+		$core = 0;
+	}
+	preg_match( '|Parent ID:(.*)$|mi', $data, $parent );
+	preg_match( '|Component Name:(.*)$|mi', $data, $name );
+	preg_match( '|Description:(.*)|mi', $data, $description );
+	preg_match( '|Version:(.*)|mi', $data, $version );
+	preg_match( '|Author:(.*)|mi', $data, $author );
+	preg_match( '|Link:(.*)|mi', $data, $url );
+
+	foreach ( array( 'component', 'parent', 'name', 'description', 'version', 'author', 'url' ) as $field ) {
+		if ( ! empty( ${$field} ) ) {
+			${$field} = trim(${$field}[1]);
+		} else {
+			${$field} = '';
+		}
+	}
+
+	if ( empty($component) ) {
+		$data = false;
+	} else {
+		$data = array(
+			'Component' => str_replace(' ', '_', strtolower($component)),
+			'File' => $file,
+			'Parent' => $parent,
+			'Name' => $name,
+			'Description' => $description,
+		    'Version' => $version,
+			'Author' => $author,
+			'URL' => $url,
+			'Link' => "<a href='{$url}' target='_blank'>{$author}</a>",
+			'Core' => $core);
+	}
+
+	return $data;
 }
 
 /**
- * Deactivated the plugin. Normally in case incompatibilities were detected.
+ * Gets information about all optional installed components.
+ * The function is recursive to find files in all directory levels.
  *
- * TODO: Run Deactivation HOOK
+ * TODO: Path must be provided as AOC_PATH is only for community plugin.
+ * @since 0.7
  *
- * @since 0.5
- *
- * @param string $name	Plugin name.
- * @return void
+ * @param string $path Absolute path where to search for components.
+ * @param boolean $core If we want to include the core components or not.
+ * @param array $files An array with filenames to seach information in. If empty will search on $path.
+ * @return array Array with all found components information.
  */
-function ak_deactivate_plugin( $name )
+function ak_get_installed_components( $path, $core = false, $files = array() )
 {
-    $plugins = get_option('active_plugins');
+	if ( empty($files) ) {
+		$files = ak_dir_content($path, 'extensions=php');
+	}
 
-	if ( in_array($name, $plugins)) {
-	    array_splice($plugins, array_search($name, $plugins), 1);
-		update_option('active_plugins', $plugins);
-    }
+	$components = array();
+	foreach ( $files as $subdir => $file ) {
+		if ( is_array($file) ) {
+			$newdir = $path .'/'. $subdir;
+			$data = ak_get_installed_components( $newdir, $core, $file );
+			if ( is_array($data) ) {
+				$components = array_merge($components, $data);
+			}
+		} else {
+			$data = ak_component_data($path . '/' . $file, $core);
+			if ( is_array($data) ) {
+				$components[$data['Component']] = $data;
+			}
+		}
+	}
+
+	return $components;
 }

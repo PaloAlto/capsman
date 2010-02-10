@@ -40,6 +40,7 @@ See the <a href="http://wiki.alkivia.org/capsman" target="_blank">plugin manual<
 * German *by <a href="http://great-solution.de/" rel="nofollow">Carsten Tauber</a>*
 * Italian *by <a href="http://gidibao.net" rel="nofollow">Gianni Diurno</a>*
 * Russian *by <a href="http://www.fatcow.com" rel="nofollow">Marcis Gasuns</a>*
+* Swedish *by <a href="http://jenswedin.com/" rel="nofollow">Jens Wedin</a>
 * POT file for easy translation to other languages included. See the <a href="http://wiki.alkivia.org/general/translators">translators page</a> for more information.
 
 == Installation ==
@@ -88,6 +89,9 @@ You should have received a copy of the GNU General Public License along with thi
 
 == Changelog ==
 
+= 1.3.2 = 
+  * Added Swedish translation.
+
 = 1.3.1 =
   * Fixed a bug where administrators could not create or manage other administrators.
   
@@ -129,6 +133,9 @@ You should have received a copy of the GNU General Public License along with thi
   * First public version.
 
 == Upgrade Notice ==
+
+= 1.3.2 = 
+Only Swedish translation.
 
 = 1.3.1 =
 Bug fixes.

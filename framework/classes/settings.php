@@ -261,6 +261,27 @@ final class akSettings
     }
 
     /**
+     * Deletes an option from a module.
+     * Only if the option existed.
+     *
+     * @param string $module  Module name.
+     * @param string $option  Setting name.
+     * @return void
+     */
+    public function deleteOption ( $module, $option )
+    {
+        if ( ! isset($this->options[$module]) ) {
+            $this->populateSettings($module);
+        }
+
+        if ( isset($this->options[$module][$option]) ) {
+            unset($this->options[$module][$option]);
+        }
+        $this->populateSettings($module);
+        $this->updated[$module] = true;
+    }
+
+    /**
      * Replaces all settings for a module and saves them to database.
      * If settings does not exist, them are created.
      *
