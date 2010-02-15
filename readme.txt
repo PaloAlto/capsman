@@ -5,7 +5,7 @@ Help link: http://wordpress.org/tags/capsman?forum_id=10
 Docs link: http://wiki.alkivia.org/capsman
 Tags: roles, capabilities, manager, rights, role, capability
 Requires at least: 2.8
-Tested up to: 2.9.1
+Tested up to: 2.9.2
 Stable tag: trunk
 
 A simple way to manage WordPress roles and capabilities. With this plugin you will be able to easily create and manage roles and capabilities.
